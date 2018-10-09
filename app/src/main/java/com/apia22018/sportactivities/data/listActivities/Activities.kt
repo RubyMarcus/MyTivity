@@ -1,6 +1,6 @@
 package com.apia22018.sportactivities.data.listActivities
 
-data class ListActivities(
+data class Activities(
         val activityId: String,
         val title: String,
         val description: String,
