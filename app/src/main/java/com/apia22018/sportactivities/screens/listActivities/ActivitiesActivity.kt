@@ -1,5 +1,6 @@
 package com.apia22018.sportactivities.screens.listActivities
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -14,6 +15,8 @@ import kotlinx.android.synthetic.main.list_activity.*
 
 class ActivitiesActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: ActivitiesViewModel
+
     companion object {
         fun start(context: Context) {
             context.startActivity(Intent(context, ActivitiesActivity::class.java))
@@ -23,18 +26,24 @@ class ActivitiesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val binding: ListActivityBinding = DataBindingUtil.setContentView(this, R.layout.list_activity)
+
         val factory: ActivitiesViewModelFactory = InjectorUtils.provideActivitesViewModelFactory()
-        val viewModel = ViewModelProviders
+        viewModel = ViewModelProviders
                 .of(this, factory)
                 .get(ActivitiesViewModel::class.java)
-        val binding: ListActivityBinding = DataBindingUtil.setContentView(this, R.layout.list_activity)
-        binding.viewModel = viewModel
-        binding.setLifecycleOwner(this)
-        binding.executePendingBindings()
 
         val adapter = ActivitiesAdapter()
 
         activities_list.layoutManager = LinearLayoutManager(this)
-        activities_list.adapter = adapter
+        binding.activitiesList.adapter = adapter
+
+        subscribeUI(adapter)
+    }
+
+    private fun subscribeUI(adapter: ActivitiesAdapter) {
+        viewModel.getActivities().observe(this, Observer { activities ->
+            if (activities != null) adapter.submitList(activities)
+        })
     }
 }
