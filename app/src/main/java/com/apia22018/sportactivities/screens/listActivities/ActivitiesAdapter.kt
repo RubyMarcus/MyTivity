@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.apia22018.sportactivities.data.listActivities.Activities
 
-class ActivitiesAdapter() : RecyclerView.Adapter<ActivitesViewHolder>() {
+class ActivitiesAdapter() : RecyclerView.Adapter<ActivitiesViewHolder>() {
     private val activities: MutableList<Activities> = mutableListOf()
 
     fun setActivities(activities: List<Activities>) {
@@ -14,13 +14,13 @@ class ActivitiesAdapter() : RecyclerView.Adapter<ActivitesViewHolder>() {
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, type: Int): ActivitesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, type: Int): ActivitiesViewHolder {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getItemCount() = this.activities.size
 
-    override fun onBindViewHolder(viewHolder: ActivitesViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ActivitiesViewHolder, position: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
