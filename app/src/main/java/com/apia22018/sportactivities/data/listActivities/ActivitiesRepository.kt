@@ -1,9 +1,14 @@
 package com.apia22018.sportactivities.data.listActivities
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class ActivitiesRepository {
+
+    private val reference: DatabaseReference = FirebaseDatabase
+            .getInstance()
+            .getReference("activities")
 
     companion object {
         @Volatile private var instance: ActivitiesRepository? = null
@@ -14,6 +19,24 @@ class ActivitiesRepository {
                 }
     }
 
+    fun create(activity: Activities){
+        //TODO research create method
+    }
+
+    fun readActivities(): LiveData<List<Activities>>{
+        return ActivitiesLiveData()
+    }
+
+    fun update(activity: Activities){
+        reference.child(activity.activityId).setValue(activity)
+    }
+
+    fun delete(activity: Activities){
+        reference.child(activity.activityId).removeValue()
+
+    }
+
+    /*
     fun get(): LiveData<List<Activities>> {
         val list = MutableLiveData<List<Activities>>()
         val activities = mutableListOf<Activities>()
@@ -33,6 +56,6 @@ class ActivitiesRepository {
 
         list.postValue(activities)
         return list
-    }
+    }*/
 
 }

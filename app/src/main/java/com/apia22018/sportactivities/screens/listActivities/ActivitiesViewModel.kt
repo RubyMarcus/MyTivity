@@ -10,7 +10,7 @@ class ActivitiesViewModel(private val activitiesRepository: ActivitiesRepository
     private val activitiesList = MediatorLiveData<List<Activities>>()
 
     init {
-        activitiesList.addSource(activitiesRepository.get(), activitiesList::setValue)
+        activitiesList.addSource(activitiesRepository.readActivities(), activitiesList::setValue)
     }
 
     fun getActivities() = activitiesList
