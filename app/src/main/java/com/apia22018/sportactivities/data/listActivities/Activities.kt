@@ -7,4 +7,9 @@ data class Activities(
         val totalSeats: Int,
         val occupiedSeats: Int,
         val activityDate: Long
-)
+) {
+    fun emptySeaterinos(): String {
+        val emptySeats = totalSeats - occupiedSeats
+        return emptySeats.toString()
+    }
+}
