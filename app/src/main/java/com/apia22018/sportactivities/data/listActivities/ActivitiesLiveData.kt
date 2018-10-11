@@ -3,7 +3,7 @@ package com.apia22018.sportactivities.data.listActivities
 import android.arch.lifecycle.LiveData
 import com.google.firebase.database.*
 
-class ActivitiesLiveData() : LiveData<List<Activities>>() {
+class ActivitiesLiveData : LiveData<List<Activities>>() {
     private val reference: DatabaseReference = FirebaseDatabase
             .getInstance()
             .getReference("activities")
