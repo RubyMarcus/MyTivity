@@ -11,7 +11,9 @@ class ActivitiesLiveData : LiveData<List<Activities>>() {
     private val eventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             value = dataSnapshot.children.mapNotNull {
-                it.getValue(Activities::class.java)
+                it.getValue(Activities::class.java).apply {
+                    this!!.activityId = it.key!!
+                }
             }
         }
 

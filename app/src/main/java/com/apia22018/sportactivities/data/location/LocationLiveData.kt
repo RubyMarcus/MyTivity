@@ -10,9 +10,10 @@ class LocationLiveData : LiveData<List<Location>>() {
 
     private val eventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            System.out.println(dataSnapshot)
             value = dataSnapshot.children.mapNotNull {
-                it.getValue(Location::class.java)
+                it.getValue(Location::class.java).apply {
+                    this!!.activityId = it.key!!
+                }
             }
         }
 

@@ -6,9 +6,11 @@ data class Activities(
         val totalSeats: Int = 0,
         val occupiedSeats: Int = 0,
         val activityDate: Long = 0,
-        val activityId: String = ""
+        val city: String = "",
+        val streetName: String = ""
 ) {
-    var city: String = ""
+
+    var activityId: String = ""
 
     fun emptySeaterinos(): String {
         val emptySeats = totalSeats - occupiedSeats
