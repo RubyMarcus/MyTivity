@@ -15,6 +15,6 @@ object InjectorUtils {
         return ActivitiesRepository.getInstance()
     }
 
-    fun provideActivitesViewModelFactory() = ActivitiesViewModelFactory(getActivitiesRepository(), getLocationRepository())
+    fun provideActivitesViewModelFactory() = ActivitiesViewModelFactory(getActivitiesRepository())
 
 }
