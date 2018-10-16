@@ -17,22 +17,8 @@ class LocationRepository {
                 }
     }
 
-    fun readLocations(): LiveData<List<Location>>{
-        return LocationLiveData()
+    fun readLocations(activityId: String = ""): LiveData<List<Location>>{
+        return LocationLiveData(reference.child(activityId))
     }
 
-    fun readLocation(activityId: String): Location? {
-        var location: Location? = null
-        reference.child(activityId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                location = dataSnapshot.getValue(Location::class.java)
-                System.out.println(location)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Error
-            }
-        })
-        return location
-    }
 }

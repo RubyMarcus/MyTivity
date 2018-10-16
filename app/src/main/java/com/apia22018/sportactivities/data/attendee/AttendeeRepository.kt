@@ -1,5 +1,6 @@
 package com.apia22018.sportactivities.data.attendee
 
+import android.arch.lifecycle.LiveData
 import com.google.firebase.database.*
 
 class AttendeeRepository {
@@ -17,23 +18,8 @@ class AttendeeRepository {
                 }
     }
 
-    fun getAttendees(activityId: String): List<Attendee>? {
-        var attendees: List<Attendee>? = null
-
-        reference.child(activityId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                attendees = dataSnapshot.children.mapNotNull {
-                    it.getValue(Attendee::class.java)
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-        })
-
-        return attendees
+    fun getAttendees(activityId: String): LiveData<List<Attendee>> {
+        return AttendeeLiveData(reference.child(activityId))
     }
 
 }

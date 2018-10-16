@@ -1,22 +1,23 @@
-package com.apia22018.sportactivities.data.location
+package com.apia22018.sportactivities.data.messages
 
 import android.arch.lifecycle.LiveData
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 
-class LocationLiveData(private val reference: DatabaseReference) : LiveData<List<Location>>() {
-
+class MessageLiveData(private val reference: DatabaseReference) : LiveData<List<Message>>() {
     private val eventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             value = dataSnapshot.children.mapNotNull {
-                it.getValue(Location::class.java).apply {
-                    this!!.activityId = it.key!!
-                }
+                it.getValue(Message::class.java)
             }
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            System.out.println(databaseError)
+            println(databaseError.message)
         }
+
     }
 
     override fun onActive() {

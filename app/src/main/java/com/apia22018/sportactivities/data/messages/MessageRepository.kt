@@ -1,5 +1,6 @@
 package com.apia22018.sportactivities.data.messages
 
+import android.arch.lifecycle.LiveData
 import com.google.firebase.database.*
 
 class MessageRepository {
@@ -18,23 +19,8 @@ class MessageRepository {
                 }
     }
 
-    fun getMessages(activityId: String): List<Message>? {
-        var messages: List<Message>? = null
-
-        reference.child(activityId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                messages = dataSnapshot.children.mapNotNull {
-                    it.getValue(Message::class.java)
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-        })
-
-        return messages
+    fun getMessages(activityId: String): LiveData<List<Message>> {
+        return MessageLiveData(reference.child(activityId))
     }
 
 }
