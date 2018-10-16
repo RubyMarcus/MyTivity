@@ -37,7 +37,7 @@ class ActivitiesActivity : AppCompatActivity() {
             subtitle = "OPTIONAL SUBTITLE?"
         }
 
-        val factory: ActivitiesViewModelFactory = InjectorUtils.provideActivitesViewModelFactory()
+        val factory: ActivitiesViewModelFactory = InjectorUtils.provideActivitiesViewModelFactory()
         viewModel = ViewModelProviders
                 .of(this, factory)
                 .get(ActivitiesViewModel::class.java)

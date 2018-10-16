@@ -3,6 +3,7 @@ package com.apia22018.sportactivities.utils
 import android.content.Context
 import com.apia22018.sportactivities.data.listActivities.ActivitiesRepository
 import com.apia22018.sportactivities.data.location.LocationRepository
+import com.apia22018.sportactivities.screens.detailActivities.DetailActivitiesViewModelFactory
 import com.apia22018.sportactivities.screens.listActivities.ActivitiesViewModelFactory
 
 object InjectorUtils {
@@ -15,6 +16,8 @@ object InjectorUtils {
         return ActivitiesRepository.getInstance()
     }
 
-    fun provideActivitesViewModelFactory() = ActivitiesViewModelFactory(getActivitiesRepository())
+    fun provideActivitiesViewModelFactory() = ActivitiesViewModelFactory(getActivitiesRepository())
 
+
+    fun provideDetailActivitiesViewModelFactory() = DetailActivitiesViewModelFactory("Test")
 }
