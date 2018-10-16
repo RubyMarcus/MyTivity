@@ -1,29 +1,30 @@
-package com.apia22018.sportactivities.data.attendee
+package com.apia22018.sportactivities.data.messages
 
 import com.google.firebase.database.*
 
-class AttendeeRepository {
+class MessageRepository {
+
     private val reference: DatabaseReference = FirebaseDatabase
             .getInstance()
-            .getReference("attendees")
+            .getReference("messages")
 
     companion object {
         @Volatile
-        private var instance: AttendeeRepository? = null
+        private var instance: MessageRepository? = null
 
         fun getInstance() =
                 instance ?: synchronized(this) {
-                    instance ?: AttendeeRepository().also { instance = it }
+                    instance ?: MessageRepository().also { instance = it }
                 }
     }
 
-    fun getAttendees(activityId: String): List<Attendee>? {
-        var attendees: List<Attendee>? = null
+    fun getMessages(activityId: String): List<Message>? {
+        var messages: List<Message>? = null
 
         reference.child(activityId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                attendees = dataSnapshot.children.mapNotNull {
-                    it.getValue(Attendee::class.java)
+                messages = dataSnapshot.children.mapNotNull {
+                    it.getValue(Message::class.java)
                 }
             }
 
@@ -33,7 +34,7 @@ class AttendeeRepository {
 
         })
 
-        return attendees
+        return messages
     }
 
 }
