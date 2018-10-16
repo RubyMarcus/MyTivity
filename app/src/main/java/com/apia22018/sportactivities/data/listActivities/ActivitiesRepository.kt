@@ -16,5 +16,4 @@ class ActivitiesRepository {
     fun readActivities(): LiveData<List<Activities>>{
         return ActivitiesLiveData()
     }
-
 }
