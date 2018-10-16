@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.screens.addActivity
+package com.apia22018.sportactivities.screens.newActivity
 
 import android.arch.lifecycle.ViewModel
 import com.apia22018.sportactivities.data.listActivities.Activities
