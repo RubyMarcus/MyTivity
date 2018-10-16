@@ -17,6 +17,7 @@ class LocationRepository {
                 }
     }
 
+    // If you only want one location then provide the function with ID
     fun readLocations(activityId: String = ""): LiveData<List<Location>>{
         return LocationLiveData(reference.child(activityId))
     }

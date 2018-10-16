@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import com.apia22018.sportactivities.R
-import com.apia22018.sportactivities.R.menu.bottom_nav
 import com.apia22018.sportactivities.databinding.ListActivityBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
 import kotlinx.android.synthetic.main.list_activity.*
