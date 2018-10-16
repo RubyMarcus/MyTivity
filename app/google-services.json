@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "85418759027",
+    "firebase_url": "https://sportactivities-f80b6.firebaseio.com",
+    "project_id": "sportactivities-f80b6",
+    "storage_bucket": "sportactivities-f80b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85418759027:android:ac31d2317d6e9425",
+        "android_client_info": {
+          "package_name": "com.apia22018.sportactivities"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85418759027-80ll2m4j81vgheis7qg91tooe0n8git4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAN4KfG_eN5vicoK0lOl5jsF7fJVCiArhM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
