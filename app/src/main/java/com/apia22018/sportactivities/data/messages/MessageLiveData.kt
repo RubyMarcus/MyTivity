@@ -10,7 +10,11 @@ class MessageLiveData(private val reference: DatabaseReference) : LiveData<List<
     private val eventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             value = dataSnapshot.children.mapNotNull {
-                Message(it.value as String, it.key as String)
+                it.getValue(Message::class.java).apply {
+                    it?.key?.let { id ->
+                        this?.messageId = id
+                    }
+                }
             }
         }
 
