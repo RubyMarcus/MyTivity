@@ -17,9 +17,23 @@ class LocationRepository {
                 }
     }
 
-    // If you only want one location then provide the function with ID
-    fun readLocations(activityId: String = ""): LiveData<List<Location>>{
-        return LocationLiveData(reference.child(activityId))
+    fun readLocations(): LiveData<List<Location>>{
+        return LocationLiveData(reference)
+    }
+
+    fun readLocation(activityId: String): Location? {
+        var location: Location? = null
+        reference.child(activityId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                location = dataSnapshot.getValue(Location::class.java)
+                println(location)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                println(databaseError.message)
+            }
+        })
+        return location
     }
 
 }

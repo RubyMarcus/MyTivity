@@ -9,7 +9,9 @@ class LocationLiveData(private val reference: DatabaseReference) : LiveData<List
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             value = dataSnapshot.children.mapNotNull {
                 it.getValue(Location::class.java).apply {
-                    this!!.activityId = it.key!!
+                    it?.key?.let { id ->
+                        this?.activityId = id
+                    }
                 }
             }
         }

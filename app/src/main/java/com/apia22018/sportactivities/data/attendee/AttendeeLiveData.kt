@@ -8,7 +8,9 @@ class AttendeeLiveData(private val reference: DatabaseReference) : LiveData<List
     private val eventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             value = dataSnapshot.children.mapNotNull {
-                it.getValue(Attendee::class.java)
+                it?.key?.let { userName ->
+                    Attendee(userName)
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 package com.apia22018.sportactivities.screens.detailActivities
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -38,5 +39,21 @@ class DetailActivitiesActivity : AppCompatActivity() {
         viewModel = ViewModelProviders
                 .of(this, factory)
                 .get(DetailActivitiesViewModel::class.java)
+
+        subscribeToData()
+    }
+
+    private fun subscribeToData() {
+        viewModel.getAttendees().observe(this, Observer {
+            println(it)
+        })
+
+        viewModel.getLocation().observe(this, Observer {
+            println(it)
+        })
+
+        viewModel.getMessages().observe(this, Observer {
+            println(it)
+        })
     }
 }
