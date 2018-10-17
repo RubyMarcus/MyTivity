@@ -4,15 +4,16 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Activities(
-        val title: String = " ",
-        val description: String = " ",
+        val title: String = "",
+        val description: String = "",
         val totalSeats: Int = 0,
         val occupiedSeats: Int = 0,
         val activityDate: Long = 0,
-        val city: String = " ",
-        val streetName: String = " "
+        val city: String = "",
+        val streetName: String = "",
+        val createdBy: String = ""
 ) : Parcelable {
-    var activityId: String = " "
+    var activityId: String = ""
 
     constructor(parcel: Parcel) : this(
             parcel.readString()!!,
@@ -20,6 +21,7 @@ data class Activities(
             parcel.readInt(),
             parcel.readInt(),
             parcel.readLong(),
+            parcel.readString()!!,
             parcel.readString()!!,
             parcel.readString()!!) {
         activityId = parcel.readString()!!
@@ -33,6 +35,7 @@ data class Activities(
         parcel.writeLong(activityDate)
         parcel.writeString(city)
         parcel.writeString(streetName)
+        parcel.writeString(createdBy)
         parcel.writeString(activityId)
     }
 
