@@ -14,13 +14,13 @@
         <activity android:name=".screens.listActivities.ActivitiesActivity"/>
         <activity android:name=".screens.splash.SplashActivity"
             android:theme="@style/SplashTheme">
+        <activity android:name=".screens.addActivity.AddActivityActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.detailActivities.DetailActivitiesActivity"/>
+        <activity android:name=".screens.detailActivities.DetailActivitiesActivity"></activity>
     </application>
-
 </manifest>
