@@ -23,5 +23,5 @@ object InjectorUtils {
 
     fun provideActivitiesViewModelFactory() = ActivitiesViewModelFactory(getActivitiesRepository())
 
-    fun provideDetailActivitiesViewModelFactory(activities: Activities) = DetailActivitiesViewModelFactory(getAttendeeRepository(), getMessageRepository(), getLocationRepository(), activities)
+    fun provideDetailActivitiesViewModelFactory(activities: Activities) = DetailActivitiesViewModelFactory(getLocationRepository(), activities)
 }

@@ -44,15 +44,7 @@ class DetailActivitiesActivity : AppCompatActivity() {
     }
 
     private fun subscribeToData() {
-        viewModel.getAttendees().observe(this, Observer {
-            println(it)
-        })
-
         viewModel.getLocation().observe(this, Observer {
-            println(it)
-        })
-
-        viewModel.getMessages().observe(this, Observer {
             println(it)
         })
     }

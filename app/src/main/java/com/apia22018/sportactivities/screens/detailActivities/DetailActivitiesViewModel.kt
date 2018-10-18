@@ -8,14 +8,10 @@ import com.apia22018.sportactivities.data.location.Location
 import com.apia22018.sportactivities.data.location.LocationRepository
 import com.apia22018.sportactivities.data.messages.MessageRepository
 
-class DetailActivitiesViewModel(private val attendeeRepository: AttendeeRepository,
-                                private val messageRepository: MessageRepository,
-                                private val locationRepository: LocationRepository,
+class DetailActivitiesViewModel(private val locationRepository: LocationRepository,
                                 private val activities: Activities
 ) : ViewModel() {
 
-    private val attendeesList = attendeeRepository.getAttendees(activities.activityId)
-    private val messageList = messageRepository.getMessages(activities.activityId)
     private val location: MutableLiveData<Location> = MutableLiveData()
 
     init {
@@ -23,10 +19,6 @@ class DetailActivitiesViewModel(private val attendeeRepository: AttendeeReposito
             location.postValue(it)
         }
     }
-
-    fun getAttendees() = attendeesList
-
-    fun getMessages() = messageList
 
     fun getLocation() = location
 
