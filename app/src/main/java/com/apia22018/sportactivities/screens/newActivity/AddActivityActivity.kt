@@ -1,5 +1,6 @@
 package com.apia22018.sportactivities.screens.newActivity
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.databinding.DataBindingUtil
@@ -7,15 +8,27 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.databinding.AddActivityActivityBinding
+import com.google.android.gms.location.places.ui.PlacePicker
+import com.google.android.gms.maps.MapView
 import kotlinx.android.synthetic.main.add_activity_activity.*
 import java.lang.Exception
+import java.nio.MappedByteBuffer
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
+import android.widget.Toast
+import com.google.android.gms.location.places.Place
+import android.content.Intent
+import android.widget.DatePicker
+
+
 
 class AddActivityActivity : AppCompatActivity() {
 
     val formate = SimpleDateFormat("dd MMM, YYYY", Locale.ENGLISH)
     val timeFormat = SimpleDateFormat("hh:mm", Locale.ENGLISH)
+    val PLACE_PICKER_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +63,13 @@ class AddActivityActivity : AppCompatActivity() {
             datepicker.show()
         }
 
+        val time = Calendar.getInstance()
+
         time_activity_btn.setOnClickListener {
             try {
                 if(time_activity_btn.text != "Pick time") {
                     val date = timeFormat.parse(time_activity_btn.text.toString())
-                    now.time = date
+                    time.time = date
                 }
             } catch (e:Exception) {
                 e.printStackTrace()
@@ -73,13 +88,33 @@ class AddActivityActivity : AppCompatActivity() {
             timePicker.show()
         }
 
+        add_location_btn.setOnClickListener {
+            val builder = PlacePicker.IntentBuilder()
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST)
+        }
 
+
+        //AIzaSyAN4KfG_eN5vicoK0lOl5jsF7fJVCiArhM old key
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                val place = PlacePicker.getPlace(data!!, this)
+                val toastMsg = place.name.toString()
+                add_location_btn.text = toastMsg
+            }
+        }
     }
 
     fun createActivity () {
 
         val name = name_activty.text as String
         val description = description_activity as String
+        val date = date_activity_btn.text as Long
+        val time = time_activity_btn.text as String
+        val totalSeats = total_people.text as Int
 
 
     }
