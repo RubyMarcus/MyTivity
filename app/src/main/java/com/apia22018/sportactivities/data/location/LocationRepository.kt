@@ -18,7 +18,7 @@ class LocationRepository {
     }
 
     fun readLocations(): LiveData<List<Location>>{
-        return LocationLiveData()
+        return LocationLiveData(reference)
     }
 
     fun readLocation(activityId: String): Location? {
@@ -26,13 +26,14 @@ class LocationRepository {
         reference.child(activityId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 location = dataSnapshot.getValue(Location::class.java)
-                System.out.println(location)
+                println(location)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Error
+                println(databaseError.message)
             }
         })
         return location
     }
+
 }

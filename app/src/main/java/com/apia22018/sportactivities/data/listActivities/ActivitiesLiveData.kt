@@ -18,16 +18,18 @@ class ActivitiesLiveData : LiveData<List<Activities>>() {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            System.out.println(databaseError)
+            System.out.println(databaseError.message)
         }
     }
 
     override fun onActive() {
         reference.addValueEventListener(eventListener)
+        super.onActive()
     }
 
     override fun onInactive() {
         reference.removeEventListener(eventListener)
+        super.onInactive()
     }
 
 

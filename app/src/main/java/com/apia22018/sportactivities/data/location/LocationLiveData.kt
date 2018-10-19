@@ -3,16 +3,15 @@ package com.apia22018.sportactivities.data.location
 import android.arch.lifecycle.LiveData
 import com.google.firebase.database.*
 
-class LocationLiveData : LiveData<List<Location>>() {
-    private val reference: DatabaseReference = FirebaseDatabase
-            .getInstance()
-            .getReference("locations")
+class LocationLiveData(private val reference: DatabaseReference) : LiveData<List<Location>>() {
 
     private val eventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             value = dataSnapshot.children.mapNotNull {
                 it.getValue(Location::class.java).apply {
-                    this!!.activityId = it.key!!
+                    it?.key?.let { id ->
+                        this?.activityId = id
+                    }
                 }
             }
         }
@@ -24,9 +23,11 @@ class LocationLiveData : LiveData<List<Location>>() {
 
     override fun onActive() {
         reference.addValueEventListener(eventListener)
+        super.onActive()
     }
 
     override fun onInactive() {
         reference.removeEventListener(eventListener)
+        super.onInactive()
     }
 }
