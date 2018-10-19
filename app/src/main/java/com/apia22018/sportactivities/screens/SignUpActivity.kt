@@ -96,7 +96,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun updateUserInfoAndUI() {
         //starta nästa activity
-        val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
+        //val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
