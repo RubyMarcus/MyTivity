@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="addAcitity"
-            type="com.apia22018.sportactivities.screens.newActivity.AddActivityActivity" />
+            name="viewModel"
+            type="com.apia22018.sportactivities.screens.newActivity.AddActivityViewModel" />
     </data>
 
 
@@ -140,6 +140,7 @@
             android:layout_marginEnd="8dp"
             android:text="Add location"
             android:textAlignment="viewStart"
+            android:onClick="@{() -> viewModel.showCreatePlacePickerDialog()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="@+id/imageView3" />
@@ -162,6 +163,7 @@
             android:layout_marginEnd="8dp"
             android:text="Pick date"
             android:textAlignment="viewStart"
+            android:onClick="@{() -> viewModel.showCreateDatePickerDialog()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toTopOf="@+id/imageView5" />
@@ -192,13 +194,11 @@
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:background="@android:color/darker_gray"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <TextView
@@ -243,6 +243,7 @@
             android:layout_marginEnd="8dp"
             android:text="Pick time"
             android:textAlignment="viewStart"
+            android:onClick="@{() -> viewModel.showCreateTimePickerDialog()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/imageView2" />

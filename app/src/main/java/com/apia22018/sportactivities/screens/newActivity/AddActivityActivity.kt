@@ -3,39 +3,54 @@ package com.apia22018.sportactivities.screens.newActivity
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.databinding.AddActivityActivityBinding
 import com.google.android.gms.location.places.ui.PlacePicker
-import com.google.android.gms.maps.MapView
 import kotlinx.android.synthetic.main.add_activity_activity.*
 import java.lang.Exception
-import java.nio.MappedByteBuffer
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
-import android.widget.Toast
-import com.google.android.gms.location.places.Place
 import android.content.Intent
-import android.widget.DatePicker
-
+import com.apia22018.sportactivities.utils.InjectorUtils
 
 
 class AddActivityActivity : AppCompatActivity() {
 
+    //Format
     val formate = SimpleDateFormat("dd MMM, YYYY", Locale.ENGLISH)
     val timeFormat = SimpleDateFormat("hh:mm", Locale.ENGLISH)
+
+    //Maps
     val PLACE_PICKER_REQUEST = 1
+
+    //ViewModel
+    lateinit var viewModel: AddActivityViewModel
+
+    //Timestamp
+    lateinit var timestamp: Timestamp
+
+    //Calendar
+    val date = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.add_activity_activity)
+
+        val factory: AddActivityViewModelFactory = InjectorUtils.provideAddActivityViewModelFactorty()
+
+        viewModel = ViewModelProviders.of(this, factory
+        ).get(AddActivityViewModel::class.java)
 
         val binding: AddActivityActivityBinding = DataBindingUtil.setContentView(this, R.layout.add_activity_activity)
+        binding.viewModel = viewModel
+        binding.setLifecycleOwner(this)
+        binding.executePendingBindings()
 
+        //Toolbar
         val toolbar = binding.toolbar1
         setSupportActionBar(toolbar)
 
@@ -44,38 +59,68 @@ class AddActivityActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        val now = Calendar.getInstance()
+        viewModel.showPlacePickerDialog.observe(this, android.arch.lifecycle.Observer { showDialog ->
+            showDialog?.let {
+                if (it) {
+                    placePickerDialog()
+                }
+            }
+        })
 
-        date_activity_btn.setOnClickListener {
-            // Add current selected date?
+        viewModel.showDatePickerDialog.observe(this, android.arch.lifecycle.Observer { showDialog ->
+            showDialog?.let {
+                if (it) {
+                    datePickerDialog()
+                }
+            }
+        })
 
-            val datepicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener{view, year, month, dayOfMonth ->
+        viewModel.showTimePickerDialog.observe(this, android.arch.lifecycle.Observer { showDialog ->
+            showDialog?.let {
+                if (it) {
+                    timePickerDialog()
+                }
+            }
+        })
 
-                val selectedDate = Calendar.getInstance()
-                selectedDate.set(Calendar.YEAR, year)
-                selectedDate.set(Calendar.MONTH, month)
-                selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        //AIzaSyAN4KfG_eN5vicoK0lOl5jsF7fJVCiArhM old key
 
-                val date = formate.format(selectedDate.time)
-                date_activity_btn.text = date.toString()
-            },
-                    now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
-            datepicker.show()
-        }
+    }
 
-        val time = Calendar.getInstance()
+    private fun placePickerDialog() {
+        val builder = PlacePicker.IntentBuilder()
+        startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST)
+    }
 
+    private fun datePickerDialog() {
+        // Add current selected date?
+
+        val datepicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(Calendar.YEAR, year)
+            selectedDate.set(Calendar.MONTH, month)
+            selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            val date = formate.format(selectedDate.time)
+            date_activity_btn.text = date.toString()
+        },
+                date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH))
+        datepicker.show()
+    }
+
+    private fun timePickerDialog() {
         time_activity_btn.setOnClickListener {
             try {
-                if(time_activity_btn.text != "Pick time") {
+                if (time_activity_btn.text != "Pick time") {
                     val date = timeFormat.parse(time_activity_btn.text.toString())
-                    time.time = date
+                    //date.time = date
                 }
-            } catch (e:Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
-            val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener{view, hourOfDay, minute ->
+            val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                 val selectedTime = Calendar.getInstance()
                 selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
                 selectedTime.set(Calendar.MINUTE, minute)
@@ -84,18 +129,9 @@ class AddActivityActivity : AppCompatActivity() {
                 time_activity_btn.text = time.toString()
 
             },
-                    now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true)
+                    date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE), true)
             timePicker.show()
         }
-
-        add_location_btn.setOnClickListener {
-            val builder = PlacePicker.IntentBuilder()
-            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST)
-        }
-
-
-        //AIzaSyAN4KfG_eN5vicoK0lOl5jsF7fJVCiArhM old key
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -108,7 +144,7 @@ class AddActivityActivity : AppCompatActivity() {
         }
     }
 
-    fun createActivity () {
+    fun createActivity() {
 
         val name = name_activty.text as String
         val description = description_activity as String
@@ -116,6 +152,6 @@ class AddActivityActivity : AppCompatActivity() {
         val time = time_activity_btn.text as String
         val totalSeats = total_people.text as Int
 
-
+        //viewModel.insertActivity(Activities(name, description, totalSeats, 1, ))
     }
 }

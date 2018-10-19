@@ -7,6 +7,7 @@ import com.apia22018.sportactivities.data.location.LocationRepository
 import com.apia22018.sportactivities.data.messages.MessageRepository
 import com.apia22018.sportactivities.screens.detailActivities.DetailActivitiesViewModelFactory
 import com.apia22018.sportactivities.screens.listActivities.ActivitiesViewModelFactory
+import com.apia22018.sportactivities.screens.newActivity.AddActivityViewModelFactory
 
 object InjectorUtils {
 
@@ -17,6 +18,8 @@ object InjectorUtils {
     private fun getAttendeeRepository() = AttendeeRepository.getInstance()
 
     private fun getMessageRepository() = MessageRepository.getInstance()
+
+    fun provideAddActivityViewModelFactorty() = AddActivityViewModelFactory(getActivitiesRepository(), getLocationRepository())
 
     fun provideActivitiesViewModelFactory() = ActivitiesViewModelFactory(getActivitiesRepository())
 
