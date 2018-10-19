@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -16,10 +17,18 @@ import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
+import android.os.PersistableBundle
+import com.apia22018.sportactivities.data.listActivities.Activities
 import com.apia22018.sportactivities.utils.InjectorUtils
+import kotlinx.android.synthetic.main.activities_list_item.*
 
 
 class AddActivityActivity : AppCompatActivity() {
+
+    //Geocoder address
+    var addresses : List<Address>? = null
 
     //Format
     val formate = SimpleDateFormat("dd MMM, YYYY", Locale.ENGLISH)
@@ -83,9 +92,31 @@ class AddActivityActivity : AppCompatActivity() {
             }
         })
 
-        //AIzaSyAN4KfG_eN5vicoK0lOl5jsF7fJVCiArhM old key
+        floatingActionButton3.setOnClickListener {
+            createActivity()
+        }
 
+        if (savedInstanceState != null) {
+            val placeValue = savedInstanceState.getString("place")
+            val dateValue = savedInstanceState.getString("date")
+            val timeValue = savedInstanceState.getString("time")
+
+            add_location_btn.text = placeValue
+            date_activity_btn.text = dateValue
+            time_activity_btn.text = timeValue
+        }
+
+        //AIzaSyAN4KfG_eN5vicoK0lOl5jsF7fJVCiArhM old key
     }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        outState?.putString("place", add_location_btn.text.toString())
+        outState?.putString("date", date_activity_btn.text.toString())
+        outState?.putString("time", time_activity_btn.text.toString())
+    }
+
 
     private fun placePickerDialog() {
         val builder = PlacePicker.IntentBuilder()
@@ -138,20 +169,36 @@ class AddActivityActivity : AppCompatActivity() {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 val place = PlacePicker.getPlace(data!!, this)
-                val toastMsg = place.name.toString()
-                add_location_btn.text = toastMsg
+                val gcd : Geocoder = Geocoder(this, Locale.getDefault())
+
+                try {
+                    addresses = gcd.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                if (addresses!!.isNotEmpty()) {
+                    addresses.let {
+                        add_location_btn.text = it!![0].locality + " " + it!![0].thoroughfare + " " + it!![0].subThoroughfare
+                    }
+                }
             }
         }
     }
 
     fun createActivity() {
+        val name = name_activty.text.toString()
+        val description = description_activity.text.toString()
+        val date : Long = 1504929383
 
-        val name = name_activty.text as String
-        val description = description_activity as String
-        val date = date_activity_btn.text as Long
-        val time = time_activity_btn.text as String
-        val totalSeats = total_people.text as Int
+        val city = addresses!![0].locality
+        val streetname = addresses!![0].thoroughfare + " " + addresses!![0].subThoroughfare
 
-        //viewModel.insertActivity(Activities(name, description, totalSeats, 1, ))
+        val time = time_activity_btn.text.toString()
+        val totalSeats = total_people.text.toString().toInt()
+        val occupiedSeats = 0
+        val createdby = "UID"
+
+        viewModel.insertActivity(Activities(name, description, totalSeats, occupiedSeats, date, city, streetname, createdby))
     }
 }
