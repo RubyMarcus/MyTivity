@@ -1,18 +1,17 @@
 package com.apia22018.sportactivities.screens.detailActivities
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.listActivities.Activities
-import com.apia22018.sportactivities.utils.InjectorUtils
+import com.apia22018.sportactivities.screens.message.MessageFragment
+import com.apia22018.sportactivities.utils.loadFragment
+import kotlinx.android.synthetic.main.detail_activities_activity.*
 
 class DetailActivitiesActivity : AppCompatActivity() {
-
-    private lateinit var viewModel: DetailActivitiesViewModel
 
     companion object {
         private const val ID = "id"
@@ -31,21 +30,42 @@ class DetailActivitiesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail_activities_activity)
 
-        val bundle = intent.extras ?: Bundle()
-        val activities: Activities = bundle.getParcelable(VALUE) ?: Activities()
+//        val bundle = intent.extras ?: Bundle()
+//        val activities: Activities = bundle.getParcelable(VALUE) ?: Activities()
 
-        val factory: DetailActivitiesViewModelFactory = InjectorUtils.provideDetailActivitiesViewModelFactory(activities)
+        setSupportActionBar(toolbar_detail)
 
-        viewModel = ViewModelProviders
-                .of(this, factory)
-                .get(DetailActivitiesViewModel::class.java)
+        supportActionBar?.apply {
+            title = "TITLE"
+        }
 
-        subscribeToData()
+        bottom_nav_detail.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_activity -> {
+                    println("Activity")
+//                    loadFragment(ActivityFragment.newInstance())
+                    true
+                }
+                R.id.action_message -> {
+                    loadFragment(MessageFragment.newInstance())
+                    true
+                }
+                R.id.action_map -> {
+                    println("map")
+//                    loadFragment(MapFragment.newInstance())
+                    true
+                }
+
+                else -> false
+            }
+        }
+
+        loadFragment(MessageFragment.newInstance())
     }
 
-    private fun subscribeToData() {
-        viewModel.getLocation().observe(this, Observer {
-            println(it)
-        })
+    //TODO("NEEDS OWN TOOLBAR DESIGN MENU ThING)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
     }
 }
