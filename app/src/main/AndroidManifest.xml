@@ -7,12 +7,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/icon_on_bakgrund"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/icon_on_bakgrund  "
+        android:roundIcon="@mipmap/icon_on_bakgrund"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.listActivities.ActivitiesActivity">
-        <activity android:name=".screens.activities_list.ListActivity" />
+        <activity android:name=".screens.listActivities.ActivitiesActivity"/>
         <activity android:name=".screens.splash.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -21,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.detailActivities.DetailActivitiesActivity"></activity>
+        <activity android:name=".screens.detailActivities.DetailActivitiesActivity"/>
     </application>
 
 </manifest>
