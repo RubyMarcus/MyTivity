@@ -23,6 +23,7 @@ import android.os.PersistableBundle
 import com.apia22018.sportactivities.data.listActivities.Activities
 import com.apia22018.sportactivities.utils.InjectorUtils
 import kotlinx.android.synthetic.main.activities_list_item.*
+import java.time.Month
 
 
 class AddActivityActivity : AppCompatActivity() {
@@ -32,6 +33,7 @@ class AddActivityActivity : AppCompatActivity() {
 
     //Format
     val formate = SimpleDateFormat("dd MMM, YYYY", Locale.ENGLISH)
+    val timestampFormat = SimpleDateFormat("YYYYMMddhhmm", Locale.ENGLISH)
     val timeFormat = SimpleDateFormat("hh:mm", Locale.ENGLISH)
 
     //Maps
@@ -45,6 +47,7 @@ class AddActivityActivity : AppCompatActivity() {
 
     //Calendar
     val date = Calendar.getInstance()
+    val timestampCalendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,6 +136,12 @@ class AddActivityActivity : AppCompatActivity() {
             selectedDate.set(Calendar.MONTH, month)
             selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
+            timestampCalendar.set(Calendar.YEAR, year)
+            timestampCalendar.set(Calendar.MONTH, month)
+            timestampCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            timestampCalendar
+
             val date = formate.format(selectedDate.time)
             date_activity_btn.text = date.toString()
         },
@@ -156,9 +165,11 @@ class AddActivityActivity : AppCompatActivity() {
                 selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
                 selectedTime.set(Calendar.MINUTE, minute)
 
+                timestampCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                timestampCalendar.set(Calendar.MINUTE, minute)
+
                 val time = timeFormat.format(selectedTime.time)
                 time_activity_btn.text = time.toString()
-
             },
                     date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE), true)
             timePicker.show()
@@ -186,19 +197,19 @@ class AddActivityActivity : AppCompatActivity() {
         }
     }
 
-    fun createActivity() {
+    private fun createActivity() {
         val name = name_activty.text.toString()
         val description = description_activity.text.toString()
-        val date : Long = 1504929383
+
+        val timestamp : Long = timestampFormat.format(timestampCalendar.time).toLong()
 
         val city = addresses!![0].locality
         val streetname = addresses!![0].thoroughfare + " " + addresses!![0].subThoroughfare
 
-        val time = time_activity_btn.text.toString()
         val totalSeats = total_people.text.toString().toInt()
         val occupiedSeats = 0
         val createdby = "UID"
 
-        viewModel.insertActivity(Activities(name, description, totalSeats, occupiedSeats, date, city, streetname, createdby))
+        viewModel.insertActivity(Activities(name, description, totalSeats, occupiedSeats, timestamp, city, streetname, createdby))
     }
 }
