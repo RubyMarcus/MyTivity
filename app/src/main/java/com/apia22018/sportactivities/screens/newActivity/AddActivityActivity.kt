@@ -19,6 +19,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.support.design.widget.Snackbar
 import android.view.View
+import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.listActivities.Activities
 import com.apia22018.sportactivities.data.location.Location
 import com.apia22018.sportactivities.utils.InjectorUtils
@@ -168,7 +169,7 @@ class AddActivityActivity : AppCompatActivity() {
 
                 if (addresses!!.isNotEmpty()) {
                     addresses.let {
-                        add_location_btn.text = it!![0].locality + " " + it!![0].thoroughfare + " " + it!![0].subThoroughfare
+                        add_location_btn.text = it!![0].locality + " " + it[0].thoroughfare + " " + it[0].subThoroughfare
                     }
                 }
             }
@@ -202,6 +203,6 @@ class AddActivityActivity : AppCompatActivity() {
 
         viewModel.insertActivity(Activities(name, description, totalSeats, occupiedSeats, timestamp, city, streetname, createdby))
         viewModel.insertLocation(Location(addresses!![0].latitude, addresses!![0].longitude))
-
+        viewModel.insertAttendee(Attendee("TestUser")) // Add UID as well
     }
 }

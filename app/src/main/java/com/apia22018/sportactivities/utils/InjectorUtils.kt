@@ -19,7 +19,7 @@ object InjectorUtils {
 
     private fun getMessageRepository() = MessageRepository.getInstance()
 
-    fun provideAddActivityViewModelFactorty() = AddActivityViewModelFactory(getActivitiesRepository(), getLocationRepository())
+    fun provideAddActivityViewModelFactorty() = AddActivityViewModelFactory(getActivitiesRepository(), getLocationRepository(), getAttendeeRepository())
 
     fun provideActivitiesViewModelFactory() = ActivitiesViewModelFactory(getActivitiesRepository())
 
