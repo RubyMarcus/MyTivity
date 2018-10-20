@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.screens.detailActivities
+package com.apia22018.sportactivities.screens.detailActivityContainer
 
 import android.content.Context
 import android.content.Intent
@@ -9,16 +9,16 @@ import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.listActivities.Activities
 import com.apia22018.sportactivities.screens.message.MessageFragment
 import com.apia22018.sportactivities.utils.loadFragment
-import kotlinx.android.synthetic.main.detail_activities_activity.*
+import kotlinx.android.synthetic.main.detail_activity_container_activity.*
 
-class DetailActivitiesActivity : AppCompatActivity() {
+class DetailActivityContainerActivity : AppCompatActivity() {
 
     companion object {
         private const val ID = "id"
         private const val VALUE = "value"
 
         fun start(context: Context, activity: Activities) {
-            context.startActivity(Intent(context, DetailActivitiesActivity::class.java).apply {
+            context.startActivity(Intent(context, DetailActivityContainerActivity::class.java).apply {
                 putExtras(Bundle().apply {
                     putParcelable(VALUE, activity)
                 })
@@ -28,7 +28,7 @@ class DetailActivitiesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_activities_activity)
+        setContentView(R.layout.detail_activity_container_activity)
 
 //        val bundle = intent.extras ?: Bundle()
 //        val activities: Activities = bundle.getParcelable(VALUE) ?: Activities()

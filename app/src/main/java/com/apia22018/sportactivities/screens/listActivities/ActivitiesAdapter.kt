@@ -4,7 +4,7 @@ import android.support.v7.recyclerview.extensions.ListAdapter
 import android.view.View
 import android.view.ViewGroup
 import com.apia22018.sportactivities.data.listActivities.Activities
-import com.apia22018.sportactivities.screens.detailActivities.DetailActivitiesActivity
+import com.apia22018.sportactivities.screens.detailActivityContainer.DetailActivityContainerActivity
 
 class ActivitiesAdapter : ListAdapter<Activities, ActivitiesViewHolder>(ActivitiesDiffCallback()) {
 
@@ -19,7 +19,7 @@ class ActivitiesAdapter : ListAdapter<Activities, ActivitiesViewHolder>(Activiti
 
     private fun createOnClickListener(activities: Activities): View.OnClickListener {
         return View.OnClickListener {
-            DetailActivitiesActivity.start(it.context, activities)
+            DetailActivityContainerActivity.start(it.context, activities)
         }
     }
 
