@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,26 +12,26 @@ import com.apia22018.sportactivities.databinding.AddActivityActivityBinding
 import com.google.android.gms.location.places.ui.PlacePicker
 import kotlinx.android.synthetic.main.add_activity_activity.*
 import java.lang.Exception
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
-import android.os.PersistableBundle
+import android.support.design.widget.Snackbar
+import android.view.View
 import com.apia22018.sportactivities.data.listActivities.Activities
 import com.apia22018.sportactivities.utils.InjectorUtils
-import kotlinx.android.synthetic.main.activities_list_item.*
-import java.time.Month
+import com.apia22018.sportactivities.utils.isNullOrEmpty
+import com.apia22018.sportactivities.utils.showSnackbar
 
 
 class AddActivityActivity : AppCompatActivity() {
 
     //Geocoder address
-    var addresses : List<Address>? = null
+    var addresses: List<Address>? = null
 
     //Format
-    val formate = SimpleDateFormat("dd MMM, YYYY", Locale.ENGLISH)
+    val dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.ENGLISH)
     val timestampFormat = SimpleDateFormat("YYYYMMddhhmm", Locale.ENGLISH)
     val timeFormat = SimpleDateFormat("hh:mm", Locale.ENGLISH)
 
@@ -42,11 +41,7 @@ class AddActivityActivity : AppCompatActivity() {
     //ViewModel
     lateinit var viewModel: AddActivityViewModel
 
-    //Timestamp
-    lateinit var timestamp: Timestamp
-
     //Calendar
-    val date = Calendar.getInstance()
     val timestampCalendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +91,7 @@ class AddActivityActivity : AppCompatActivity() {
         })
 
         floatingActionButton3.setOnClickListener {
-            createActivity()
+            createActivity(binding.root)
         }
 
         if (savedInstanceState != null) {
@@ -114,7 +109,6 @@ class AddActivityActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-
         outState?.putString("place", add_location_btn.text.toString())
         outState?.putString("date", date_activity_btn.text.toString())
         outState?.putString("time", time_activity_btn.text.toString())
@@ -127,60 +121,43 @@ class AddActivityActivity : AppCompatActivity() {
     }
 
     private fun datePickerDialog() {
-        // Add current selected date?
-
         val datepicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
-            val selectedDate = Calendar.getInstance()
-            selectedDate.set(Calendar.YEAR, year)
-            selectedDate.set(Calendar.MONTH, month)
-            selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
+            //Set time to calendar
             timestampCalendar.set(Calendar.YEAR, year)
             timestampCalendar.set(Calendar.MONTH, month)
             timestampCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            timestampCalendar
-
-            val date = formate.format(selectedDate.time)
+            //Convert to showable format
+            val date = dateFormat.format(timestampCalendar.time)
             date_activity_btn.text = date.toString()
         },
-                date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH))
+                //Get time from calendar
+                timestampCalendar.get(Calendar.YEAR), timestampCalendar.get(Calendar.MONTH), timestampCalendar.get(Calendar.DAY_OF_MONTH))
         datepicker.show()
     }
 
     private fun timePickerDialog() {
-        time_activity_btn.setOnClickListener {
-            try {
-                if (time_activity_btn.text != "Pick time") {
-                    val date = timeFormat.parse(time_activity_btn.text.toString())
-                    //date.time = date
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
 
-            val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                val selectedTime = Calendar.getInstance()
-                selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                selectedTime.set(Calendar.MINUTE, minute)
+            //Set time to calendar
+            timestampCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            timestampCalendar.set(Calendar.MINUTE, minute)
 
-                timestampCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                timestampCalendar.set(Calendar.MINUTE, minute)
-
-                val time = timeFormat.format(selectedTime.time)
-                time_activity_btn.text = time.toString()
-            },
-                    date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE), true)
-            timePicker.show()
-        }
+            //Convert to showable format
+            val time = timeFormat.format(timestampCalendar.time)
+            time_activity_btn.text = time.toString()
+        },
+                //Get time from calendar
+                timestampCalendar.get(Calendar.HOUR_OF_DAY), timestampCalendar.get(Calendar.MINUTE), true)
+        timePicker.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 val place = PlacePicker.getPlace(data!!, this)
-                val gcd : Geocoder = Geocoder(this, Locale.getDefault())
+                val gcd: Geocoder = Geocoder(this, Locale.getDefault())
 
                 try {
                     addresses = gcd.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
@@ -197,19 +174,32 @@ class AddActivityActivity : AppCompatActivity() {
         }
     }
 
-    private fun createActivity() {
-        val name = name_activty.text.toString()
+    private fun createActivity(view : View) {
+        val name : String
+        val totalSeats : Int
+
+        if(isNullOrEmpty(name_activty.text.toString())) {
+            showSnackbar(view, "Fill in name!")
+            return
+        } else {
+            name = name_activty.text.toString()
+        }
+
+        if(isNullOrEmpty(total_people.text.toString())) {
+            showSnackbar(view, "Fill in max people!")
+            return
+        } else {
+            totalSeats = total_people.text.toString().toInt()
+        }
+
         val description = description_activity.text.toString()
-
-        val timestamp : Long = timestampFormat.format(timestampCalendar.time).toLong()
-
+        val timestamp: Long = timestampFormat.format(timestampCalendar.time).toLong()
         val city = addresses!![0].locality
         val streetname = addresses!![0].thoroughfare + " " + addresses!![0].subThoroughfare
-
-        val totalSeats = total_people.text.toString().toInt()
-        val occupiedSeats = 0
-        val createdby = "UID"
+        val occupiedSeats = 1
+        val createdby = "UID" // Get current logged in user
 
         viewModel.insertActivity(Activities(name, description, totalSeats, occupiedSeats, timestamp, city, streetname, createdby))
+
     }
 }
