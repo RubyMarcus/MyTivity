@@ -20,6 +20,7 @@ import android.location.Geocoder
 import android.support.design.widget.Snackbar
 import android.view.View
 import com.apia22018.sportactivities.data.listActivities.Activities
+import com.apia22018.sportactivities.data.location.Location
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.apia22018.sportactivities.utils.isNullOrEmpty
 import com.apia22018.sportactivities.utils.showSnackbar
@@ -200,6 +201,7 @@ class AddActivityActivity : AppCompatActivity() {
         val createdby = "UID" // Get current logged in user
 
         viewModel.insertActivity(Activities(name, description, totalSeats, occupiedSeats, timestamp, city, streetname, createdby))
+        viewModel.insertLocation(Location(addresses!![0].latitude, addresses!![0].longitude))
 
     }
 }

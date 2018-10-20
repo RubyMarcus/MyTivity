@@ -3,6 +3,7 @@ package com.apia22018.sportactivities.screens.newActivity
 import android.arch.lifecycle.ViewModel
 import com.apia22018.sportactivities.data.listActivities.Activities
 import com.apia22018.sportactivities.data.listActivities.ActivitiesRepository
+import com.apia22018.sportactivities.data.location.Location
 import com.apia22018.sportactivities.data.location.LocationRepository
 import com.apia22018.sportactivities.utils.SingleLiveEvent
 
@@ -14,6 +15,10 @@ class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val 
 
     fun insertActivity(activity : Activities) {
         repoActivity.insertActivity(activity)
+    }
+
+    fun insertLocation(location: Location) {
+        repolocation.insertLocation(location, repoActivity.currentFbKey)
     }
 
     fun showCreatePlacePickerDialog() {

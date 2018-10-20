@@ -1,12 +1,15 @@
 package com.apia22018.sportactivities.data.listActivities
 
 import android.arch.lifecycle.LiveData
+import android.databinding.DataBinderMapperImpl
+import com.apia22018.sportactivities.data.location.Location
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class ActivitiesRepository {
 
-    private val reference: DatabaseReference = FirebaseDatabase.getInstance().getReference("activities")
+    private val referenceActivity: DatabaseReference = FirebaseDatabase.getInstance().getReference("activities")
+    lateinit var currentFbKey : String
 
     companion object {
         @Volatile private var instance: ActivitiesRepository? = null
@@ -22,10 +25,12 @@ class ActivitiesRepository {
     }
 
     fun insertActivity (activity: Activities) {
-        val key = reference.push().key
+        val key = referenceActivity.push().key
         key?.let {
+            currentFbKey = key
+
             activity.activityId = it
-            reference.child(it).setValue(activity)
+            referenceActivity.child(it).setValue(activity)
         }
     }
 }
