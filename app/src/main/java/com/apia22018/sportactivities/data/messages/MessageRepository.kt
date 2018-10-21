@@ -23,4 +23,14 @@ class MessageRepository {
         return MessageLiveData(reference.child(activityId))
     }
 
+    fun createMessage(activityId: String, message: Message) {
+        val key = reference.push().key
+        key?.apply {
+            reference.child(activityId).child(this).setValue(message)
+        }
+    }
+
+    fun deleteMessage(activityId: String, message: Message) {
+        reference.child(activityId).child(message.messageId).removeValue()
+    }
 }
