@@ -25,7 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.newActivity.AddActivityActivity" />
+        <activity
+            android:name=".screens.splash.SplashActivity"
+            android:theme="@style/SplashTheme" />
+        <activity android:name=".screens.newActivities.AddActivityActivity" />
+        <activity android:name=".screens.detailActivityContainer.DetailActivityContainerActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_place_api" />
@@ -33,7 +38,7 @@
         <activity android:name=".screens.splash.LoginActivity" />
         <activity android:name=".screens.login.LoginActivity" />
 
-        <activity android:name=".screens.mapActivities.mapActivity"></activity>
+        <activity android:name=".screens.mapActivities.MapActivity" />
     </application>
 
 </manifest>

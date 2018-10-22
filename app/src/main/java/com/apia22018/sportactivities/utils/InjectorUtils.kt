@@ -6,7 +6,7 @@ import com.apia22018.sportactivities.data.listActivities.ActivitiesRepository
 import com.apia22018.sportactivities.data.location.LocationRepository
 import com.apia22018.sportactivities.data.messages.MessageRepository
 import com.apia22018.sportactivities.screens.listActivities.ActivitiesViewModelFactory
-import com.apia22018.sportactivities.screens.newActivity.AddActivityViewModelFactory
+import com.apia22018.sportactivities.screens.newActivities.AddActivityViewModelFactory
 import com.apia22018.sportactivities.screens.message.MessageViewModelFactory
 
 object InjectorUtils {
