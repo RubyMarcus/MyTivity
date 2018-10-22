@@ -2,6 +2,7 @@ package com.apia22018.sportactivities.data.listActivities
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.database.Exclude
 
 data class Activities(
         val title: String = "",
@@ -13,7 +14,7 @@ data class Activities(
         val streetName: String = "",
         val createdBy: String = ""
 ) : Parcelable {
-    var activityId: String = ""
+    @set:Exclude @get:Exclude var activityId: String = ""
 
     constructor(parcel: Parcel) : this(
             parcel.readString()!!,

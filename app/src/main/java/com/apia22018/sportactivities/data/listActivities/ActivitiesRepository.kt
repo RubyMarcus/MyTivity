@@ -29,7 +29,6 @@ class ActivitiesRepository {
         key?.let {
             currentFbKey = key
 
-            activity.activityId = it
             referenceActivity.child(it).setValue(activity)
         }
     }

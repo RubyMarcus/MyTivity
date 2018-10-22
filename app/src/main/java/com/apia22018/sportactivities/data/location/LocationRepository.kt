@@ -37,7 +37,6 @@ class LocationRepository {
     }
 
     fun insertLocation(location: Location, activityId: String) {
-        location.activityId = activityId
         reference.child(activityId).setValue(location)
     }
 
