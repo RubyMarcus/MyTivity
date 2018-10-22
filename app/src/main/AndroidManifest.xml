@@ -14,11 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.listActivities.ActivitiesActivity" />
-        <activity
-            android:name=".screens.splash.SplashActivity"
-            android:theme="@style/SplashTheme">
-
+        <activity android:name=".screens.listActivities.ActivitiesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,15 +23,14 @@
         </activity>
         <activity
             android:name=".screens.splash.SplashActivity"
-            android:theme="@style/SplashTheme" />
+            android:theme="@style/SplashTheme">
+        </activity>
         <activity android:name=".screens.newActivities.AddActivityActivity" />
         <activity android:name=".screens.detailActivityContainer.DetailActivityContainerActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_place_api" />
-        <activity android:name=".screens.detailActivityContainer.DetailActivityContainerActivity" />
-        <activity android:name=".screens.splash.LoginActivity" />
         <activity android:name=".screens.login.LoginActivity" />
 
         <activity android:name=".screens.mapActivities.MapActivity" />

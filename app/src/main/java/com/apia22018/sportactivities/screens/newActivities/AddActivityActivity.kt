@@ -66,7 +66,7 @@ class AddActivityActivity : AppCompatActivity() {
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title =""
+            title = ""
         }
 
         viewModel.showPlacePickerDialog.observe(this, android.arch.lifecycle.Observer { showDialog ->
@@ -93,21 +93,29 @@ class AddActivityActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.place.observe(this, android.arch.lifecycle.Observer {
+            it?.let { adresses ->
+                if (adresses.isNotEmpty()) {
+                    add_location_btn.text = adresses!![0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare
+                }
+            }
+        })
+
+        viewModel.date.observe(this, android.arch.lifecycle.Observer {
+            it.let {
+                date_activity_btn.text = it
+            }
+        })
+
+        viewModel.time.observe(this, android.arch.lifecycle.Observer {
+            it.let {
+                time_activity_btn.text = it
+            }
+        })
+
         floatingActionButton3.setOnClickListener {
             createActivity(binding.root)
         }
-
-        if (savedInstanceState != null) {
-            val placeValue = savedInstanceState.getString("place")
-            val dateValue = savedInstanceState.getString("date")
-            val timeValue = savedInstanceState.getString("time")
-
-            add_location_btn.text = placeValue
-            date_activity_btn.text = dateValue
-            time_activity_btn.text = timeValue
-        }
-
-        //AIzaSyAN4KfG_eN5vicoK0lOl5jsF7fJVCiArhM old key
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -119,13 +127,6 @@ class AddActivityActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        outState?.putString("place", add_location_btn.text.toString())
-        outState?.putString("date", date_activity_btn.text.toString())
-        outState?.putString("time", time_activity_btn.text.toString())
     }
 
     private fun placePickerDialog() {
@@ -143,7 +144,7 @@ class AddActivityActivity : AppCompatActivity() {
 
             //Convert to showable format
             val date = dateFormat.format(timestampCalendar.time)
-            date_activity_btn.text = date.toString()
+            viewModel.date.value = date
         },
                 //Get time from calendar
                 timestampCalendar.get(Calendar.YEAR), timestampCalendar.get(Calendar.MONTH), timestampCalendar.get(Calendar.DAY_OF_MONTH))
@@ -159,7 +160,7 @@ class AddActivityActivity : AppCompatActivity() {
 
             //Convert to showable format
             val time = timeFormat.format(timestampCalendar.time)
-            time_activity_btn.text = time.toString()
+            viewModel.time.value = time
 
         },
                 //Get time from calendar
@@ -173,18 +174,7 @@ class AddActivityActivity : AppCompatActivity() {
                 if (data != null) {
                     val place = PlacePicker.getPlace(this, data)
 
-                    val gcd: Geocoder = Geocoder(this, Locale.getDefault())
-
-                    try {
-                        addresses = gcd.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-
-                    addresses?.let {
-                        add_location_btn.text = it[0].locality + " " + it[0].thoroughfare + " " + it[0].subThoroughfare
-                    }
-                }
+                viewModel.place.value = gcd.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
             }
         }
     }

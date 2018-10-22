@@ -1,6 +1,8 @@
 package com.apia22018.sportactivities.screens.newActivities
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.location.Address
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.attendee.AttendeeRepository
 import com.apia22018.sportactivities.data.listActivities.Activities
@@ -14,6 +16,10 @@ class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val 
     val showPlacePickerDialog = SingleLiveEvent<Boolean>()
     val showDatePickerDialog = SingleLiveEvent<Boolean>()
     val showTimePickerDialog = SingleLiveEvent<Boolean>()
+
+    val place = MutableLiveData<List<Address>>()
+    val date = MutableLiveData<String>()
+    val time = MutableLiveData<String>()
 
     fun insertActivity(activity : Activities) {
         repoActivity.insertActivity(activity)
