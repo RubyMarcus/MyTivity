@@ -23,13 +23,29 @@
           }
         },
         {
+          "client_id": "85418759027-42k28c47v3pq97atl7mj2t6bbj1qjlr7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apia22018.sportactivities",
+            "certificate_hash": "3a1de3b8c3054a1ab959002d6017023f2b6aa479"
+          }
+        },
+        {
+          "client_id": "85418759027-m9415u8ft39rgt6ja9ua22hcmuhsekh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apia22018.sportactivities",
+            "certificate_hash": "ee1d267cf12619a0ae65a5eee44bc75c9109526a"
+          }
+        },
+        {
           "client_id": "85418759027-80ll2m4j81vgheis7qg91tooe0n8git4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB0fjQq8FWzSy0bWZTzfL_VH2AELmVezpw"
+          "current_key": "AIzaSyAIWZPf0N9xnCjwmqGpDcvKEbJ5Px2fvZA"
         }
       ],
       "services": {
