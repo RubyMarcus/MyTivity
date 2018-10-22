@@ -14,6 +14,7 @@ fun AppCompatActivity.isNullOrEmpty(str: String?): Boolean {
     if (str != null && !str.isEmpty())
         return false
     return true
+}
 
 fun AppCompatActivity.loadFragment(fragment: Fragment) {
     supportFragmentManager
