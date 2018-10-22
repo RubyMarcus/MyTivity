@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.apia22018.sportactivities">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -14,22 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.listActivities.ActivitiesActivity"/>
-        <activity android:name=".screens.splash.SplashActivity"
-            android:theme="@style/SplashTheme">
-        <activity android:name=".screens.addActivity.AddActivityActivity">
+        <activity android:name=".screens.listActivities.ActivitiesActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.detailActivities.DetailActivitiesActivity"/>
-        <activity android:name=".screens.newActivity.AddActivityActivity">
-
-        </activity>
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_place_api"/>
+        <activity
+            android:name=".screens.splash.SplashActivity"
+            android:theme="@style/SplashTheme"></activity>
+        <activity android:name=".screens.newActivity.AddActivityActivity"></activity>
         <activity android:name=".screens.detailActivities.DetailActivitiesActivity"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_place_api" />
     </application>
 </manifest>
