@@ -25,8 +25,8 @@ class MessageViewModel(private val messageRepository: MessageRepository, private
         }
     }
 
-    fun deleteMessage(){
-        messageRepository.deleteMessage(activityId, Message())
+    fun deleteMessage(message: Message){
+        messageRepository.deleteMessage(activityId, message)
     }
 
 }

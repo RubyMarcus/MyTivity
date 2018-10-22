@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.apia22018.sportactivities.data.messages.Message
 
-class MessageAdapter : RecyclerView.Adapter<MessageViewHolder>() {
+class MessageAdapter(private val messageViewModel: MessageViewModel) : RecyclerView.Adapter<MessageViewHolder>() {
     private val messages: MutableList<Message> = mutableListOf()
 
     fun setMessages(message: List<Message>) {
@@ -16,9 +16,9 @@ class MessageAdapter : RecyclerView.Adapter<MessageViewHolder>() {
         notifyDataSetChanged()
     }
 
-    private fun createOnClickListener(message: Message): View.OnClickListener {
+    private fun deleteMessageClickListener(message: Message): View.OnClickListener {
         return View.OnClickListener {
-            println(" SOME KIND OF BUTTON CLICKED $message")
+            messageViewModel.deleteMessage(message)
         }
     }
 
@@ -29,7 +29,7 @@ class MessageAdapter : RecyclerView.Adapter<MessageViewHolder>() {
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val message = this.messages[position]
         holder.apply {
-            bind(createOnClickListener(message), message)
+            bind(deleteMessageClickListener(message), message)
         }
     }
 }
