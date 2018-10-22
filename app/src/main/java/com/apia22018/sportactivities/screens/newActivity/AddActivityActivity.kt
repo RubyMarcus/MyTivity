@@ -18,6 +18,8 @@ import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import android.support.design.widget.Snackbar
+import android.support.v4.app.NavUtils
+import android.view.MenuItem
 import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.listActivities.Activities
@@ -33,9 +35,9 @@ class AddActivityActivity : AppCompatActivity() {
     var addresses: List<Address>? = null
 
     //Format
-    val dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.ENGLISH)
-    val timestampFormat = SimpleDateFormat("YYYYMMddhhmm", Locale.ENGLISH)
-    val timeFormat = SimpleDateFormat("hh:mm", Locale.ENGLISH)
+    val dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.getDefault())
+    val timestampFormat = SimpleDateFormat("YYYYMMddHHmm", Locale.getDefault())
+    val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     //Maps
     val PLACE_PICKER_REQUEST = 1
@@ -64,8 +66,8 @@ class AddActivityActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
-            title = "Add Activity"
             setDisplayHomeAsUpEnabled(true)
+            title =""
         }
 
         viewModel.showPlacePickerDialog.observe(this, android.arch.lifecycle.Observer { showDialog ->
@@ -109,13 +111,23 @@ class AddActivityActivity : AppCompatActivity() {
         //AIzaSyAN4KfG_eN5vicoK0lOl5jsF7fJVCiArhM old key
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Respond to the action bar's Up/Home button
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putString("place", add_location_btn.text.toString())
         outState?.putString("date", date_activity_btn.text.toString())
         outState?.putString("time", time_activity_btn.text.toString())
     }
-
 
     private fun placePickerDialog() {
         val builder = PlacePicker.IntentBuilder()
@@ -149,9 +161,10 @@ class AddActivityActivity : AppCompatActivity() {
             //Convert to showable format
             val time = timeFormat.format(timestampCalendar.time)
             time_activity_btn.text = time.toString()
+
         },
                 //Get time from calendar
-                timestampCalendar.get(Calendar.HOUR_OF_DAY), timestampCalendar.get(Calendar.MINUTE), true)
+                timestampCalendar.get(Calendar.HOUR), timestampCalendar.get(Calendar.MINUTE), true)
         timePicker.show()
     }
 
@@ -176,18 +189,42 @@ class AddActivityActivity : AppCompatActivity() {
         }
     }
 
-    private fun createActivity(view : View) {
-        val name : String
-        val totalSeats : Int
+    private fun createActivity(view: View) {
+        var title: String
+        var totalSeats: Int
+        var city: String = ""
+        var streetname: String = ""
+        var timestamp: Long
 
-        if(isNullOrEmpty(name_activty.text.toString())) {
+
+        if (isNullOrEmpty(name_activty.text.toString())) {
             showSnackbar(view, "Fill in name!")
             return
         } else {
-            name = name_activty.text.toString()
+            title = name_activty.text.toString()
         }
 
-        if(isNullOrEmpty(total_people.text.toString())) {
+        if (add_location_btn.text != "Pick location") {
+            city = addresses!![0].locality
+            streetname = addresses!![0].thoroughfare + " " + addresses!![0].subThoroughfare
+        } else {
+            showSnackbar(view, "Pick a location!")
+            return
+        }
+
+        if (date_activity_btn.text != "Pick date") {
+            if (time_activity_btn.text != "Pick time") {
+                timestamp = timestampFormat.format(timestampCalendar.time).toLong()
+            } else {
+                showSnackbar(view, "Pick a time!")
+                return
+            }
+        } else {
+            showSnackbar(view, "Pick a date!")
+            return
+        }
+
+        if (isNullOrEmpty(total_people.text.toString())) {
             showSnackbar(view, "Fill in max people!")
             return
         } else {
@@ -195,14 +232,13 @@ class AddActivityActivity : AppCompatActivity() {
         }
 
         val description = description_activity.text.toString()
-        val timestamp: Long = timestampFormat.format(timestampCalendar.time).toLong()
-        val city = addresses!![0].locality
-        val streetname = addresses!![0].thoroughfare + " " + addresses!![0].subThoroughfare
         val occupiedSeats = 1
         val createdby = "UID" // Get current logged in user
 
-        viewModel.insertActivity(Activities(name, description, totalSeats, occupiedSeats, timestamp, city, streetname, createdby))
+        viewModel.insertActivity(Activities(title, description, totalSeats, occupiedSeats, timestamp, city, streetname, createdby))
         viewModel.insertLocation(Location(addresses!![0].latitude, addresses!![0].longitude))
         viewModel.insertAttendee(Attendee("TestUser")) // Add UID as well
+
+        finish()
     }
 }
