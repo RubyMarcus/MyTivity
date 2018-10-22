@@ -15,13 +15,25 @@
       },
       "oauth_client": [
         {
+          "client_id": "85418759027-sncsef0skdefcp8v0vbhp2ijs7qanqer.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apia22018.sportactivities",
+            "certificate_hash": "bed7a8440be1244141b672f55b55d47265868583"
+          }
+        },
+        {
           "client_id": "85418759027-80ll2m4j81vgheis7qg91tooe0n8git4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
+<<<<<<< HEAD
           "current_key": "AIzaSyB0fjQq8FWzSy0bWZTzfL_VH2AELmVezpw"
+=======
+          "current_key": "AIzaSyAIWZPf0N9xnCjwmqGpDcvKEbJ5Px2fvZA"
+>>>>>>> login view och activity
         }
       ],
       "services": {
@@ -29,8 +41,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85418759027-80ll2m4j81vgheis7qg91tooe0n8git4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
