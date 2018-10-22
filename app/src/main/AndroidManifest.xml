@@ -25,11 +25,9 @@
             android:name=".screens.splash.SplashActivity"
             android:theme="@style/SplashTheme" />
         <activity android:name=".screens.newActivity.AddActivityActivity" />
-        <activity android:name=".screens.detailActivities.DetailActivitiesActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_place_api" />
-        <activity android:name=".screens.mapActivities.mapsActivity" />
         <activity android:name=".screens.detailActivityContainer.DetailActivityContainerActivity" />
     </application>
 </manifest>
