@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.screens.newActivity
+package com.apia22018.sportactivities.screens.newActivities
 
 import android.app.Activity
 import android.app.DatePickerDialog

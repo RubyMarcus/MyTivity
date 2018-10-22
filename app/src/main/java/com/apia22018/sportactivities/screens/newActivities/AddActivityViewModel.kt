@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.screens.newActivity
+package com.apia22018.sportactivities.screens.newActivities
 
 import android.arch.lifecycle.ViewModel
 import com.apia22018.sportactivities.data.attendee.Attendee

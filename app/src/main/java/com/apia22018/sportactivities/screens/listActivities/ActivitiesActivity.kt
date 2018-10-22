@@ -1,6 +1,5 @@
 package com.apia22018.sportactivities.screens.listActivities
 
-import android.app.Dialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -12,9 +11,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.databinding.ListActivityBinding
-import com.apia22018.sportactivities.screens.newActivity.AddActivityActivity
+import com.apia22018.sportactivities.screens.newActivities.AddActivityActivity
 import com.apia22018.sportactivities.utils.InjectorUtils
 import kotlinx.android.synthetic.main.list_activity.*
+import java.util.zip.Inflater
 
 class ActivitiesActivity : AppCompatActivity() {
 
@@ -66,7 +66,9 @@ class ActivitiesActivity : AppCompatActivity() {
     private fun bottomNavigation(){
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.action_bar_map -> println("MAPS ACTIVITY")
+                R.id.action_bar_map -> {
+
+                }
                 R.id.action_bar_list -> println("NOTHING?")
                 else -> {
                     // Something else...

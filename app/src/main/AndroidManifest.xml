@@ -32,6 +32,8 @@
         <activity android:name=".screens.detailActivityContainer.DetailActivityContainerActivity" />
         <activity android:name=".screens.splash.LoginActivity" />
         <activity android:name=".screens.login.LoginActivity" />
-    </application>
-</manifest>
 
+        <activity android:name=".screens.mapActivities.mapActivity"></activity>
+    </application>
+
+</manifest>
