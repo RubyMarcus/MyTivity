@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.view.Menu
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
@@ -39,26 +40,25 @@ class DetailActivityContainerActivity : AppCompatActivity() {
             title = "TITLE"
         }
 
-        bottom_nav_detail.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_activity -> {
-                    println("Activity")
-//                    loadFragment(ActivityFragment.newInstance())
-                    true
-                }
-                R.id.action_message -> {
-                    loadFragment(MessageFragment.newInstance(activities))
-                    true
-                }
-                R.id.action_map -> {
-                    println("map")
-//                    loadFragment(MapFragment.newInstance())
-                    true
-                }
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> {
+                        println("activity")
+                    }
+                    1 -> {
+                        loadFragment(MessageFragment.newInstance(activities))
+                    }
 
-                else -> false
+                    2 -> {
+                        println("maps")
+                    }
+                }
             }
-        }
+
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
+        })
 
         loadFragment(MessageFragment.newInstance(activities))
     }
