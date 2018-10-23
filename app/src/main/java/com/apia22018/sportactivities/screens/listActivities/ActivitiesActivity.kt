@@ -13,11 +13,12 @@ import android.view.MenuItem
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.databinding.ListActivityBinding
 import com.apia22018.sportactivities.screens.mapActivities.MapActivity
+import com.apia22018.sportactivities.screens.mapActivities.MapFragment
 import com.apia22018.sportactivities.screens.newActivities.AddActivityActivity
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.apia22018.sportactivities.utils.loadFragment
 import kotlinx.android.synthetic.main.list_activity.*
-import kotlinx.android.synthetic.main.map_activity.*
+import kotlinx.android.synthetic.main.map_fragment.*
 
 class ActivitiesActivity : AppCompatActivity() {
 
@@ -66,23 +67,20 @@ class ActivitiesActivity : AppCompatActivity() {
         })
     }
 
-    override fun onContextItemSelected(item: MenuItem?): Boolean {
-        return super.onContextItemSelected(item)
-
-    }
-
     private fun bottomNavigation(){
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_bar_map -> {
-                    MapActivity.start(this)
+                    loadFragment(MapFragment.newInstance())
+                    true
                 }
-                R.id.action_bar_list -> println("NOTHING?")
+                R.id.action_bar_list -> {
+                    false
+                }
                 else -> {
-                    // Something else...
+                    false
                 }
             }
-            return@setOnNavigationItemSelectedListener true
         }
     }
 
