@@ -15,7 +15,6 @@ data class Activities(
         val createdBy: String = ""
 ) : Parcelable {
     @set:Exclude @get:Exclude var activityId: String = ""
-
     constructor(parcel: Parcel) : this(
             parcel.readString()!!,
             parcel.readString()!!,

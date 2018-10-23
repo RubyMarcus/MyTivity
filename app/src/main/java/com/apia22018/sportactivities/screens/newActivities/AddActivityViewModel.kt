@@ -44,5 +44,4 @@ class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val 
     fun showCreateTimePickerDialog() {
         showTimePickerDialog.postValue(true)
     }
-
 }

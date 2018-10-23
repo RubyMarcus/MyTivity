@@ -69,6 +69,38 @@ class AddActivityActivity : AppCompatActivity() {
             title = ""
         }
 
+        dialogObservers()
+        onChangeObservers()
+
+        floatingActionButton3.setOnClickListener {
+            createActivity(binding.root)
+        }
+    }
+
+    // Rotation
+    private fun onChangeObservers () {
+        viewModel.place.observe(this, android.arch.lifecycle.Observer {
+            it?.let { adresses ->
+                if (adresses.isNotEmpty()) {
+                    add_location_btn.text = adresses!![0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare
+                }
+            }
+        })
+
+        viewModel.date.observe(this, android.arch.lifecycle.Observer {
+            it.let {
+                date_activity_btn.text = it
+            }
+        })
+
+        viewModel.time.observe(this, android.arch.lifecycle.Observer {
+            it.let {
+                time_activity_btn.text = it
+            }
+        })
+    }
+
+    private fun dialogObservers () {
         viewModel.showPlacePickerDialog.observe(this, android.arch.lifecycle.Observer { showDialog ->
             showDialog?.let {
                 if (it) {
@@ -92,30 +124,6 @@ class AddActivityActivity : AppCompatActivity() {
                 }
             }
         })
-
-        viewModel.place.observe(this, android.arch.lifecycle.Observer {
-            it?.let { adresses ->
-                if (adresses.isNotEmpty()) {
-                    add_location_btn.text = adresses!![0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare
-                }
-            }
-        })
-
-        viewModel.date.observe(this, android.arch.lifecycle.Observer {
-            it.let {
-                date_activity_btn.text = it
-            }
-        })
-
-        viewModel.time.observe(this, android.arch.lifecycle.Observer {
-            it.let {
-                time_activity_btn.text = it
-            }
-        })
-
-        floatingActionButton3.setOnClickListener {
-            createActivity(binding.root)
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
