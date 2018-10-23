@@ -19,9 +19,9 @@ class MessageViewHolder(private val binding: MessageListItemBinding) : RecyclerV
         }
     }
 
-    fun bind(listener: View.OnClickListener, item: Message) {
+    fun bind(messageViewModel: MessageViewModel, item: Message) {
         binding.apply {
-            clickListener = listener
+            viewModel = messageViewModel
             message = item
             executePendingBindings()
         }

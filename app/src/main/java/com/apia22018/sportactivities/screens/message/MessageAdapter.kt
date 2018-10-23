@@ -16,12 +16,6 @@ class MessageAdapter(private val messageViewModel: MessageViewModel) : RecyclerV
         notifyDataSetChanged()
     }
 
-    private fun deleteMessageClickListener(message: Message): View.OnClickListener {
-        return View.OnClickListener {
-            messageViewModel.deleteMessage(message)
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, type: Int): MessageViewHolder = MessageViewHolder.newInstance(parent)
 
     override fun getItemCount(): Int = this.messages.size
@@ -29,7 +23,7 @@ class MessageAdapter(private val messageViewModel: MessageViewModel) : RecyclerV
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val message = this.messages[position]
         holder.apply {
-            bind(deleteMessageClickListener(message), message)
+            bind(messageViewModel, message)
         }
     }
 }

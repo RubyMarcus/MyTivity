@@ -4,8 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener"/>
+            name="viewModel"
+            type="com.apia22018.sportactivities.screens.message.MessageViewModel"/>
 
         <variable
             name="message"
@@ -48,7 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="X"
-            android:onClick="@{clickListener}"
+            android:onClick="@{()->viewModel.deleteMessage(message)}"
+            app:isGone="@{viewModel.canDelete}"
             app:layout_constraintBottom_toBottomOf="@+id/text_message"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/user_name" />

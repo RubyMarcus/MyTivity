@@ -17,8 +17,6 @@ import java.util.*
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
-import android.support.design.widget.Snackbar
-import android.support.v4.app.NavUtils
 import android.view.MenuItem
 import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
@@ -27,6 +25,7 @@ import com.apia22018.sportactivities.data.location.Location
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.apia22018.sportactivities.utils.isNullOrEmpty
 import com.apia22018.sportactivities.utils.showSnackbar
+import com.google.firebase.auth.FirebaseAuth
 
 
 class AddActivityActivity : AppCompatActivity() {
@@ -171,18 +170,19 @@ class AddActivityActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                val place = PlacePicker.getPlace(data!!, this)
-                val gcd: Geocoder = Geocoder(this, Locale.getDefault())
+                if (data != null) {
+                    val place = PlacePicker.getPlace(this, data)
 
-                try {
-                    addresses = gcd.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                    val gcd: Geocoder = Geocoder(this, Locale.getDefault())
 
-                if (addresses!!.isNotEmpty()) {
-                    addresses.let {
-                        add_location_btn.text = it!![0].locality + " " + it[0].thoroughfare + " " + it[0].subThoroughfare
+                    try {
+                        addresses = gcd.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                    addresses?.let {
+                        add_location_btn.text = it[0].locality + " " + it[0].thoroughfare + " " + it[0].subThoroughfare
                     }
                 }
             }
@@ -190,11 +190,11 @@ class AddActivityActivity : AppCompatActivity() {
     }
 
     private fun createActivity(view: View) {
-        var title: String
-        var totalSeats: Int
+        val title: String
+        val totalSeats: Int
         var city: String = ""
-        var streetname: String = ""
-        var timestamp: Long
+        var streetName: String = ""
+        val timestamp: Long
 
 
         if (isNullOrEmpty(name_activty.text.toString())) {
@@ -205,8 +205,10 @@ class AddActivityActivity : AppCompatActivity() {
         }
 
         if (add_location_btn.text != "Pick location") {
-            city = addresses!![0].locality
-            streetname = addresses!![0].thoroughfare + " " + addresses!![0].subThoroughfare
+            addresses?.let {
+                city = it[0].locality
+                streetName = it[0].thoroughfare + " " + it[0].subThoroughfare
+            }
         } else {
             showSnackbar(view, "Pick a location!")
             return
@@ -214,7 +216,7 @@ class AddActivityActivity : AppCompatActivity() {
 
         if (date_activity_btn.text != "Pick date") {
             if (time_activity_btn.text != "Pick time") {
-                timestamp = timestampFormat.format(timestampCalendar.time).toLong()
+                timestamp = timestampCalendar.timeInMillis
             } else {
                 showSnackbar(view, "Pick a time!")
                 return
@@ -231,13 +233,18 @@ class AddActivityActivity : AppCompatActivity() {
             totalSeats = total_people.text.toString().toInt()
         }
 
+        val user = FirebaseAuth.getInstance().currentUser
+
         val description = description_activity.text.toString()
         val occupiedSeats = 1
-        val createdby = "UID" // Get current logged in user
+        val uid = user?.uid ?: ""
+        val email = user?.email ?: ""
 
-        viewModel.insertActivity(Activities(title, description, totalSeats, occupiedSeats, timestamp, city, streetname, createdby))
-        viewModel.insertLocation(Location(addresses!![0].latitude, addresses!![0].longitude))
-        viewModel.insertAttendee(Attendee("TestUser")) // Add UID as well
+        viewModel.insertActivity(Activities(title, description, totalSeats, occupiedSeats, timestamp, city, streetName, uid))
+        addresses?.let {
+            viewModel.insertLocation(Location(it[0].latitude, it[0].longitude))
+        }
+        viewModel.insertAttendee(Attendee(uid, email)) // Add UID as well
 
         finish()
     }

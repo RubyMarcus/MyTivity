@@ -30,8 +30,8 @@ class DetailActivityContainerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail_activity_container_activity)
 
-//        val bundle = intent.extras ?: Bundle()
-//        val activities: Activities = bundle.getParcelable(VALUE) ?: Activities()
+        val bundle = intent.extras ?: Bundle()
+        val activities: Activities = bundle.getParcelable(VALUE) ?: Activities()
 
         setSupportActionBar(toolbar_detail)
 
@@ -47,7 +47,7 @@ class DetailActivityContainerActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_message -> {
-                    loadFragment(MessageFragment.newInstance())
+                    loadFragment(MessageFragment.newInstance(activities))
                     true
                 }
                 R.id.action_map -> {
@@ -60,7 +60,7 @@ class DetailActivityContainerActivity : AppCompatActivity() {
             }
         }
 
-        loadFragment(MessageFragment.newInstance())
+        loadFragment(MessageFragment.newInstance(activities))
     }
 
     //TODO("NEEDS OWN TOOLBAR DESIGN MENU ThING)

@@ -43,6 +43,15 @@ class LoginActivity : AppCompatActivity() {
 
         initialise()
     }
+
+    override fun onStart() {
+        super.onStart()
+        val user = mAuth?.currentUser
+        if (user != null) {
+            ActivitiesActivity.start(this)
+        }
+    }
+
     private fun initialise() {
         tvForgotPassword = findViewById<View>(R.id.tv_forgot_password) as TextView
         etEmail = findViewById<View>(R.id.et_email) as EditText
