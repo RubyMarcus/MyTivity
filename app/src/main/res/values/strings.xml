@@ -2,4 +2,7 @@
     <string name="app_name">SportActivities</string>
     <string name="google_place_api">AIzaSyDcUNyNokjBpxV9EzO6FdmL_6EvHMkYANQ</string>
     <string name="title_activity_maps_activitys">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
