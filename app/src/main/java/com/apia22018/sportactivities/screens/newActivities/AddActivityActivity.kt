@@ -151,8 +151,7 @@ class AddActivityActivity : AppCompatActivity() {
             timestampCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
             //Convert to showable format
-            val date = dateFormat.format(timestampCalendar.time)
-            viewModel.date.value = date
+            viewModel.date.value = dateFormat.format(timestampCalendar.time)
         },
                 //Get time from calendar
                 timestampCalendar.get(Calendar.YEAR), timestampCalendar.get(Calendar.MONTH), timestampCalendar.get(Calendar.DAY_OF_MONTH))
@@ -167,9 +166,7 @@ class AddActivityActivity : AppCompatActivity() {
             timestampCalendar.set(Calendar.MINUTE, minute)
 
             //Convert to showable format
-            val time = timeFormat.format(timestampCalendar.time)
-            viewModel.time.value = time
-
+            viewModel.time.value = timeFormat.format(timestampCalendar.time)
         },
                 //Get time from calendar
                 timestampCalendar.get(Calendar.HOUR), timestampCalendar.get(Calendar.MINUTE), true)
@@ -180,9 +177,10 @@ class AddActivityActivity : AppCompatActivity() {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                    val place = PlacePicker.getPlace(this, data)
+                val place = PlacePicker.getLatLngBounds(data)
+                val gcd: Geocoder = Geocoder(this, Locale.getDefault())
 
-                viewModel.place.value = gcd.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
+                viewModel.place.value = gcd.getFromLocation(place.center.latitude, place.center.longitude, 1)
             }
         }
     }
