@@ -38,6 +38,7 @@ class MapFragment : Fragment() {
                     val marker = LatLng(it.lat, it.long)
                     gMap.addMarker(MarkerOptions().position(marker).title("title"))
                     gMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
+
                 }
             })
         }
