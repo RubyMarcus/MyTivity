@@ -28,13 +28,15 @@ import java.util.jar.Manifest
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat.checkSelfPermission
 import android.util.Log
+import com.apia22018.sportactivities.data.activities.Activities
+import com.apia22018.sportactivities.screens.containers.DetailActivityContainerActivity
 import com.google.android.gms.common.GooglePlayServicesUtil.isGooglePlayServicesAvailable
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import kotlinx.android.synthetic.main.add_activity_activity.*
 import kotlin.math.ln1p
 
-class MapFragment : Fragment(), GoogleMap.OnMarkerClickListener {
-
+class MapFragment : Fragment() {
     private lateinit var viewModel: MapViewModel
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0
     private var mLocationPermissionGranted = false
@@ -63,27 +65,31 @@ class MapFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
             googleMap = gMap
 
-            googleMap.setOnMarkerClickListener(this)
+            //googleMap.setOnInfoWindowClickListener(this)
 
             viewModel.getActivities().observe(this, Observer { activities ->
                 activities?.mapNotNull { item ->
                     val zoom = 12.0f
-                    val activityPosition = LatLng(item.latitude, item.longitude)
+                    val activityPosition = LatLng(item.lat, item.long)
                     val marker = googleMap.addMarker(MarkerOptions().position(activityPosition))
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(activityPosition, zoom))
 
                     marker.tag = item.activityId
                     marker.title = item.title
                     marker.snippet = item.description
+
+                    googleMap.setOnInfoWindowClickListener {
+                        it?.let {
+                            DetailActivityContainerActivity.start(this.requireContext(), item)
+                        }
+                    }
                 }
             })
         }
     }
 
-    override fun onMarkerClick(marker: Marker?): Boolean {
 
-        return false
-    }
+
 
 
     private fun getLocationPermission() {
@@ -109,7 +115,7 @@ class MapFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         when (requestCode) {
             PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationPermissionGranted = true
                 }
             }

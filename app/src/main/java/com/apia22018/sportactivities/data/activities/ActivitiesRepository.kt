@@ -20,11 +20,11 @@ class ActivitiesRepository {
         return ActivitiesLiveData()
     }
 
-    fun insertActivity (activity: Activities): String {
+    fun insertActivity (activity: Activities, complete: (String) -> Unit = {}) {
         val key = referenceActivity.push().key
         key?.let {
             referenceActivity.child(it).setValue(activity)
+            complete(it)
         }
-        return key ?: ""
     }
 }

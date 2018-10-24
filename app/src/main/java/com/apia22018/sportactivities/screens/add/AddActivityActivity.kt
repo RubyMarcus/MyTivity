@@ -29,9 +29,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class AddActivityActivity : AppCompatActivity() {
 
-    //Geocoder address
-    var addresses: List<Address>? = null
-
     //Format
     val dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.getDefault())
     val timestampFormat = SimpleDateFormat("YYYYMMddHHmm", Locale.getDefault())
@@ -176,10 +173,10 @@ class AddActivityActivity : AppCompatActivity() {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                    val place = PlacePicker.getLatLngBounds(data)
+                    val place = PlacePicker.getPlace(this, data)
                     val gcd: Geocoder = Geocoder(this, Locale.getDefault())
 
-                    viewModel.place.value = gcd.getFromLocation(place.center.latitude, place.center.longitude, 1)
+                    viewModel.place.value = gcd.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
                 }
             }
         }
@@ -189,10 +186,7 @@ class AddActivityActivity : AppCompatActivity() {
     private fun createActivity(view: View) {
         val title: String
         val totalSeats: Int
-        var city: String = ""
-        var streetName: String = ""
         val timestamp: Long
-
 
         if (isNullOrEmpty(name_activty.text.toString())) {
             showSnackbar(view, "Fill in name!")
@@ -201,12 +195,7 @@ class AddActivityActivity : AppCompatActivity() {
             title = name_activty.text.toString()
         }
 
-        if (add_location_btn.text != "Pick location") {
-            addresses?.let {
-                city = it[0].locality
-                streetName = it[0].thoroughfare + " " + it[0].subThoroughfare
-            }
-        } else {
+        if (add_location_btn.text == "Pick location") {
             showSnackbar(view, "Pick a location!")
             return
         }
@@ -237,17 +226,13 @@ class AddActivityActivity : AppCompatActivity() {
         val uid = user?.uid ?: ""
         val email = user?.email ?: ""
 
-        var activityId = ""
-        addresses?.let {
+        viewModel.place.value?.let {
             viewModel.insertActivity(Activities(title, description, totalSeats,
-                    occupiedSeats, timestamp, city,
-                    streetName, uid, it[0].latitude, it[0].longitude)).also {
-                    activityId = it
-
+                    occupiedSeats, timestamp, it[0].locality,
+                    it[0].thoroughfare + " " + it[0].subThoroughfare, uid, it[0].latitude, it[0].longitude)).also {
+                viewModel.insertAttendee(Attendee(uid, email))
             }
         }
-
-        viewModel.insertAttendee(Attendee(uid, email), activityId)
 
         finish()
     }

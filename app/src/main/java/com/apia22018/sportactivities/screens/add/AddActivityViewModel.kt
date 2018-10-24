@@ -21,11 +21,15 @@ class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val 
     val date = MutableLiveData<String>()
     val time = MutableLiveData<String>()
 
-    fun insertActivity(activity : Activities): String {
-        return repoActivity.insertActivity(activity)
+    var activityId : String = ""
+
+    fun insertActivity(activity : Activities) {
+        repoActivity.insertActivity(activity) {
+            activityId = it
+        }
     }
 
-    fun insertAttendee(attendee: Attendee, activityId: String) {
+    fun insertAttendee(attendee: Attendee) {
         repoAttendee.insertAttendees(attendee, activityId)
     }
 
