@@ -21,7 +21,6 @@ import com.apia22018.sportactivities.utils.InjectorUtils
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_activity_list.*
 
-
 class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentActivityListBinding
@@ -35,6 +34,12 @@ class ListFragment : Fragment() {
                 .of(this, factory)
                 .get(ActivitiesViewModel::class.java)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val adapter = ActivitiesAdapter()
 
         val list = binding.recyclerviewListActivities
@@ -42,8 +47,6 @@ class ListFragment : Fragment() {
         binding.recyclerviewListActivities.adapter = adapter
 
         subscribeUI(adapter)
-
-        return binding.root
     }
 
     private fun subscribeUI(adapter: ActivitiesAdapter) {
