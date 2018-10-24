@@ -30,14 +30,16 @@ import android.support.v4.content.ContextCompat.checkSelfPermission
 import android.util.Log
 import com.google.android.gms.common.GooglePlayServicesUtil.isGooglePlayServicesAvailable
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.Marker
+import kotlin.math.ln1p
 
-class MapFragment : Fragment() {
+class MapFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     private lateinit var viewModel: MapViewModel
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0
     private var mLocationPermissionGranted = false
-    private lateinit var fusedLocationClient : FusedLocationProviderClient
-    private lateinit var googleMap : GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var googleMap: GoogleMap
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val factory: MapViewModelFactory = InjectorUtils.provideMapViewModelFactory()
@@ -61,14 +63,28 @@ class MapFragment : Fragment() {
 
             googleMap = gMap
 
-            viewModel.getLocation().observe(this, Observer { locations ->
-                locations?.forEach {
-                    val marker = LatLng(it.lat, it.long)
-                    gMap.addMarker(MarkerOptions().position(marker).title("title"))
+            googleMap.setOnMarkerClickListener(this)
+
+            viewModel.getActivities().observe(this, Observer { activities ->
+                activities?.mapNotNull { item ->
+                    val zoom = 12.0f
+                    val activityPosition = LatLng(item.latitude, item.longitude)
+                    val marker = googleMap.addMarker(MarkerOptions().position(activityPosition))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(activityPosition, zoom))
+
+                    marker.tag = item.activityId
+                    marker.title = item.title
+                    marker.snippet = item.description
                 }
             })
         }
     }
+
+    override fun onMarkerClick(marker: Marker?): Boolean {
+
+        return false
+    }
+
 
     private fun getLocationPermission() {
         /*
@@ -115,17 +131,17 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun checkPermission() : Boolean {
-        if (ContextCompat.checkSelfPermission(this.requireContext() , android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return true;
+    private fun checkPermission(): Boolean {
+        return if (ContextCompat.checkSelfPermission(this.requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            true
         } else {
             getLocationPermission()
-            return false
+            false
         }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance () = MapFragment()
+        fun newInstance() = MapFragment()
     }
 }
