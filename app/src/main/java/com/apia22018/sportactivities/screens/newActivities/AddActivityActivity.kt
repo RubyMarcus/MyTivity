@@ -50,7 +50,7 @@ class AddActivityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val factory: AddActivityViewModelFactory = InjectorUtils.provideAddActivityViewModelFactorty()
+        val factory: AddActivityViewModelFactory = InjectorUtils.provideAddActivityViewModelFactory()
 
         viewModel = ViewModelProviders.of(this, factory
         ).get(AddActivityViewModel::class.java)
@@ -177,14 +177,16 @@ class AddActivityActivity : AppCompatActivity() {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                val place = PlacePicker.getLatLngBounds(data)
-                val gcd: Geocoder = Geocoder(this, Locale.getDefault())
+                    val place = PlacePicker.getLatLngBounds(data)
+                    val gcd: Geocoder = Geocoder(this, Locale.getDefault())
 
-                viewModel.place.value = gcd.getFromLocation(place.center.latitude, place.center.longitude, 1)
+                    viewModel.place.value = gcd.getFromLocation(place.center.latitude, place.center.longitude, 1)
+                }
             }
         }
     }
 
+    //Move to ViewModel?
     private fun createActivity(view: View) {
         val title: String
         val totalSeats: Int

@@ -47,6 +47,7 @@ class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val 
         showTimePickerDialog.postValue(true)
     }
 
+    //Create activity here?
     fun createActivity(title : String, description : String, totalSeats : Int, view : View) {
 
         if (title.isEmpty()) {
