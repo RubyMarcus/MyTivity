@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import com.apia22018.sportactivities.R
-import com.apia22018.sportactivities.data.listActivities.Activities
+import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.screens.message.MessageFragment
 import com.apia22018.sportactivities.utils.loadFragment
 import kotlinx.android.synthetic.main.detail_activity_container_activity.*

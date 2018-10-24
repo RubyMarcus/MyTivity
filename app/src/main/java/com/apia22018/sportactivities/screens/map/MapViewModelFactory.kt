@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.screens.mapActivities
+package com.apia22018.sportactivities.screens.map
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider

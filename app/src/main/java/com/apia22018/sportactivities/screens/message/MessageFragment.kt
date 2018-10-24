@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import com.apia22018.sportactivities.R
-import com.apia22018.sportactivities.data.listActivities.Activities
+import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.databinding.MessageFragmentBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.google.firebase.auth.FirebaseAuth

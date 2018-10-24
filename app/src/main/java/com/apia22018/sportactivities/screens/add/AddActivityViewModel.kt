@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.screens.newActivities
+package com.apia22018.sportactivities.screens.add
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
@@ -6,8 +6,8 @@ import android.location.Address
 import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.attendee.AttendeeRepository
-import com.apia22018.sportactivities.data.listActivities.Activities
-import com.apia22018.sportactivities.data.listActivities.ActivitiesRepository
+import com.apia22018.sportactivities.data.activities.Activities
+import com.apia22018.sportactivities.data.activities.ActivitiesRepository
 import com.apia22018.sportactivities.utils.SingleLiveEvent
 import com.apia22018.sportactivities.utils.showSnackbar
 

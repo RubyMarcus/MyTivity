@@ -10,7 +10,7 @@
 
         <variable
             name="activities"
-            type="com.apia22018.sportactivities.data.listActivities.Activities"/>
+            type="com.apia22018.sportactivities.data.activities.Activities"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

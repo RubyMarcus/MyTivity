@@ -2,7 +2,7 @@ package com.apia22018.sportactivities.screens.message
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import com.apia22018.sportactivities.data.listActivities.Activities
+import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.data.messages.Message
 import com.apia22018.sportactivities.data.messages.MessageRepository
 import com.apia22018.sportactivities.utils.SingleLiveEvent

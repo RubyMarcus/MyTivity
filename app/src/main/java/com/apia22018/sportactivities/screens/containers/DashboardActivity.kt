@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import com.apia22018.sportactivities.R
-import com.apia22018.sportactivities.screens.listActivities.ListFragment
-import com.apia22018.sportactivities.screens.mapActivities.MapFragment
-import com.apia22018.sportactivities.screens.newActivities.AddActivityActivity
+import com.apia22018.sportactivities.screens.list.ListFragment
+import com.apia22018.sportactivities.screens.map.MapFragment
+import com.apia22018.sportactivities.screens.add.AddActivityActivity
 import com.apia22018.sportactivities.utils.loadFragment
 import kotlinx.android.synthetic.main.list_activity.*
 

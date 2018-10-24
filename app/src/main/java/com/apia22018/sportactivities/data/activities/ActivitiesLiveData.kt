@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.data.listActivities
+package com.apia22018.sportactivities.data.activities
 
 import android.arch.lifecycle.LiveData
 import com.google.firebase.database.*

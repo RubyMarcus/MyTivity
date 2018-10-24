@@ -3,8 +3,6 @@ package com.apia22018.sportactivities.utils
 import android.databinding.BindingAdapter
 import android.view.View
 import android.widget.TextView
-import com.apia22018.sportactivities.data.listActivities.Activities
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 

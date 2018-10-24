@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.screens.newActivities
+package com.apia22018.sportactivities.screens.add
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -20,7 +20,7 @@ import android.location.Geocoder
 import android.view.MenuItem
 import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
-import com.apia22018.sportactivities.data.listActivities.Activities
+import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.apia22018.sportactivities.utils.isNullOrEmpty
 import com.apia22018.sportactivities.utils.showSnackbar
