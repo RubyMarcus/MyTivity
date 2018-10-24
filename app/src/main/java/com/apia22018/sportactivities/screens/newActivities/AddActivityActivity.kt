@@ -12,7 +12,6 @@ import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.databinding.AddActivityActivityBinding
 import com.google.android.gms.location.places.ui.PlacePicker
 import kotlinx.android.synthetic.main.add_activity_activity.*
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent
@@ -22,7 +21,6 @@ import android.view.MenuItem
 import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.listActivities.Activities
-import com.apia22018.sportactivities.data.location.Location
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.apia22018.sportactivities.utils.isNullOrEmpty
 import com.apia22018.sportactivities.utils.showSnackbar
@@ -83,7 +81,7 @@ class AddActivityActivity : AppCompatActivity() {
         viewModel.place.observe(this, android.arch.lifecycle.Observer {
             it?.let { adresses ->
                 if (adresses.isNotEmpty()) {
-                    add_location_btn.text = adresses!![0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare
+                    add_location_btn.text = adresses[0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare
                 }
             }
         })
@@ -239,11 +237,17 @@ class AddActivityActivity : AppCompatActivity() {
         val uid = user?.uid ?: ""
         val email = user?.email ?: ""
 
-        viewModel.insertActivity(Activities(title, description, totalSeats, occupiedSeats, timestamp, city, streetName, uid))
+        var activityId = ""
         addresses?.let {
-            viewModel.insertLocation(Location(it[0].latitude, it[0].longitude))
+            viewModel.insertActivity(Activities(title, description, totalSeats,
+                    occupiedSeats, timestamp, city,
+                    streetName, uid, it[0].latitude, it[0].longitude)).also {
+                    activityId = it
+
+            }
         }
-        viewModel.insertAttendee(Attendee(uid, email)) // Add UID as well
+
+        viewModel.insertAttendee(Attendee(uid, email), activityId)
 
         finish()
     }

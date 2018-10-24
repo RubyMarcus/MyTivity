@@ -8,12 +8,10 @@ import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.attendee.AttendeeRepository
 import com.apia22018.sportactivities.data.listActivities.Activities
 import com.apia22018.sportactivities.data.listActivities.ActivitiesRepository
-import com.apia22018.sportactivities.data.location.Location
-import com.apia22018.sportactivities.data.location.LocationRepository
 import com.apia22018.sportactivities.utils.SingleLiveEvent
 import com.apia22018.sportactivities.utils.showSnackbar
 
-class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val repolocation: LocationRepository, val repoAttendee: AttendeeRepository) : ViewModel() {
+class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val repoAttendee: AttendeeRepository) : ViewModel() {
 
     val showPlacePickerDialog = SingleLiveEvent<Boolean>()
     val showDatePickerDialog = SingleLiveEvent<Boolean>()
@@ -23,16 +21,12 @@ class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val 
     val date = MutableLiveData<String>()
     val time = MutableLiveData<String>()
 
-    fun insertActivity(activity : Activities) {
-        repoActivity.insertActivity(activity)
+    fun insertActivity(activity : Activities): String {
+        return repoActivity.insertActivity(activity)
     }
 
-    fun insertLocation(location: Location) {
-        repolocation.insertLocation(location, repoActivity.currentFbKey)
-    }
-
-    fun insertAttendee(attendee: Attendee) {
-        repoAttendee.insertAttendees(attendee, repoActivity.currentFbKey)
+    fun insertAttendee(attendee: Attendee, activityId: String) {
+        repoAttendee.insertAttendees(attendee, activityId)
     }
 
     fun showCreatePlacePickerDialog() {
@@ -63,12 +57,6 @@ class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val 
         place.let {
 
         }
-
-
-
-
-
-
 
     }
 

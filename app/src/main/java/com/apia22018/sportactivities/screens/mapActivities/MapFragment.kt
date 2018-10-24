@@ -33,14 +33,14 @@ class MapFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync { gMap ->
 
-            viewModel.getLocation().observe(this, Observer { locations ->
-                locations?.forEach {
-                    val marker = LatLng(it.lat, it.long)
-                    gMap.addMarker(MarkerOptions().position(marker).title("title"))
-                    gMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
-
-                }
-            })
+//            viewModel.getLocation().observe(this, Observer { locations ->
+//                locations?.forEach {
+//                    val marker = LatLng(it.lat, it.long)
+//                    gMap.addMarker(MarkerOptions().position(marker).title("title"))
+//                    gMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
+//
+//                }
+//            })
         }
     }
 

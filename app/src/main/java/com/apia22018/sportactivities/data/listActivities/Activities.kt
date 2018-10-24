@@ -12,7 +12,9 @@ data class Activities(
         val activityDate: Long = 0,
         val city: String = "",
         val streetName: String = "",
-        val createdBy: String = ""
+        val createdBy: String = "",
+        val lat: Double = 0.0,
+        val long: Double = 0.0
 ) : Parcelable {
     @set:Exclude @get:Exclude var activityId: String = ""
     constructor(parcel: Parcel) : this(
@@ -23,7 +25,9 @@ data class Activities(
             parcel.readLong(),
             parcel.readString()!!,
             parcel.readString()!!,
-            parcel.readString()!!) {
+            parcel.readString()!!,
+            parcel.readDouble(),
+            parcel.readDouble()) {
         activityId = parcel.readString()!!
     }
 
@@ -36,6 +40,8 @@ data class Activities(
         parcel.writeString(city)
         parcel.writeString(streetName)
         parcel.writeString(createdBy)
+        parcel.writeDouble(lat)
+        parcel.writeDouble(long)
         parcel.writeString(activityId)
     }
 
