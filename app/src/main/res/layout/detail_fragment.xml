@@ -6,17 +6,17 @@
     <data>
         <variable
             name="activity"
-            type="com.apia22018.sportactivities.data.listActivities.Activities"/>
+            type="com.apia22018.sportactivities.data.activities.Activities"/>
 
         <variable
             name="viewModel"
-            type="com.apia22018.sportactivities.screens.detailActivity.DetailViewModel"/>
+            type="com.apia22018.sportactivities.screens.detail.DetailViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screens.detailActivity.DetailFragment">
+        tools:context=".screens.detail.DetailFragment">
 
         <ImageView
             android:id="@+id/detail_edit_image"

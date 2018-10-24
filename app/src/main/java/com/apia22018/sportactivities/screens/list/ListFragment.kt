@@ -10,16 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.apia22018.sportactivities.R
-import com.apia22018.sportactivities.databinding.FragmentActivityListBinding
+import com.apia22018.sportactivities.databinding.ListFragmentBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
 
 class ListFragment : Fragment() {
 
-    private lateinit var binding: FragmentActivityListBinding
+    private lateinit var binding: ListFragmentBinding
     private lateinit var viewModel: ActivitiesViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_activity_list, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.list_fragment, container, false)
 
         val factory: ActivitiesViewModelFactory = InjectorUtils.provideActivitiesViewModelFactory()
         viewModel = ViewModelProviders

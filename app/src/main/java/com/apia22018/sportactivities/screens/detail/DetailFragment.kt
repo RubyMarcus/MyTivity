@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.screens.detailActivity
+package com.apia22018.sportactivities.screens.detail
 
 
 import android.arch.lifecycle.ViewModelProviders
@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.apia22018.sportactivities.data.listActivities.Activities
+import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.databinding.DetailFragmentBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
 

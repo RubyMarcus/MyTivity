@@ -8,19 +8,20 @@ import android.support.design.widget.TabLayout
 import android.view.Menu
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
-import com.apia22018.sportactivities.screens.detailActivity.DetailFragment
+import com.apia22018.sportactivities.screens.detail.DetailFragment
+import com.apia22018.sportactivities.screens.map.MapFragment
 import com.apia22018.sportactivities.screens.message.MessageFragment
 import com.apia22018.sportactivities.utils.loadFragment
-import kotlinx.android.synthetic.main.detail_activity_container_activity.*
+import kotlinx.android.synthetic.main.detail_container_activity.*
 
-class DetailActivityContainerActivity : AppCompatActivity() {
+class DetailContainerActivity : AppCompatActivity() {
 
     companion object {
         private const val ID = "id"
         private const val VALUE = "value"
 
         fun start(context: Context, activity: Activities) {
-            context.startActivity(Intent(context, DetailActivityContainerActivity::class.java).apply {
+            context.startActivity(Intent(context, DetailContainerActivity::class.java).apply {
                 putExtras(Bundle().apply {
                     putParcelable(VALUE, activity)
                 })
@@ -30,7 +31,7 @@ class DetailActivityContainerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_activity_container_activity)
+        setContentView(R.layout.detail_container_activity)
 
         val bundle = intent.extras ?: Bundle()
         val activities: Activities = bundle.getParcelable(VALUE) ?: Activities()
@@ -52,7 +53,7 @@ class DetailActivityContainerActivity : AppCompatActivity() {
                     }
 
                     2 -> {
-                        println("maps")
+                        loadFragment(MapFragment.newInstance())
                     }
                 }
             }
@@ -61,7 +62,7 @@ class DetailActivityContainerActivity : AppCompatActivity() {
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
         })
 
-        loadFragment(MessageFragment.newInstance(activities))
+        loadFragment(DetailFragment.newInstance(activities))
     }
 
     //TODO("NEEDS OWN TOOLBAR DESIGN MENU ThING)

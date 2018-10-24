@@ -13,7 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.apia22018.sportactivities.R
-import com.apia22018.sportactivities.screens.containers.DashboardActivity
+import com.apia22018.sportactivities.screens.containers.DashboardContainerActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         val user = mAuth?.currentUser
         if (user != null) {
-            DashboardActivity.start(this)
+            DashboardContainerActivity.start(this)
             finish()
         }
     }
@@ -83,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with signed-in user's information
                             Log.d(TAG, "signInWithEmail:success")
-                            DashboardActivity.start(this)
+                            DashboardContainerActivity.start(this)
                             finish()
                         } else {
                             // If sign in fails, display a message to the user.

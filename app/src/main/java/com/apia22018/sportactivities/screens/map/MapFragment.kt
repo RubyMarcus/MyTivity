@@ -2,17 +2,11 @@ package com.apia22018.sportactivities.screens.map
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Criteria
 import android.location.Location
-import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.NonNull
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.ContextCompat.getSystemService
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,17 +18,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.jar.Manifest
 import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat.checkSelfPermission
-import android.util.Log
-import com.apia22018.sportactivities.data.activities.Activities
-import com.apia22018.sportactivities.screens.containers.DetailActivityContainerActivity
-import com.google.android.gms.common.GooglePlayServicesUtil.isGooglePlayServicesAvailable
+import com.apia22018.sportactivities.screens.containers.DetailContainerActivity
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.Marker
-import kotlinx.android.synthetic.main.add_activity_activity.*
-import kotlin.math.ln1p
 
 class MapFragment : Fragment() {
     private lateinit var viewModel: MapViewModel
@@ -80,7 +66,7 @@ class MapFragment : Fragment() {
 
                     googleMap.setOnInfoWindowClickListener {
                         it?.let {
-                            DetailActivityContainerActivity.start(this.requireContext(), item)
+                            DetailContainerActivity.start(this.requireContext(), item)
                         }
                     }
                 }

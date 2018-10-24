@@ -9,25 +9,24 @@ import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.apia22018.sportactivities.R
-import com.apia22018.sportactivities.databinding.AddActivityActivityBinding
 import com.google.android.gms.location.places.ui.PlacePicker
-import kotlinx.android.synthetic.main.add_activity_activity.*
+import kotlinx.android.synthetic.main.add_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent
-import android.location.Address
 import android.location.Geocoder
 import android.view.MenuItem
 import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.activities.Activities
+import com.apia22018.sportactivities.databinding.AddActivityBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.apia22018.sportactivities.utils.isNullOrEmpty
 import com.apia22018.sportactivities.utils.showSnackbar
 import com.google.firebase.auth.FirebaseAuth
 
 
-class AddActivityActivity : AppCompatActivity() {
+class AddActivity : AppCompatActivity() {
 
     //Format
     val dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.getDefault())
@@ -38,7 +37,7 @@ class AddActivityActivity : AppCompatActivity() {
     val PLACE_PICKER_REQUEST = 1
 
     //ViewModel
-    lateinit var viewModel: AddActivityViewModel
+    lateinit var viewModel: AddViewModel
 
     //Calendar
     val timestampCalendar = Calendar.getInstance()
@@ -46,12 +45,12 @@ class AddActivityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val factory: AddActivityViewModelFactory = InjectorUtils.provideAddActivityViewModelFactory()
+        val factory: AddViewModelFactory = InjectorUtils.provideAddActivityViewModelFactory()
 
         viewModel = ViewModelProviders.of(this, factory
-        ).get(AddActivityViewModel::class.java)
+        ).get(AddViewModel::class.java)
 
-        val binding: AddActivityActivityBinding = DataBindingUtil.setContentView(this, R.layout.add_activity_activity)
+        val binding: AddActivityBinding = DataBindingUtil.setContentView(this, R.layout.add_activity)
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
@@ -239,7 +238,7 @@ class AddActivityActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, AddActivityActivity::class.java))
+            context.startActivity(Intent(context, AddActivity::class.java))
         }
     }
 }

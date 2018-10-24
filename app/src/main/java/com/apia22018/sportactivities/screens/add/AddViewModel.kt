@@ -11,7 +11,7 @@ import com.apia22018.sportactivities.data.activities.ActivitiesRepository
 import com.apia22018.sportactivities.utils.SingleLiveEvent
 import com.apia22018.sportactivities.utils.showSnackbar
 
-class AddActivityViewModel(private val repoActivity : ActivitiesRepository, val repoAttendee: AttendeeRepository) : ViewModel() {
+class AddViewModel(private val repoActivity : ActivitiesRepository, val repoAttendee: AttendeeRepository) : ViewModel() {
 
     val showPlacePickerDialog = SingleLiveEvent<Boolean>()
     val showDatePickerDialog = SingleLiveEvent<Boolean>()

@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.apia22018.sportactivities.screens.add.AddActivityViewModel" />
+            type="com.apia22018.sportactivities.screens.add.AddViewModel" />
     </data>
 
 
@@ -19,7 +19,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screens.add.AddActivityActivity">
+        tools:context=".screens.add.AddActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"

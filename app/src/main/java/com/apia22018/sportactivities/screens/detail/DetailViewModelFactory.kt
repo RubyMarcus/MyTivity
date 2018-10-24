@@ -1,9 +1,8 @@
-package com.apia22018.sportactivities.screens.detailActivity
+package com.apia22018.sportactivities.screens.detail
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.apia22018.sportactivities.data.attendee.Attendee
-import com.apia22018.sportactivities.data.listActivities.Activities
+import com.apia22018.sportactivities.data.activities.Activities
 
 class DetailViewModelFactory(private val activities: Activities) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")

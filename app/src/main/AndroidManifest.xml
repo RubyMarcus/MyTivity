@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.containers.DashboardActivity">
+        <activity android:name=".screens.containers.DashboardContainerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,8 +25,8 @@
             android:name=".screens.splash.SplashActivity"
             android:theme="@style/SplashTheme">
         </activity>
-        <activity android:name=".screens.add.AddActivityActivity" />
-        <activity android:name=".screens.containers.DetailActivityContainerActivity" />
+        <activity android:name=".screens.add.AddActivity" />
+        <activity android:name=".screens.containers.DetailContainerActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -8,21 +8,21 @@ import android.view.Menu
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.screens.list.ListFragment
 import com.apia22018.sportactivities.screens.map.MapFragment
-import com.apia22018.sportactivities.screens.add.AddActivityActivity
+import com.apia22018.sportactivities.screens.add.AddActivity
 import com.apia22018.sportactivities.utils.loadFragment
-import kotlinx.android.synthetic.main.list_activity.*
+import kotlinx.android.synthetic.main.dashboard_container_activity.*
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardContainerActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, DashboardActivity::class.java))
+            context.startActivity(Intent(context, DashboardContainerActivity::class.java))
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.list_activity)
+        setContentView(R.layout.dashboard_container_activity)
 
         setSupportActionBar(toolbar)
 
@@ -34,7 +34,7 @@ class DashboardActivity : AppCompatActivity() {
         bottomNavigation()
 
         floatingActionButton.setOnClickListener {
-            AddActivityActivity.start(this)
+            AddActivity.start(this)
         }
 
         loadFragment(ListFragment.newInstance())
