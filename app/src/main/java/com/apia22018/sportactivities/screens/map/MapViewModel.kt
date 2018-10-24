@@ -16,4 +16,8 @@ class MapViewModel (private val repoActivities: ActivitiesRepository): ViewModel
     }
 
     fun getActivities() = activitiesList
+
+    fun getActivity(activityId: String): Activities? {
+        return activitiesList.value?.find { it.activityId == activityId }
+    }
 }

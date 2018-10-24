@@ -46,7 +46,7 @@ class DetailContainerActivity : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
-                        loadFragment(DetailFragment.newInstance(activities))
+                        loadFragment(DetailFragment.newInstance(activities.activityId))
                     }
                     1 -> {
                         loadFragment(MessageFragment.newInstance(activities))
@@ -62,7 +62,7 @@ class DetailContainerActivity : AppCompatActivity() {
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
         })
 
-        loadFragment(DetailFragment.newInstance(activities))
+        loadFragment(DetailFragment.newInstance(activities.activityId))
     }
 
     //TODO("NEEDS OWN TOOLBAR DESIGN MENU ThING)

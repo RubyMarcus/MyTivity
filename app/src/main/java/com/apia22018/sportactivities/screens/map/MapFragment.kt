@@ -21,62 +21,59 @@ import com.google.android.gms.maps.model.MarkerOptions
 import android.support.v4.app.ActivityCompat
 import com.apia22018.sportactivities.screens.containers.DetailContainerActivity
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.Marker
 
-class MapFragment : Fragment() {
+class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private lateinit var viewModel: MapViewModel
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0
     private var mLocationPermissionGranted = false
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var googleMap: GoogleMap
+    private lateinit var gMap: GoogleMap
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val factory: MapViewModelFactory = InjectorUtils.provideMapViewModelFactory()
+        val view = inflater.inflate(R.layout.map_fragment, container, false)
 
+        val factory: MapViewModelFactory = InjectorUtils.provideMapViewModelFactory()
         viewModel = ViewModelProviders
                 .of(this, factory)
                 .get(MapViewModel::class.java)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
 
-        return inflater.inflate(R.layout.map_fragment, container, false)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+        return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onMapReady(googleMap: GoogleMap) {
+        gMap = googleMap
 
-        updateLocationUI()
+        updateUserLocation()
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync { gMap ->
+        viewModel.getActivities().observe(this, Observer { activities ->
+            activities?.mapNotNull { item ->
+                val activityPosition = LatLng(item.lat, item.long)
+                val marker = googleMap.addMarker(MarkerOptions().position(activityPosition))
 
-            googleMap = gMap
+                marker.tag = item.activityId
+                marker.title = item.title
+                marker.snippet = item.description
+            }
+        })
 
-            //googleMap.setOnInfoWindowClickListener(this)
+        gMap.setOnInfoWindowClickListener(this)
+    }
 
-            viewModel.getActivities().observe(this, Observer { activities ->
-                activities?.mapNotNull { item ->
-                    val zoom = 12.0f
-                    val activityPosition = LatLng(item.lat, item.long)
-                    val marker = googleMap.addMarker(MarkerOptions().position(activityPosition))
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(activityPosition, zoom))
+    override fun onInfoWindowClick(marker: Marker?) {
+        marker?.let {
+            viewModel.getActivity(it.tag as String)?.also { activities ->
+                DetailContainerActivity.start(this.requireContext(), activities)
+            }
 
-                    marker.tag = item.activityId
-                    marker.title = item.title
-                    marker.snippet = item.description
-
-                    googleMap.setOnInfoWindowClickListener {
-                        it?.let {
-                            DetailContainerActivity.start(this.requireContext(), item)
-                        }
-                    }
-                }
-            })
         }
     }
-
-
-
-
 
     private fun getLocationPermission() {
         /*
@@ -106,18 +103,18 @@ class MapFragment : Fragment() {
                 }
             }
         }
-        updateLocationUI()
+        updateUserLocation()
     }
 
-    private fun updateLocationUI() {
+    private fun updateUserLocation() {
         if (checkPermission()) {
             fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
                         location?.let {
                             val zoomLevel = 12f
                             val userLocation = LatLng(it.latitude, it.longitude)
-                            googleMap.isMyLocationEnabled = true
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, zoomLevel))
+                            gMap.isMyLocationEnabled = true
+                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, zoomLevel))
                         }
                     }
         }
