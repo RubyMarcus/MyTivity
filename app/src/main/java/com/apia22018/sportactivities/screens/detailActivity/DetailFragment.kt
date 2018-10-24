@@ -26,6 +26,7 @@ class DetailFragment : Fragment() {
                 .get(DetailViewModel::class.java)
 
         binding.viewModel = viewModel
+        binding.activity = activity
         binding.executePendingBindings()
 
         return binding.root
