@@ -13,7 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.apia22018.sportactivities.R
-import com.apia22018.sportactivities.screens.listActivities.ActivitiesActivity
+import com.apia22018.sportactivities.screens.containers.DashboardActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -40,7 +40,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
 
-
         initialise()
     }
 
@@ -48,7 +47,8 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         val user = mAuth?.currentUser
         if (user != null) {
-            ActivitiesActivity.start(this)
+            DashboardActivity.start(this)
+            finish()
         }
     }
 
@@ -83,7 +83,8 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with signed-in user's information
                             Log.d(TAG, "signInWithEmail:success")
-                            updateUI()
+                            DashboardActivity.start(this)
+                            finish()
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, "signInWithEmail:failure", task.exception)
@@ -95,11 +96,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun updateUI() {
-        val intent = Intent(this@LoginActivity, ActivitiesActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
-    }
+
     companion object {
         fun start (context: Context){
             context.startActivity(Intent(context, LoginActivity::class.java))

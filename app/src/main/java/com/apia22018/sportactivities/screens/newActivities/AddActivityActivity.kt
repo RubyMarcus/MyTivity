@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -245,5 +246,11 @@ class AddActivityActivity : AppCompatActivity() {
         viewModel.insertAttendee(Attendee(uid, email)) // Add UID as well
 
         finish()
+    }
+
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(Intent(context, AddActivityActivity::class.java))
+        }
     }
 }
