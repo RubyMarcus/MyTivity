@@ -107,7 +107,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/description_guideline"
-            tools:layout="@layout/attendee_fragment" />
+            tools:layout="@layout/attendee_list_fragment" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

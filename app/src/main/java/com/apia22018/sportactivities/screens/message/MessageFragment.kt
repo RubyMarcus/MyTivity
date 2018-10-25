@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
-import com.apia22018.sportactivities.databinding.MessageFragmentBinding
+import com.apia22018.sportactivities.databinding.MessageListFragmentBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.google.firebase.auth.FirebaseAuth
 
@@ -24,7 +24,7 @@ class MessageFragment : Fragment() {
         val bundle = arguments ?: Bundle()
         val activity: Activities = bundle.getParcelable(VALUE) ?: Activities()
 
-        val binding = MessageFragmentBinding.inflate(inflater, container, false)
+        val binding = MessageListFragmentBinding.inflate(inflater, container, false)
         val factory: MessageViewModelFactory = InjectorUtils.provideMessageViewModelFactory(activity)
         viewModel = ViewModelProviders.of(this, factory)
                 .get(MessageViewModel::class.java)

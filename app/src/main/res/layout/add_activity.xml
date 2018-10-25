@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.apia22018.sportactivities.screens.add.AddViewModel" />
@@ -93,18 +94,15 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
             app:srcCompat="@drawable/outline_add_location_black_24" />
 
-        <Button
-            android:id="@+id/add_location_btn"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="@{() -> viewModel.showCreatePlacePickerDialog()}"
-            android:text="Pick location"
-            android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar"
+                app:srcCompat="@drawable/outline_add_location_black_24" />
 
         <TextView
             android:id="@+id/textView5"
@@ -126,18 +124,15 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
             app:srcCompat="@drawable/outline_calendar_today_black_24dp" />
 
-        <Button
-            android:id="@+id/date_activity_btn"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="@{() -> viewModel.showCreateDatePickerDialog()}"
-            android:text="Pick date"
-            android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="@+id/imageView5" />
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                app:srcCompat="@drawable/outline_calendar_today_black_24dp" />
 
         <TextView
             android:id="@+id/textView6"
@@ -159,18 +154,15 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView5"
             app:srcCompat="@drawable/outline_schedule_black_24dp" />
 
-        <Button
-            android:id="@+id/time_activity_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="@{() -> viewModel.showCreateTimePickerDialog()}"
-            android:text="Pick time"
-            android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5"
+                app:srcCompat="@drawable/outline_schedule_black_24dp" />
 
         <TextView
             android:id="@+id/textView2"
