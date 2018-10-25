@@ -22,7 +22,8 @@ class AttendeeViewHolder (private val binding: AttendeeListItemBinding) : Recycl
 
     fun bind(item: Attendee) {
         binding.apply {
-
+            attendee = item
+            executePendingBindings()
         }
     }
 }
