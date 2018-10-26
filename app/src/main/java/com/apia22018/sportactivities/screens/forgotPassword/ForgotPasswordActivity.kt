@@ -1,4 +1,4 @@
-package com.apia22018.sportactivities.screens.ForgotPassword
+package com.apia22018.sportactivities.screens.forgotPassword
 
 import android.content.Intent
 import android.os.Bundle

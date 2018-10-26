@@ -14,9 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <activity android:name=".screens.containers.DashboardContainerActivity"/>
-
         <activity
             android:name=".screens.splash.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -28,13 +26,11 @@
         </activity>
         <activity android:name=".screens.add.AddActivity" />
         <activity android:name=".screens.containers.DetailContainerActivity" />
+        <activity android:name=".screens.login.LoginActivity" />
+        <activity android:name=".screens.forgotPassword.ForgotPasswordActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_place_api" />
-
-        <activity android:name=".screens.login.LoginActivity" />
-        <activity android:name=".screens.mapActivities.MapActivity" />
-        <activity android:name=".screens.ForgotPassword.ForgotPasswordActivity"></activity>
     </application>
 </manifest>

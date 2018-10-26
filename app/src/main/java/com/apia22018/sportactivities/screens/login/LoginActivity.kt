@@ -14,7 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.screens.containers.DashboardContainerActivity
-import com.apia22018.sportactivities.screens.ForgotPassword.ForgotPasswordActivity
+import com.apia22018.sportactivities.screens.forgotPassword.ForgotPasswordActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
