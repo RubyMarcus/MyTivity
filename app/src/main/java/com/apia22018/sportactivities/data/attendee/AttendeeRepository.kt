@@ -30,7 +30,7 @@ class AttendeeRepository {
         }
     }
 
-    fun deleteMessage(activityId: String, attendee: Attendee) {
+    fun deleteAttendee(activityId: String, attendee: Attendee) {
         reference.child(activityId).child(attendee.attendeeId).removeValue()
     }
 

@@ -5,10 +5,6 @@
 
     <data>
         <variable
-            name="activity"
-            type="com.apia22018.sportactivities.data.activities.Activities"/>
-
-        <variable
             name="viewModel"
             type="com.apia22018.sportactivities.screens.detail.DetailViewModel"/>
     </data>
@@ -37,7 +33,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="48dp"
             android:layout_marginEnd="8dp"
-            android:text=""
+            android:text="@{viewModel.activity.title}"
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -54,8 +50,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@{activity.description}"
-            app:layout_constraintBottom_toTopOf="@+id/description_guideline"
+            android:text="@{viewModel.activity.description}"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_address" />
@@ -65,14 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.45" />
+            app:layout_constraintGuide_percent="0.55" />
 
         <TextView
             android:id="@+id/detail_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Address"
+            android:text="@{viewModel.activity.city}"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/detail_date"
@@ -88,12 +84,36 @@
             android:text="Date"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:date="@{activity.activityDate}"
+            app:date="@{viewModel.activity.activityDate}"
             app:layout_constraintBottom_toBottomOf="@+id/detail_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/detail_address"
             app:layout_constraintTop_toTopOf="@+id/detail_address" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="24dp"
+            android:text="Empty seats"
+            app:layout_constraintBottom_toTopOf="@+id/attendee_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/join_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:onClick="@{() -> viewModel.attendEvent()}"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/attendee_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/outline_add_black_48dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/attendee_list"

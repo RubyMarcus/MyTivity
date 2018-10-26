@@ -1,15 +1,16 @@
 package com.apia22018.sportactivities.data.activities
 
 import android.arch.lifecycle.LiveData
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 
-class ActivitiesLiveData(private val reference: DatabaseReference) : LiveData<List<Activities>>() {
+class ActivityLiveData(private val reference: DatabaseReference) : LiveData<Activities>() {
     private val eventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            value = dataSnapshot.children.mapNotNull {
-                it.getValue(Activities::class.java)?.apply {
-                    this.activityId = it.key!!
-                }
+            value = dataSnapshot.getValue(Activities::class.java)?.apply {
+                activityId = dataSnapshot.key!!
             }
         }
 

@@ -25,5 +25,6 @@ object InjectorUtils {
 
     fun provideMapViewModelFactory() = MapViewModelFactory(getActivitiesRepository())
 
-    fun provideDetailViewModelFactory(activityId: String) = DetailViewModelFactory(activityId, getAttendeeRepository())
+    fun provideDetailViewModelFactory(activityId: String) = DetailViewModelFactory(activityId, getActivitiesRepository(), getAttendeeRepository())
+
 }
