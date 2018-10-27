@@ -13,10 +13,9 @@ class ActivitiesRepository {
         @Volatile
         private var instance: ActivitiesRepository? = null
 
-        fun getInstance() =
-                instance ?: synchronized(this) {
-                    instance ?: ActivitiesRepository().also { instance = it }
-                }
+        @Synchronized
+        fun getInstance(): ActivitiesRepository = instance
+                ?: ActivitiesRepository().also { instance = it }
     }
 
     fun readActivities(): LiveData<List<Activities>> {

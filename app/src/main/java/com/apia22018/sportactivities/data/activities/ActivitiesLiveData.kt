@@ -20,11 +20,9 @@ class ActivitiesLiveData(private val reference: DatabaseReference) : LiveData<Li
 
     override fun onActive() {
         reference.addValueEventListener(eventListener)
-        super.onActive()
     }
 
     override fun onInactive() {
         reference.removeEventListener(eventListener)
-        super.onInactive()
     }
 }

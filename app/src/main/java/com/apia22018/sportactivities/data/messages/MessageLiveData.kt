@@ -26,11 +26,9 @@ class MessageLiveData(private val reference: DatabaseReference) : LiveData<List<
 
     override fun onActive() {
         reference.addValueEventListener(eventListener)
-        super.onActive()
     }
 
     override fun onInactive() {
         reference.removeEventListener(eventListener)
-        super.onInactive()
     }
 }

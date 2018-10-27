@@ -13,10 +13,9 @@ class AttendeeRepository {
         @Volatile
         private var instance: AttendeeRepository? = null
 
-        fun getInstance() =
-                instance ?: synchronized(this) {
-                    instance ?: AttendeeRepository().also { instance = it }
-                }
+        @Synchronized
+        fun getInstance(): AttendeeRepository = instance
+                ?: AttendeeRepository().also { instance = it }
     }
 
     fun getAttendees(activityId: String): LiveData<List<Attendee>> {

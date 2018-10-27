@@ -13,10 +13,9 @@ class MessageRepository {
         @Volatile
         private var instance: MessageRepository? = null
 
-        fun getInstance() =
-                instance ?: synchronized(this) {
-                    instance ?: MessageRepository().also { instance = it }
-                }
+        @Synchronized
+        fun getInstance(): MessageRepository = instance
+                ?: MessageRepository().also { instance = it }
     }
 
     fun getMessages(activityId: String): LiveData<List<Message>> {
