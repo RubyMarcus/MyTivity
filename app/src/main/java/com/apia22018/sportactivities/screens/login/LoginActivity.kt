@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.screens.containers.DashboardContainerActivity
 import com.apia22018.sportactivities.screens.forgotPassword.ForgotPasswordActivity
+import com.apia22018.sportactivities.screens.signUp.SignUpActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -35,9 +36,6 @@ class LoginActivity : AppCompatActivity() {
 
     //Firebase references
     private var mAuth: FirebaseAuth? = null
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,12 +64,10 @@ class LoginActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
 
         tvForgotPassword!!
-                 .setOnClickListener { startActivity(Intent(this@LoginActivity,
-                         ForgotPasswordActivity::class.java)) }
-         /*btnCreateAccount!!
-                 .setOnClickListener { startActivity(Intent(this@LoginActivity,
-                         CreateAccountActivity::class.java)) }
-                         */
+                 .setOnClickListener { ForgotPasswordActivity.start(this) }
+         btnCreateAccount!!
+                 .setOnClickListener { SignUpActivity.start(this) }
+
         btnLogin!!.setOnClickListener { loginUser() }
     }
     private fun loginUser() {

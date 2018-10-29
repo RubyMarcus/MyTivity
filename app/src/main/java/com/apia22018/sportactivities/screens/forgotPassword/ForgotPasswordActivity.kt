@@ -1,5 +1,6 @@
 package com.apia22018.sportactivities.screens.forgotPassword
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -44,12 +45,17 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener { task: Task<Void> ->
             if(task.isComplete){
-                val loginIntent = Intent(this, LoginActivity::class.java)
-                startActivity(loginIntent)
+                LoginActivity.start(this)
 
                 Toast.makeText(applicationContext, "Please check email to reset password", Toast.LENGTH_LONG).show()
 
             }
+        }
+    }
+
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(Intent(context, ForgotPasswordActivity::class.java))
         }
     }
 }

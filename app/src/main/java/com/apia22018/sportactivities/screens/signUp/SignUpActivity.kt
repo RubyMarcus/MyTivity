@@ -1,5 +1,6 @@
-package com.apia22018.sportactivities.screens
+package com.apia22018.sportactivities.screens.signUp
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -10,28 +11,28 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.apia22018.sportactivities.R
+import com.apia22018.sportactivities.screens.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-private var etEmail: EditText? = null
-private var etPassword: EditText? = null
-private var btnCreateAccount: Button? = null
-
-private val TAG = "CreateAccountActivity"
-//global variables
-
-private var email: String? = null
-private var password: String? = null
-
-//Firebase-referenser
-private var mDatabaseReference: DatabaseReference? = null
-private var mDatabase: FirebaseDatabase? = null
-private var mAuth: FirebaseAuth? = null
 
 class SignUpActivity : AppCompatActivity() {
 
+    private var etEmail: EditText? = null
+    private var etPassword: EditText? = null
+    private var btnCreateAccount: Button? = null
 
+    private val TAG = "CreateAccountActivity"
+//global variables
+
+    private var email: String? = null
+    private var password: String? = null
+
+    //Firebase-referenser
+    private var mDatabaseReference: DatabaseReference? = null
+    private var mDatabase: FirebaseDatabase? = null
+    private var mAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ class SignUpActivity : AppCompatActivity() {
 
         initialise()
     }
+
     private fun initialise() {
         etEmail = findViewById<View>(R.id.emailField) as EditText
         etPassword = findViewById<View>(R.id.passwordField) as EditText
@@ -51,12 +53,11 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 
-
     private fun createNewAccount() {
         email = etEmail?.text.toString()
         password = etPassword?.text.toString()
 
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
             mAuth!!
                     .createUserWithEmailAndPassword(email!!, password!!)
@@ -78,7 +79,7 @@ class SignUpActivity : AppCompatActivity() {
                             currentUserDb.child("userName").setValue(userName)
                             */
 
-                            updateUserInfoAndUI()
+                            LoginActivity.start(this)
                         } else {
                             // Signin fail meddelande
                             Log.w(TAG, "createUserWithEmail:failed", task.exception)
@@ -92,13 +93,6 @@ class SignUpActivity : AppCompatActivity() {
             Toast.makeText(this, "Enter all details please.", Toast.LENGTH_SHORT).show()
         }
 
-    }
-
-    private fun updateUserInfoAndUI() {
-        //starta nästa activity
-        //val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
     }
 
     private fun verifyEmail() {
@@ -116,6 +110,12 @@ class SignUpActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT).show()
                     }
                 }
+    }
+
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(Intent(context, SignUpActivity::class.java))
+        }
     }
 
 }

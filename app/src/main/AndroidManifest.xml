@@ -28,7 +28,7 @@
         <activity android:name=".screens.containers.DetailContainerActivity" />
         <activity android:name=".screens.login.LoginActivity" />
         <activity android:name=".screens.forgotPassword.ForgotPasswordActivity"/>
-
+        <activity android:name=".screens.signUp.SignUpActivity"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_place_api" />
