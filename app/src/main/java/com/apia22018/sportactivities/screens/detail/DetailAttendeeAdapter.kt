@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import com.apia22018.sportactivities.data.attendee.Attendee
 
 class DetailAttendeeAdapter(private val detailViewModel: DetailViewModel) : RecyclerView.Adapter<DetailAttendeeViewHolder>() {
-
     private val attendees: MutableList<Attendee> = mutableListOf()
 
     fun setAttendees(attendee: List<Attendee>) {
         this.attendees.apply {
+            clear()
             addAll(attendee)
         }
         notifyDataSetChanged()
@@ -19,15 +19,10 @@ class DetailAttendeeAdapter(private val detailViewModel: DetailViewModel) : Recy
 
     override fun getItemCount(): Int = this.attendees.size
 
-    override fun onBindViewHolder(holder: DetailAttendeeViewHolder, position: Int) = holder.bind(attendees[position])
-
-
-
-    /*{
+    override fun onBindViewHolder(holder: DetailAttendeeViewHolder, position: Int) {
         val attendee = this.attendees[position]
         holder.apply {
             bind(attendee)
         }
-    }*/
-
+    }
 }

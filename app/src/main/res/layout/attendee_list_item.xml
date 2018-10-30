@@ -40,6 +40,8 @@
             android:layout_marginBottom="16dp"
             android:background="@android:color/holo_red_light"
             android:text="X"
+            android:visibility="@{viewModel.canDelete(attendee.uid), default=gone}"
+            android:onClick="@{()->viewModel.deleteAttendee(attendee)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
