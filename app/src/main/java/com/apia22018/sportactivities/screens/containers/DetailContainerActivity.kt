@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout
 import android.view.Menu
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
-import com.apia22018.sportactivities.screens.attendee.AttendeeFragment
 import com.apia22018.sportactivities.screens.detail.DetailFragment
 import com.apia22018.sportactivities.screens.map.MapFragment
 import com.apia22018.sportactivities.screens.message.MessageFragment
@@ -54,9 +53,6 @@ class DetailContainerActivity : AppCompatActivity() {
                     }
                     2 -> {
                         loadFragment(MapFragment.newInstance())
-                    }
-                    3 -> {
-                        loadFragment()
                     }
                 }
             }

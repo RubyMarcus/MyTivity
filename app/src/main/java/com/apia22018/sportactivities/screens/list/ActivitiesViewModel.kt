@@ -14,5 +14,4 @@ class ActivitiesViewModel(private val activitiesRepository: ActivitiesRepository
     }
 
     fun getActivities() = activitiesList
-
 }

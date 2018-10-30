@@ -7,7 +7,6 @@ import com.apia22018.sportactivities.data.messages.MessageRepository
 import com.apia22018.sportactivities.screens.list.ActivitiesViewModelFactory
 import com.apia22018.sportactivities.screens.map.MapViewModelFactory
 import com.apia22018.sportactivities.screens.add.AddViewModelFactory
-import com.apia22018.sportactivities.screens.attendee.AttendeeViewModelFactory
 import com.apia22018.sportactivities.screens.detail.DetailViewModelFactory
 import com.apia22018.sportactivities.screens.message.MessageViewModelFactory
 
@@ -26,8 +25,5 @@ object InjectorUtils {
 
     fun provideMapViewModelFactory() = MapViewModelFactory(getActivitiesRepository())
 
-    fun provideDetailViewModelFactory(activityId: String) = DetailViewModelFactory(activityId, getActivitiesRepository())
-
-    fun provideAttendeeViewModelFactory() = AttendeeViewModelFactory(getAttendeeRepository())
-
+    fun provideDetailViewModelFactory(activityId: String) = DetailViewModelFactory(activityId, getAttendeeRepository())
 }

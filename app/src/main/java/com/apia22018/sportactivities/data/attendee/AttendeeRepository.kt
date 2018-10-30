@@ -24,7 +24,14 @@ class AttendeeRepository {
     }
 
     fun insertAttendees(attendee: Attendee, activityId: String) {
-        reference.child(activityId).setValue(attendee)
+        val key = reference.push().key
+        key?.apply {
+            reference.child(activityId).child(this).setValue(attendee)
+        }
+    }
+
+    fun deleteMessage(activityId: String, attendee: Attendee) {
+        reference.child(activityId).child(attendee.attendeeId).removeValue()
     }
 
 }

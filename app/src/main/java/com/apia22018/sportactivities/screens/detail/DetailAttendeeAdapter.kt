@@ -1,10 +1,10 @@
-package com.apia22018.sportactivities.screens.attendee
+package com.apia22018.sportactivities.screens.detail
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.apia22018.sportactivities.data.attendee.Attendee
 
-class AttendeeAdapter(private val attendeeViewModel: AttendeeViewModel) : RecyclerView.Adapter<AttendeeViewHolder>() {
+class DetailAttendeeAdapter(private val detailViewModel: DetailViewModel) : RecyclerView.Adapter<DetailAttendeeViewHolder>() {
 
     private val attendees: MutableList<Attendee> = mutableListOf()
 
@@ -15,15 +15,19 @@ class AttendeeAdapter(private val attendeeViewModel: AttendeeViewModel) : Recycl
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, type: Int): AttendeeViewHolder = AttendeeViewHolder.newInstance(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, type: Int): DetailAttendeeViewHolder = DetailAttendeeViewHolder.newInstance(parent, detailViewModel)
 
     override fun getItemCount(): Int = this.attendees.size
 
-    override fun onBindViewHolder(holder: AttendeeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DetailAttendeeViewHolder, position: Int) = holder.bind(attendees[position])
+
+
+
+    /*{
         val attendee = this.attendees[position]
         holder.apply {
             bind(attendee)
         }
-    }
+    }*/
 
 }
