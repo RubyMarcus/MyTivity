@@ -23,14 +23,19 @@ class AttendeeRepository {
     }
 
     fun insertAttendees(attendee: Attendee, activityId: String) {
-        val key = reference.push().key
+        val key = reference.child(activityId).push().key
         key?.apply {
             reference.child(activityId).child(this).setValue(attendee)
         }
     }
 
-    fun deleteAttendee(activityId: String, attendee: Attendee) {
+    fun deleteAttendee(activityId: String, attendee: Attendee, complete: (Boolean) -> Unit = {}) {
         reference.child(activityId).child(attendee.attendeeId).removeValue()
+                .addOnSuccessListener {
+                    complete(true)
+                }.addOnFailureListener {
+                    complete(false)
+                }
     }
 
 }

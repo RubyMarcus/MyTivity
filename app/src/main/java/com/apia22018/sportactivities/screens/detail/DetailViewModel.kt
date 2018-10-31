@@ -21,6 +21,7 @@ class DetailViewModel(private val activityId: String,
 
     fun attendEvent() {
         val user = FirebaseAuth.getInstance().currentUser
+        //TODO("NEED TO UPDATE ATTENDEE HERE")
         activitiesRepository.updateActivityAttendees(activityId, 2) {
             if (it) user?.email?.let {
                 attendeeRepository.insertAttendees(Attendee(user.uid, it), activityId)
@@ -32,7 +33,15 @@ class DetailViewModel(private val activityId: String,
 
     fun getAttendees() = attendeeLiveData
 
-    fun deleteAttendee(attendee: Attendee) = attendeeRepository.deleteAttendee(activityId, attendee)
+    fun deleteAttendee(attendee: Attendee) {
+        attendeeRepository.deleteAttendee(activityId, attendee) { value ->
+            if (value) {
+                //TODO("NEED TO REMOVE ATTENDEE HERE")
+                activitiesRepository.updateActivityAttendees(activityId, 1)
+            }
+        }
+    }
+
 
     fun canDelete(userAttendeeUID: String): Int = if (currentUserUid == userAttendeeUID) VISIBLE else GONE
 

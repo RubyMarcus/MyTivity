@@ -222,14 +222,11 @@ class AddActivity : AppCompatActivity() {
         val description = description_activity.text.toString()
         val occupiedSeats = 1
         val uid = user?.uid ?: ""
-        val email = user?.email ?: ""
 
         viewModel.place.value?.let {
             viewModel.insertActivity(Activities(title, description, totalSeats,
                     occupiedSeats, timestamp, it[0].locality,
-                    it[0].thoroughfare + " " + it[0].subThoroughfare, uid, it[0].latitude, it[0].longitude)).also {
-                viewModel.insertAttendee(Attendee(uid, email))
-            }
+                    it[0].thoroughfare + " " + it[0].subThoroughfare, uid, it[0].latitude, it[0].longitude))
         }
 
         finish()

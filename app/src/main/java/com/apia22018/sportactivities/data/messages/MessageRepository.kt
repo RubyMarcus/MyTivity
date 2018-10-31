@@ -23,7 +23,7 @@ class MessageRepository {
     }
 
     fun createMessage(activityId: String, message: Message) {
-        val key = reference.push().key
+        val key = reference.child(activityId).push().key
         key?.apply {
             reference.child(activityId).child(this).setValue(message)
         }

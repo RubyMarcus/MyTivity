@@ -10,13 +10,14 @@ import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.data.activities.ActivitiesRepository
 import com.apia22018.sportactivities.utils.SingleLiveEvent
 import com.apia22018.sportactivities.utils.showSnackbar
+import com.google.firebase.auth.FirebaseAuth
 
 class AddViewModel(private val repoActivity : ActivitiesRepository, val repoAttendee: AttendeeRepository) : ViewModel() {
 
     val showPlacePickerDialog = SingleLiveEvent<Boolean>()
     val showDatePickerDialog = SingleLiveEvent<Boolean>()
     val showTimePickerDialog = SingleLiveEvent<Boolean>()
-
+    val user = FirebaseAuth.getInstance().currentUser
     val place = MutableLiveData<List<Address>>()
     val date = MutableLiveData<String>()
     val time = MutableLiveData<String>()
@@ -26,10 +27,14 @@ class AddViewModel(private val repoActivity : ActivitiesRepository, val repoAtte
     fun insertActivity(activity : Activities) {
         repoActivity.insertActivity(activity) {
             activityId = it
+            insertAttendee()
         }
     }
 
-    fun insertAttendee(attendee: Attendee) {
+    fun insertAttendee() {
+        val uid = user?.uid ?: ""
+        val email = user?.email ?: ""
+        val attendee = Attendee(uid, email)
         repoAttendee.insertAttendees(attendee, activityId)
     }
 
