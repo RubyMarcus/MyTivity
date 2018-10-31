@@ -55,13 +55,12 @@ class AddActivity : AppCompatActivity() {
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
 
-        //Toolbar
-        val toolbar = binding.toolbar1
-        setSupportActionBar(toolbar)
+
+        setSupportActionBar(toolbar_add_activity)
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = ""
+            title = "Add activity"
         }
 
         dialogObservers()
