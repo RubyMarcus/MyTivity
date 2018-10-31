@@ -18,6 +18,7 @@
             android:id="@+id/messages_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
@@ -43,16 +44,18 @@
                 android:id="@+id/message_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Message"
                 android:inputType="textMultiLine" />
 
         </android.support.design.widget.TextInputLayout>
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/send_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:drawableStart="@drawable/ic_send"
+            android:src="@drawable/ic_send"
+            android:tint="@color/colorPrimaryDark"
             android:onClick="@{()->viewModel.onSendMessageClicked()}"
             app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
