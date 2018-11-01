@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent
 import android.location.Geocoder
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
@@ -55,19 +56,41 @@ class AddActivity : AppCompatActivity() {
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
 
-
-        setSupportActionBar(toolbar_add_activity)
+        val toolbar = binding.toolbarAddActivity
+        setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            title = "Add activity"
+            title = "New activity"
+
         }
 
         dialogObservers()
         onChangeObservers()
+    }
 
-        floatingActionButton3.setOnClickListener {
-            createActivity(binding.root)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.add_activity_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+
+        R.id.action_favorite -> {
+            // User chose the "Favorite" action, mark the current item
+            // as a favorite...
+            true
+        }
+
+        android.R.id.home -> {
+            // Respond to the action bar's Up/Home button
+            finish()
+             true
+        }
+
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -76,20 +99,20 @@ class AddActivity : AppCompatActivity() {
         viewModel.place.observe(this, android.arch.lifecycle.Observer {
             it?.let { adresses ->
                 if (adresses.isNotEmpty()) {
-                    add_location_btn.text = adresses[0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare
+                    //add_location_btn.text = adresses[0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare
                 }
             }
         })
 
         viewModel.date.observe(this, android.arch.lifecycle.Observer {
             it.let {
-                date_activity_btn.text = it
+                //date_activity_btn.text = it
             }
         })
 
         viewModel.time.observe(this, android.arch.lifecycle.Observer {
             it.let {
-                time_activity_btn.text = it
+                //time_activity_btn.text = it
             }
         })
     }
@@ -118,17 +141,6 @@ class AddActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                // Respond to the action bar's Up/Home button
-                finish()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun placePickerDialog() {
@@ -180,17 +192,19 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
+    /*
+
     //Move to ViewModel?
     private fun createActivity(view: View) {
         val title: String
         val totalSeats: Int
         val timestamp: Long
 
-        if (isNullOrEmpty(name_activty.text.toString())) {
+        if (isNullOrEmpty(eventname_add_textedit.text.toString())) {
             showSnackbar(view, "Fill in name!")
             return
         } else {
-            title = name_activty.text.toString()
+            title = eventname_add_textedit.text.toString()
         }
 
         if (add_location_btn.text == "Pick location") {
@@ -219,7 +233,7 @@ class AddActivity : AppCompatActivity() {
 
         val user = FirebaseAuth.getInstance().currentUser
 
-        val description = description_activity.text.toString()
+        val description = description_add_edittext.text.toString()
         val occupiedSeats = 1
         val uid = user?.uid ?: ""
 
@@ -231,6 +245,8 @@ class AddActivity : AppCompatActivity() {
 
         finish()
     }
+
+    */
 
     companion object {
         fun start(context: Context) {

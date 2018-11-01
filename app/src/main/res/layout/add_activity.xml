@@ -11,207 +11,163 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:context=".screens.add.AddActivity">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_add_activity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_clear_black_24dp"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:background="?attr/colorPrimary">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_add_activity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.v7.widget.Toolbar>
 
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/appbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar"
-            app:srcCompat="@drawable/outline_add_black_48dp" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout2"
+        <ScrollView
+            android:id="@+id/scrollview"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar"
-            app:passwordToggleDrawable="@color/colorPrimaryDark">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/name_activty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Title" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-            app:passwordToggleDrawable="@color/colorPrimaryDark">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/description_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Description" />
-        </android.support.design.widget.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-            app:srcCompat="@drawable/outline_add_location_black_24" />
-
-        <Button
-            android:id="@+id/add_location_btn"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="@{() -> viewModel.showCreatePlacePickerDialog()}"
-            android:text="Pick location"
-            android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="@+id/imageView3" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="*Required"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/add_location_btn"
-            app:layout_constraintTop_toBottomOf="@+id/add_location_btn" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
-            app:srcCompat="@drawable/outline_calendar_today_black_24dp" />
-
-        <Button
-            android:id="@+id/date_activity_btn"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="@{() -> viewModel.showCreateDatePickerDialog()}"
-            android:text="Pick date"
-            android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="@+id/imageView5" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="*Required"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/date_activity_btn"
-            app:layout_constraintTop_toBottomOf="@+id/date_activity_btn" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            app:srcCompat="@drawable/outline_schedule_black_24dp" />
-
-        <Button
-            android:id="@+id/time_activity_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="@{() -> viewModel.showCreateTimePickerDialog()}"
-            android:text="Pick time"
-            android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="*Required"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/time_activity_btn"
-            app:layout_constraintTop_toBottomOf="@+id/time_activity_btn" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="24dp"
-            app:passwordToggleDrawable="@color/colorPrimaryDark"
+            android:layout_height="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time_activity_btn">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_add_activity">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/total_people"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Max number of people" />
-        </android.support.design.widget.TextInputLayout>
-    </android.support.constraint.ConstraintLayout>
+                android:layout_height="wrap_content">
 
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="21sp"
+                    style="@style/AddTextInputLayoutStyle"
+                    app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/eventname_add_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="21sp"
+                        android:hint="Event name" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    style="@style/AddTextInputLayoutStyle"
+                    app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/description_add_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Description" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    style="@style/AddTextInputLayoutStyle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/location_add_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:hint="Location" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    style="@style/AddTextInputLayoutStyle"
+                    app:layout_constraintEnd_toStartOf="@+id/textInputLayout5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/date_add_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:hint="Date" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    style="@style/AddTextInputLayoutStyle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/textInputLayout7"
+                    app:layout_constraintTop_toTopOf="@+id/textInputLayout7">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/time_add_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:hint="Time" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    style="@style/AddTextInputLayoutStyle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/spots"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="How many people?" />
+                </android.support.design.widget.TextInputLayout>
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+
+    </android.support.constraint.ConstraintLayout>
 </layout>
