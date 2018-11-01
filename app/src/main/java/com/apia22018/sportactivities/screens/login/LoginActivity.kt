@@ -16,7 +16,6 @@ import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.screens.containers.DashboardContainerActivity
 import com.apia22018.sportactivities.screens.forgotPassword.ForgotPasswordActivity
 import com.apia22018.sportactivities.screens.signUp.SignUpActivity
-import com.apia22018.sportactivities.utils.FirebaseHelper
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -35,6 +34,9 @@ class LoginActivity : AppCompatActivity() {
     private var btnCreateAccount: Button? = null
     private var mProgressBar: ProgressDialog? = null
 
+    //Firebase references
+    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
@@ -42,9 +44,10 @@ class LoginActivity : AppCompatActivity() {
         initialise()
     }
 
+
     override fun onStart() {
         super.onStart()
-        val user = FirebaseHelper.getCurrentUser()
+        val user = mAuth.currentUser
         if (user != null) {
             DashboardContainerActivity.start(this)
             finish()
@@ -75,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
             mProgressBar!!.setMessage("Logging in....")
             mProgressBar!!.show()
             Log.d(TAG, "Logging in user.")
-            FirebaseHelper.getFirebaseInstance()!!.signInWithEmailAndPassword(email!!, password!!)
+            mAuth.signInWithEmailAndPassword(email!!, password!!)
                     .addOnCompleteListener(this) { task ->
                         mProgressBar!!.hide()
                         if (task.isSuccessful) {

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.NavUtils
 import android.view.Menu
 import android.view.MenuItem
 import com.apia22018.sportactivities.R
@@ -13,7 +12,6 @@ import com.apia22018.sportactivities.screens.list.ListFragment
 import com.apia22018.sportactivities.screens.map.MapFragment
 import com.apia22018.sportactivities.screens.add.AddActivity
 import com.apia22018.sportactivities.screens.login.LoginActivity
-import com.apia22018.sportactivities.utils.FirebaseHelper
 import com.apia22018.sportactivities.utils.loadFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.dashboard_container_activity.*
@@ -65,7 +63,7 @@ class DashboardContainerActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout_button -> {
-                FirebaseHelper.getFirebaseInstance()?.signOut()
+                FirebaseAuth.getInstance().signOut()
                 LoginActivity.start(this)
                 finish()
             }
