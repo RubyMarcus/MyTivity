@@ -3,10 +3,8 @@ package com.apia22018.sportactivities.screens.add
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
-import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
-import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.attendee.AttendeeRepository
 import com.apia22018.sportactivities.data.activities.Activities
@@ -24,7 +22,8 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
 
     val timestampCalendar = Calendar.getInstance()
 
-    val currentUser = FirebaseAuth.getInstance().currentUser?.uid
+    private val currentUser = FirebaseAuth.getInstance().currentUser?.uid
+    val email = FirebaseAuth.getInstance().currentUser?.email
 
     val showPlacePickerDialog = SingleLiveEvent<Boolean>()
     val showDatePickerDialog = SingleLiveEvent<Boolean>()
@@ -43,7 +42,7 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
 
     var activityId: String = ""
 
-    fun insertActivity(activity: Activities) {
+    private fun insertActivity(activity: Activities) {
         repoActivity.insertActivity(activity) {
             activityId = it
             insertAttendee()
@@ -124,6 +123,13 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
             emptySpotsError.value = null
         }
 
-
+        place.value?.let {
+            insertActivity(Activities(eventName, description, emptySpots.toInt(), 1,
+                    timestampCalendar.timeInMillis, it[0].locality,
+                    it[0].thoroughfare + " " + it[0].subThoroughfare, currentUser ?: "",
+                    it[0].latitude, it[0].longitude)).also {
+                insertAttendee(Attendee(currentUser ?: "", email ?: ""))
+            }
+        }
     }
 }

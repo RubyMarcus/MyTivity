@@ -11,10 +11,8 @@ import android.os.Bundle
 import com.apia22018.sportactivities.R
 import com.google.android.gms.location.places.ui.PlacePicker
 import kotlinx.android.synthetic.main.add_activity.*
-import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent
-import android.location.Geocoder
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
@@ -60,8 +58,8 @@ class AddActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_favorite -> {
-            // User chose the "Favorite" action, mark the current item
-            // as a favorite...
+            createNewActivity()
+            finish()
             true
         }
 
@@ -172,62 +170,6 @@ class AddActivity : AppCompatActivity() {
 
         viewModel.createActivity(name, description, location, date, time, emptySpots)
     }
-
-    /*
-
-    //Move to ViewModel?
-    private fun createActivity(view: View) {
-        val title: String
-        val totalSeats: Int
-        val timestamp: Long
-
-        if (isNullOrEmpty(eventname_add_textedit.text.toString())) {
-            showSnackbar(view, "Fill in name!")
-            return
-        } else {
-            title = eventname_add_textedit.text.toString()
-        }
-
-        if (add_location_btn.text == "Pick location") {
-            showSnackbar(view, "Pick a location!")
-            return
-        }
-
-        if (date_activity_btn.text != "Pick date") {
-            if (time_activity_btn.text != "Pick time") {
-                timestamp = timestampCalendar.timeInMillis
-            } else {
-                showSnackbar(view, "Pick a time!")
-                return
-            }
-        } else {
-            showSnackbar(view, "Pick a date!")
-            return
-        }
-
-        if (isNullOrEmpty(total_people.text.toString())) {
-            showSnackbar(view, "Fill in max people!")
-            return
-        } else {
-            totalSeats = total_people.text.toString().toInt()
-        }
-
-        val user = FirebaseAuth.getInstance().currentUser
-
-        val description = description_add_edittext.text.toString()
-        val occupiedSeats = 1
-        val uid = user?.uid ?: ""
-
-        viewModel.place.value?.let {
-            viewModel.insertActivity(Activities(title, description, totalSeats,
-                    occupiedSeats, timestamp, it[0].locality,
-                    it[0].thoroughfare + " " + it[0].subThoroughfare, uid, it[0].latitude, it[0].longitude))
-        }
-
-        finish()
-    }
-
-    */
 
     companion object {
         fun start(context: Context) {
