@@ -21,16 +21,10 @@ import android.view.MenuItem
 import com.apia22018.sportactivities.databinding.AddActivityBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
 
-
 class AddActivity : AppCompatActivity() {
 
-    //Format
-    val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-
-    //Maps
     val PLACE_PICKER_REQUEST = 1
 
-    //ViewModel
     lateinit var viewModel: AddViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +39,6 @@ class AddActivity : AppCompatActivity() {
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
 
-        viewModel.eventNameError.observe(this, android.arch.lifecycle.Observer {
-            binding.eventnameAddEdittext.error = it
-        })
-
         val toolbar = binding.toolbarAddActivity
         setSupportActionBar(toolbar)
 
@@ -56,8 +46,11 @@ class AddActivity : AppCompatActivity() {
             title = "New activity"
         }
 
+        description_add_edittext.setRawInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE)
+        description_add_edittext.setRawInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
+
+        textErrorObservers()
         dialogObservers()
-        onChangeObservers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -66,7 +59,6 @@ class AddActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-
         R.id.action_favorite -> {
             // User chose the "Favorite" action, mark the current item
             // as a favorite...
@@ -75,9 +67,7 @@ class AddActivity : AppCompatActivity() {
 
         android.R.id.home -> {
             // Respond to the action bar's Up/Home button
-
-            viewModel.setEventName("")
-            // finish()
+            finish()
             true
         }
 
@@ -88,26 +78,29 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
-    // Rotation
-    private fun onChangeObservers() {
-        viewModel.place.observe(this, android.arch.lifecycle.Observer {
-            it?.let { adresses ->
-                if (adresses.isNotEmpty()) {
-                    location_add_edittext.setText(adresses[0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare)
-                }
-            }
+    private fun textErrorObservers () {
+        viewModel.eventNameError.observe(this, android.arch.lifecycle.Observer {
+            eventname_textInputLayout.error = it
         })
 
-        viewModel.date.observe(this, android.arch.lifecycle.Observer {
-            it.let {
-                date_add_edittext.setText(it)
-            }
+        viewModel.descriptionError.observe(this, android.arch.lifecycle.Observer {
+            description_textInputLayout.error = it
         })
 
-        viewModel.time.observe(this, android.arch.lifecycle.Observer {
-            it.let {
-                time_add_edittext.setText(it)
-            }
+        viewModel.locationError.observe(this, android.arch.lifecycle.Observer {
+            location_textInputLayout.error = it
+        })
+
+        viewModel.dateError.observe(this, android.arch.lifecycle.Observer {
+            date_textInputLayout.error = it
+        })
+
+        viewModel.timeError.observe(this, android.arch.lifecycle.Observer {
+            time_textInputLayout.error = it
+        })
+
+        viewModel.emptySpotsError.observe(this, android.arch.lifecycle.Observer {
+            spots_textInputLayout.error = it
         })
     }
 
@@ -143,7 +136,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun datePickerDialog() {
-        val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             viewModel.setDate(year, month, dayOfMonth)
         },
                 viewModel.timestampCalendar.get(Calendar.YEAR), viewModel.timestampCalendar.get(Calendar.MONTH), viewModel.timestampCalendar.get(Calendar.DAY_OF_MONTH))
@@ -170,8 +163,14 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun createNewActivity() {
+        val name = eventname_add_edittext.text.toString()
+        val description = description_add_edittext.text.toString()
+        val location = location_add_edittext.text.toString()
+        val date = date_add_edittext.text.toString()
+        val time = time_add_edittext.text.toString()
+        val emptySpots = spots_add_edittext.text.toString()
 
-        viewModel.createActivity(eventname_add_edittext.text.toString())
+        viewModel.createActivity(name, description, location, date, time, emptySpots)
     }
 
     /*

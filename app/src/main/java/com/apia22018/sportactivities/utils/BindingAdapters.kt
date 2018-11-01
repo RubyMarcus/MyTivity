@@ -1,6 +1,7 @@
 package com.apia22018.sportactivities.utils
 
 import android.databinding.BindingAdapter
+import android.location.Address
 import android.view.View
 import android.widget.TextView
 import java.text.SimpleDateFormat
@@ -19,5 +20,14 @@ fun bindIsGone(view: View, isGone: Boolean) {
         View.GONE
     } else {
         View.VISIBLE
+    }
+}
+
+@BindingAdapter("place")
+fun setPlaceValue(view: TextView, value: List<Address>?) {
+    if (value != null) {
+        view.text = value[0].locality + " " + value[0].thoroughfare + " " + value[0].subThoroughfare
+    } else {
+        view.text = ""
     }
 }

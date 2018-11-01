@@ -47,15 +47,15 @@
                 android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/textInputLayout3"
+                    android:id="@+id/eventname_textInputLayout"
+                    style="@style/AddTextInputLayoutStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:textSize="21sp"
-                    style="@style/AddTextInputLayoutStyle"
-                    app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+                    app:errorEnabled="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -64,66 +64,70 @@
                         android:id="@+id/eventname_add_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapSentences"
                         android:hint="Event name"
+                        android:inputType="textCapSentences"
                         android:singleLine="true"
                         android:textSize="21sp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/textInputLayout2"
+                    android:id="@+id/description_textInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     style="@style/AddTextInputLayoutStyle"
-                    app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
+                    app:errorEnabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/location_textInputLayout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+                    app:layout_constraintTop_toBottomOf="@+id/eventname_textInputLayout">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/description_add_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapSentences"
-                        android:hint="Description" />
+                        android:hint="Description"
+                        android:singleLine="false" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/textInputLayout4"
+                    android:id="@+id/location_textInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     style="@style/AddTextInputLayoutStyle"
+                    app:errorEnabled="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+                    app:layout_constraintTop_toBottomOf="@+id/description_textInputLayout">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/location_add_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:focusableInTouchMode="false"
                         android:onClick="@{() -> viewModel.showCreatePlacePickerDialog()}"
-                        android:hint="Location" />
+                        android:focusableInTouchMode="false"
+                        android:hint="Location"
+                        app:place="@{viewModel.place}" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/textInputLayout7"
+                    android:id="@+id/date_textInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     style="@style/AddTextInputLayoutStyle"
-                    app:layout_constraintEnd_toStartOf="@+id/textInputLayout5"
+                    app:errorEnabled="true"
+                    app:layout_constraintEnd_toStartOf="@+id/time_textInputLayout"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+                    app:layout_constraintTop_toBottomOf="@+id/location_textInputLayout">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/date_add_edittext"
@@ -132,19 +136,21 @@
                         android:onClick="@{() -> viewModel.showCreateDatePickerDialog()}"
                         android:focusableInTouchMode="false"
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:hint="Date" />
+                        android:hint="Date"
+                        android:text="@{viewModel.date}"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/textInputLayout5"
+                    android:id="@+id/time_textInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     style="@style/AddTextInputLayoutStyle"
+                    app:errorEnabled="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/textInputLayout7"
-                    app:layout_constraintTop_toTopOf="@+id/textInputLayout7">
+                    app:layout_constraintStart_toEndOf="@+id/date_textInputLayout"
+                    app:layout_constraintTop_toTopOf="@+id/date_textInputLayout">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/time_add_edittext"
@@ -153,23 +159,27 @@
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                         android:focusableInTouchMode="false"
                         android:onClick="@{() -> viewModel.showCreateTimePickerDialog()}"
-                        android:hint="Time" />
+                        android:hint="Time"
+                        android:text="@{viewModel.time}"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/spots_textInputLayout"
                     style="@style/AddTextInputLayoutStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
+                    app:errorEnabled="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
+                    app:layout_constraintTop_toBottomOf="@+id/date_textInputLayout">
 
                     <android.support.design.widget.TextInputEditText
-                        android:id="@+id/spots"
+                        android:id="@+id/spots_add_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="How many people?"
