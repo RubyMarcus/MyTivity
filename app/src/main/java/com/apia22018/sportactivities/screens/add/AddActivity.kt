@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent
 import android.location.Geocoder
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import com.apia22018.sportactivities.databinding.AddActivityBinding
@@ -169,6 +170,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun createNewActivity() {
+
         viewModel.createActivity(eventname_add_edittext.text.toString())
     }
 
