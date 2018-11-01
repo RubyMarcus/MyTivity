@@ -17,21 +17,13 @@ import android.content.Intent
 import android.location.Geocoder
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import com.apia22018.sportactivities.data.attendee.Attendee
-import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.databinding.AddActivityBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
-import com.apia22018.sportactivities.utils.isNullOrEmpty
-import com.apia22018.sportactivities.utils.showSnackbar
-import com.google.firebase.auth.FirebaseAuth
 
 
 class AddActivity : AppCompatActivity() {
 
     //Format
-    val dateFormat = SimpleDateFormat("dd MMM, YYYY", Locale.getDefault())
-    val timestampFormat = SimpleDateFormat("YYYYMMddHHmm", Locale.getDefault())
     val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     //Maps
@@ -40,12 +32,8 @@ class AddActivity : AppCompatActivity() {
     //ViewModel
     lateinit var viewModel: AddViewModel
 
-    //Calendar
-    val timestampCalendar = Calendar.getInstance()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val factory: AddViewModelFactory = InjectorUtils.provideAddActivityViewModelFactory()
 
         viewModel = ViewModelProviders.of(this, factory
@@ -56,12 +44,15 @@ class AddActivity : AppCompatActivity() {
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
 
+        viewModel.eventNameError.observe(this, android.arch.lifecycle.Observer {
+            binding.eventnameAddEdittext.error = it
+        })
+
         val toolbar = binding.toolbarAddActivity
         setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
             title = "New activity"
-
         }
 
         dialogObservers()
@@ -83,8 +74,10 @@ class AddActivity : AppCompatActivity() {
 
         android.R.id.home -> {
             // Respond to the action bar's Up/Home button
-            finish()
-             true
+
+            viewModel.setEventName("")
+            // finish()
+            true
         }
 
         else -> {
@@ -95,29 +88,29 @@ class AddActivity : AppCompatActivity() {
     }
 
     // Rotation
-    private fun onChangeObservers () {
+    private fun onChangeObservers() {
         viewModel.place.observe(this, android.arch.lifecycle.Observer {
             it?.let { adresses ->
                 if (adresses.isNotEmpty()) {
-                    //add_location_btn.text = adresses[0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare
+                    location_add_edittext.setText(adresses[0].locality + " " + adresses[0].thoroughfare + " " + adresses[0].subThoroughfare)
                 }
             }
         })
 
         viewModel.date.observe(this, android.arch.lifecycle.Observer {
             it.let {
-                //date_activity_btn.text = it
+                date_add_edittext.setText(it)
             }
         })
 
         viewModel.time.observe(this, android.arch.lifecycle.Observer {
             it.let {
-                //time_activity_btn.text = it
+                time_add_edittext.setText(it)
             }
         })
     }
 
-    private fun dialogObservers () {
+    private fun dialogObservers() {
         viewModel.showPlacePickerDialog.observe(this, android.arch.lifecycle.Observer { showDialog ->
             showDialog?.let {
                 if (it) {
@@ -149,33 +142,18 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun datePickerDialog() {
-        val datepicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-
-            //Set time to calendar
-            timestampCalendar.set(Calendar.YEAR, year)
-            timestampCalendar.set(Calendar.MONTH, month)
-            timestampCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            //Convert to showable format
-            viewModel.date.value = dateFormat.format(timestampCalendar.time)
+        val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            viewModel.setDate(year, month, dayOfMonth)
         },
-                //Get time from calendar
-                timestampCalendar.get(Calendar.YEAR), timestampCalendar.get(Calendar.MONTH), timestampCalendar.get(Calendar.DAY_OF_MONTH))
-        datepicker.show()
+                viewModel.timestampCalendar.get(Calendar.YEAR), viewModel.timestampCalendar.get(Calendar.MONTH), viewModel.timestampCalendar.get(Calendar.DAY_OF_MONTH))
+        datePicker.show()
     }
 
     private fun timePickerDialog() {
         val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-
-            //Set time to calendar
-            timestampCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            timestampCalendar.set(Calendar.MINUTE, minute)
-
-            //Convert to showable format
-            viewModel.time.value = timeFormat.format(timestampCalendar.time)
+            viewModel.setTime(hourOfDay, minute)
         },
-                //Get time from calendar
-                timestampCalendar.get(Calendar.HOUR), timestampCalendar.get(Calendar.MINUTE), true)
+                viewModel.timestampCalendar.get(Calendar.HOUR), viewModel.timestampCalendar.get(Calendar.MINUTE), true)
         timePicker.show()
     }
 
@@ -184,12 +162,14 @@ class AddActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     val place = PlacePicker.getPlace(this, data)
-                    val gcd: Geocoder = Geocoder(this, Locale.getDefault())
-
-                    viewModel.place.value = gcd.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
+                    viewModel.setPLace(this, place)
                 }
             }
         }
+    }
+
+    private fun createNewActivity() {
+        viewModel.createActivity(eventname_add_edittext.text.toString())
     }
 
     /*

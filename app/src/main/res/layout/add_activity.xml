@@ -105,6 +105,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:focusableInTouchMode="false"
+                        android:onClick="@{() -> viewModel.showCreatePlacePickerDialog()}"
                         android:hint="Location" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -124,6 +126,8 @@
                         android:id="@+id/date_add_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.showCreateDatePickerDialog()}"
+                        android:focusableInTouchMode="false"
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                         android:hint="Date" />
                 </android.support.design.widget.TextInputLayout>
@@ -144,6 +148,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:focusableInTouchMode="false"
+                        android:onClick="@{() -> viewModel.showCreateTimePickerDialog()}"
                         android:hint="Time" />
                 </android.support.design.widget.TextInputLayout>
 
