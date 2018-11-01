@@ -4,17 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.NavUtils
 import android.view.Menu
+import android.view.MenuItem
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.screens.list.ListFragment
 import com.apia22018.sportactivities.screens.map.MapFragment
 import com.apia22018.sportactivities.screens.add.AddActivity
+import com.apia22018.sportactivities.screens.login.LoginActivity
+import com.apia22018.sportactivities.utils.FirebaseHelper
 import com.apia22018.sportactivities.utils.loadFragment
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.dashboard_container_activity.*
 
 class DashboardContainerActivity : AppCompatActivity() {
-
     companion object {
         fun start(context: Context) {
             context.startActivity(Intent(context, DashboardContainerActivity::class.java))
@@ -28,8 +32,7 @@ class DashboardContainerActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
-            title = "TITLE"
-            subtitle = "OPTIONAL SUBTITLE?"
+            title = "Activities"
         }
 
         bottomNavigation()
@@ -38,7 +41,6 @@ class DashboardContainerActivity : AppCompatActivity() {
             AddActivity.start(this)
         }
 
-        loadFragment(ListFragment.newInstance())
     }
 
     private fun bottomNavigation(){
@@ -57,6 +59,20 @@ class DashboardContainerActivity : AppCompatActivity() {
                 }
             }
         }
+        loadFragment(ListFragment.newInstance())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.logout_button -> {
+                FirebaseHelper.getFirebaseInstance()?.signOut()
+                LoginActivity.start(this)
+                finish()
+            }
+            else -> { }
+
+        }
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
