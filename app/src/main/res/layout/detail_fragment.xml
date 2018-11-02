@@ -5,6 +5,10 @@
 
     <data>
         <variable
+            name="activity"
+            type="com.apia22018.sportactivities.data.activities.Activities"/>
+
+        <variable
             name="viewModel"
             type="com.apia22018.sportactivities.screens.detail.DetailViewModel"/>
     </data>
@@ -33,7 +37,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="Title"
+            android:text="@{activity.title}"
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -46,10 +50,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Blekegatan 48 \n Lund"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:address="@{activity}"
             app:layout_constraintEnd_toStartOf="@+id/detail_date"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -60,11 +64,10 @@
             android:id="@+id/detail_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:date="@{viewModel.activity.activityDate}"
+            app:date="@{activity.activityDate}"
             app:layout_constraintBottom_toBottomOf="@+id/detail_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -79,7 +82,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:text="d ijfodifdsoif jdoifjdo ifjdfoi djfodijfdoifjdiofjdoifjdfoijdfoijdfoijdfoidjfidojfdoijfdoijfdoijfd dijfodifdsoifjdoifjdoifjdfoidjfodijfdoifjdiofjdoifjd foijdfoijd foijdfoidj fidojfdoijfd oijfdoijfd  dijfodifds oifjdo ifjdoifj dfoidjfodijfdo ifjdiof jdoifjd foijdfoijdfoijdf oidjfidojfdoijfdoijfdoijfd "
+            android:text="@{activity.description}"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/description_guideline"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="Empty seats\n 2"
+            android:text="@{activity.emptySeaterinos()}"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/description_guideline" />
@@ -141,7 +144,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/outline_add_black_48dp" />
-
 
     </android.support.constraint.ConstraintLayout>
 </layout>

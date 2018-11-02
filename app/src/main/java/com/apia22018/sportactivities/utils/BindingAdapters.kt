@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter
 import android.location.Address
 import android.view.View
 import android.widget.TextView
+import com.apia22018.sportactivities.data.activities.Activities
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,4 +35,10 @@ fun setPlaceValue(view: TextView, value: List<Address>?) {
     } else {
         view.text = ""
     }
+}
+
+@BindingAdapter("address")
+fun formatAddress(view: TextView, value: Activities?) {
+    val address = value ?: Activities()
+    view.text = "${address.streetName} \n ${address.city}"
 }

@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.data.activities.ActivitiesRepository
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.attendee.AttendeeRepository
@@ -13,10 +14,8 @@ class DetailViewModel(private val activityId: String,
                       private val activitiesRepository: ActivitiesRepository,
                       private val attendeeRepository: AttendeeRepository
 ) : ViewModel() {
-    private val attendeeLiveData : LiveData<List<Attendee>> = attendeeRepository.getAttendees(activityId)
-    private val ourActivity = activitiesRepository.readActivity(activityId).also {
-        println(it.value)
-    }
+    private val attendeeLiveData = attendeeRepository.getAttendees(activityId)
+    private val activities: LiveData<Activities> = activitiesRepository.readActivity(activityId)
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
 
     fun attendEvent() {
@@ -42,8 +41,8 @@ class DetailViewModel(private val activityId: String,
         }
     }
 
-
     fun canDelete(userAttendeeUID: String): Int = if (currentUserUid == userAttendeeUID) VISIBLE else GONE
 
-    fun getActivity() = ourActivity.value
+    fun getActivity() = activities
+
 }
