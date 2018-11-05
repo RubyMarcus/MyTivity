@@ -86,42 +86,46 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
     fun createActivity(eventName: String, description: String, location: String,
                        date: String, time: String, emptySpots: String) : Boolean {
 
+        var isEmptyFallback = false
+
         if (eventName.isEmpty()) {
             eventNameError.value = "You need a name!"
-            return false
+            isEmptyFallback = true
         } else {
             eventNameError.value = null
         }
         if (description.isEmpty()) {
             descriptionError.value = "Add some information!"
-            return false
+            isEmptyFallback = true
         } else {
             descriptionError.value = null
         }
         if (location.isEmpty()) {
             locationError.value = "Pick a location!"
-            return false
+            isEmptyFallback = true
         } else {
             locationError.value = null
         }
         if (date.isEmpty()) {
             dateError.value = "Pick a date!"
-            return false
+            isEmptyFallback = true
         } else {
             dateError.value = null
         }
         if (time.isEmpty()) {
             timeError.value = "Pick a time!"
-            return false
+            isEmptyFallback = true
         } else {
             timeError.value = null
         }
         if (emptySpots.isEmpty()) {
             emptySpotsError.value = "Choose how many people!"
-            return false
+            isEmptyFallback = true
         } else {
             emptySpotsError.value = null
         }
+
+        if (isEmptyFallback) return false
 
         place.value?.let {
             insertActivity(Activities(eventName, description, emptySpots.toInt(), 1,
