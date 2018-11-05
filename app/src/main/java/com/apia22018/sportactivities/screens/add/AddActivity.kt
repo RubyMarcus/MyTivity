@@ -59,7 +59,6 @@ class AddActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_favorite -> {
             createNewActivity()
-            finish()
             true
         }
 
@@ -168,7 +167,9 @@ class AddActivity : AppCompatActivity() {
         val time = time_add_edittext.text.toString()
         val emptySpots = spots_add_edittext.text.toString()
 
-        viewModel.createActivity(name, description, location, date, time, emptySpots)
+        val success = viewModel.createActivity(name, description, location, date, time, emptySpots)
+
+        if (success) { finish() }
     }
 
     companion object {

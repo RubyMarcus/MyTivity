@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import com.apia22018.sportactivities.R
+import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.screens.list.ListFragment
 import com.apia22018.sportactivities.screens.map.MapFragment
 import com.apia22018.sportactivities.screens.add.AddActivity
@@ -44,7 +45,7 @@ class DashboardContainerActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_bar_map -> {
-                    loadFragment(MapFragment.newInstance())
+                    loadFragment(MapFragment.newInstance(Activities()))
                     true
                 }
                 R.id.action_bar_list -> {

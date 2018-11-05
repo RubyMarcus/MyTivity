@@ -10,7 +10,7 @@ import com.apia22018.sportactivities.data.attendee.AttendeeRepository
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.data.activities.ActivitiesRepository
 import com.apia22018.sportactivities.utils.SingleLiveEvent
-import com.apia22018.sportactivities.utils.showSnackbar
+import com.google.android.gms.location.places.Place
 import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,13 +22,12 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
 
     val timestampCalendar = Calendar.getInstance()
 
-    private val currentUser = FirebaseAuth.getInstance().currentUser?.uid
-    val email = FirebaseAuth.getInstance().currentUser?.email
-
     val showPlacePickerDialog = SingleLiveEvent<Boolean>()
     val showDatePickerDialog = SingleLiveEvent<Boolean>()
     val showTimePickerDialog = SingleLiveEvent<Boolean>()
-    val user = FirebaseAuth.getInstance().currentUser
+
+    private val user = FirebaseAuth.getInstance().currentUser
+
     val place = MutableLiveData<List<Address>>()
     val date = MutableLiveData<String>()
     val time = MutableLiveData<String>()
@@ -49,7 +48,7 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
         }
     }
 
-    fun insertAttendee() {
+    private fun insertAttendee() {
         val uid = user?.uid ?: ""
         val email = user?.email ?: ""
         val attendee = Attendee(uid, email)
@@ -85,40 +84,41 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
     }
 
     fun createActivity(eventName: String, description: String, location: String,
-                       date: String, time: String, emptySpots: String) {
+                       date: String, time: String, emptySpots: String) : Boolean {
+
         if (eventName.isEmpty()) {
             eventNameError.value = "You need a name!"
-            return
+            return false
         } else {
             eventNameError.value = null
         }
         if (description.isEmpty()) {
             descriptionError.value = "Add some information!"
-            return
+            return false
         } else {
             descriptionError.value = null
         }
         if (location.isEmpty()) {
             locationError.value = "Pick a location!"
-            return
+            return false
         } else {
             locationError.value = null
         }
         if (date.isEmpty()) {
             dateError.value = "Pick a date!"
-            return
+            return false
         } else {
             dateError.value = null
         }
         if (time.isEmpty()) {
             timeError.value = "Pick a time!"
-            return
+            return false
         } else {
             timeError.value = null
         }
         if (emptySpots.isEmpty()) {
             emptySpotsError.value = "Choose how many people!"
-            return
+            return false
         } else {
             emptySpotsError.value = null
         }
@@ -126,10 +126,9 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
         place.value?.let {
             insertActivity(Activities(eventName, description, emptySpots.toInt(), 1,
                     timestampCalendar.timeInMillis, it[0].locality,
-                    it[0].thoroughfare + " " + it[0].subThoroughfare, currentUser ?: "",
-                    it[0].latitude, it[0].longitude)).also {
-                insertAttendee(Attendee(currentUser ?: "", email ?: ""))
+                    it[0].thoroughfare + " " + it[0].subThoroughfare, user?.uid ?: "",
+                    it[0].latitude, it[0].longitude))
             }
+        return true
         }
     }
-}

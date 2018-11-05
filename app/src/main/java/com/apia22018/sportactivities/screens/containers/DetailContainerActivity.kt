@@ -52,7 +52,7 @@ class DetailContainerActivity : AppCompatActivity() {
                         loadFragment(MessageFragment.newInstance(activities))
                     }
                     2 -> {
-                        loadFragment(MapFragment.newInstance())
+                        loadFragment(MapFragment.newInstance(activities))
                     }
                 }
             }

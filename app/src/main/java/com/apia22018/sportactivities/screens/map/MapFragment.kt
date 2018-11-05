@@ -19,20 +19,30 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import android.support.v4.app.ActivityCompat
+import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.screens.containers.DetailContainerActivity
+import com.apia22018.sportactivities.screens.message.MessageFragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.Marker
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+
     private lateinit var viewModel: MapViewModel
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0
     private var mLocationPermissionGranted = false
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var gMap: GoogleMap
 
+    private val zoomLevel = 12f
+
+    private lateinit var activity : Activities
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.map_fragment, container, false)
+
+        val bundle = arguments ?: Bundle()
+        activity = bundle.getParcelable(MapFragment.VALUE) ?: Activities()
 
         val factory: MapViewModelFactory = InjectorUtils.provideMapViewModelFactory()
         viewModel = ViewModelProviders
@@ -52,18 +62,28 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
         updateUserLocation()
 
-        viewModel.getActivities().observe(this, Observer { activities ->
-            activities?.mapNotNull { item ->
-                val activityPosition = LatLng(item.lat, item.long)
-                val marker = googleMap.addMarker(MarkerOptions().position(activityPosition))
+        if(activity.activityId == "") {
+            viewModel.getActivities().observe(this, Observer { activities ->
+                activities?.mapNotNull { item ->
+                    val activityPosition = LatLng(item.lat, item.long)
+                    val marker = googleMap.addMarker(MarkerOptions().position(activityPosition))
 
-                marker.tag = item.activityId
-                marker.title = item.title
-                marker.snippet = item.description
+                    marker.tag = item.activityId
+                    marker.title = item.title
+                    marker.snippet = item.description
+                }
+            })
+
+            gMap.setOnInfoWindowClickListener(this)
+        } else {
+            activity.let {
+                val singleActivityPosition = LatLng(it.lat, it.long)
+                googleMap.addMarker(MarkerOptions().position(singleActivityPosition))
+
+                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(singleActivityPosition, zoomLevel))
+
             }
-        })
-
-        gMap.setOnInfoWindowClickListener(this)
+        }
     }
 
     override fun onInfoWindowClick(marker: Marker?) {
@@ -111,10 +131,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
                         location?.let {
-                            val zoomLevel = 12f
-                            val userLocation = LatLng(it.latitude, it.longitude)
-                            gMap.isMyLocationEnabled = true
-                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, zoomLevel))
+                            if (activity.activityId == "") {
+                                val userLocation = LatLng(it.latitude, it.longitude)
+                                gMap.isMyLocationEnabled = true
+                                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, zoomLevel))
+                            }
                         }
                     }
         }
@@ -130,7 +151,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     }
 
     companion object {
+        private const val VALUE = "value"
+
         @JvmStatic
-        fun newInstance() = MapFragment()
+        fun newInstance(activities: Activities) = MapFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(VALUE, activities)
+            }
+        }
     }
 }

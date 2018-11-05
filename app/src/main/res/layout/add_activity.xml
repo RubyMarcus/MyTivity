@@ -23,9 +23,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_clear_black_24dp"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:background="?attr/colorPrimary">
+            <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
 
         </android.support.v7.widget.Toolbar>
 
