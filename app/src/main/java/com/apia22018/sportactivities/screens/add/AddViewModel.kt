@@ -103,6 +103,9 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
         if (location.isEmpty()) {
             locationError.value = "Pick a location!"
             isEmptyFallback = true
+        } else if (location == "Invalid address") {
+            locationError.value = "Invalid address, pick new location!"
+            isEmptyFallback = true
         } else {
             locationError.value = null
         }
@@ -129,7 +132,7 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
 
         place.value?.let {
             insertActivity(Activities(eventName, description, emptySpots.toInt(), 1,
-                    timestampCalendar.timeInMillis, it[0].locality,
+                    timestampCalendar.timeInMillis, it[0].locality ?: "",
                     it[0].thoroughfare + " " + it[0].subThoroughfare, user?.uid ?: "",
                     it[0].latitude, it[0].longitude))
             }

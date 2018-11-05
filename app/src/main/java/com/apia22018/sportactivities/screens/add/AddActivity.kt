@@ -144,7 +144,7 @@ class AddActivity : AppCompatActivity() {
         val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
             viewModel.setTime(hourOfDay, minute)
         },
-                viewModel.timestampCalendar.get(Calendar.HOUR), viewModel.timestampCalendar.get(Calendar.MINUTE), true)
+                viewModel.timestampCalendar.get(Calendar.HOUR_OF_DAY), viewModel.timestampCalendar.get(Calendar.MINUTE), true)
         timePicker.show()
     }
 
