@@ -48,6 +48,14 @@ class DetailFragment : Fragment() {
                 binding.activity = it
             }
         })
+
+        this.viewModel.removeActivity.observe(this, Observer {
+            if (it != null && it) {
+                activity?.run {
+                    finish()
+                }
+            }
+        })
     }
 
     companion object {

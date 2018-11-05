@@ -8,6 +8,7 @@ import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.data.activities.ActivitiesRepository
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.attendee.AttendeeRepository
+import com.apia22018.sportactivities.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
 
 class DetailViewModel(private val activityId: String,
@@ -17,6 +18,7 @@ class DetailViewModel(private val activityId: String,
     private val attendeeLiveData = attendeeRepository.getAttendees(activityId)
     private val activities: LiveData<Activities> = activitiesRepository.readActivity(activityId)
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
+    val removeActivity = SingleLiveEvent<Boolean>()
 
     fun attendEvent() {
         val user = FirebaseAuth.getInstance().currentUser
@@ -41,8 +43,20 @@ class DetailViewModel(private val activityId: String,
         }
     }
 
-    fun canDelete(userAttendeeUID: String): Int = if (currentUserUid == userAttendeeUID) VISIBLE else GONE
+    fun canRemoveAttendee(userAttendeeUID: String): Int = if (currentUserUid == userAttendeeUID) VISIBLE else GONE
 
     fun getActivity() = activities
+
+    fun canDeleteActivity(){}
+
+    fun deleteActivity() {
+        activitiesRepository.deleteActivity(activityId) {
+            if (it) {
+                removeActivity.postValue(it)
+            } else {
+                //TODO("ERROR KUNDE INTE TA BORT AKTIVIET")
+            }
+        }
+    }
 
 }

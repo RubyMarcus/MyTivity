@@ -48,7 +48,7 @@
             app:srcCompat="@drawable/places_ic_clear"
             android:onClick="@{()->viewModel.deleteAttendee(attendee)}"
             android:tint="@color/colorPrimaryDark"
-            android:visibility="@{viewModel.canDelete(attendee.uid), default=gone}" />
+            android:visibility="@{viewModel.canRemoveAttendee(attendee.uid), default=gone}" />
 
         <View
             android:id="@+id/view"

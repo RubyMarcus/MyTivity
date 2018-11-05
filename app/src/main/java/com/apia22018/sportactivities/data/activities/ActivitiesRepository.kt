@@ -49,4 +49,14 @@ class ActivitiesRepository {
                     complete(false)
                 }
     }
+
+    fun deleteActivity(activityId: String, complete: (Boolean) -> Unit = {}) {
+        referenceActivity.child(activityId).removeValue()
+                .addOnSuccessListener {
+                    complete(true)
+                }
+                .addOnFailureListener {
+                    complete(false)
+                }
+    }
 }
