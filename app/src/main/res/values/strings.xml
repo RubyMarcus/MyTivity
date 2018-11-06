@@ -8,4 +8,8 @@
     <string name="password">Password</string>
     <string name="login_title">Login</string>
     <string name="create_account">Create Account</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="stand_in">Are you sure?</string>
+    <string name="detail_message">Are you sure you want to join this activity?</string>
 </resources>
