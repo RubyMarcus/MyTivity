@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    /*
+
     override fun onStart() {
         super.onStart()
         val user = mAuth.currentUser
@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             DashboardContainerActivity.start(this)
             finish()
         }
-    }*/
+    }
 
 
 

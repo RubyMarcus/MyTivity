@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="Empty spots"
+                android:text="@string/empty_spots"
                 android:textStyle="bold"
                 app:layout_constraintBaseline_toBaselineOf="@+id/title"
                 app:layout_constraintEnd_toEndOf="parent" />
