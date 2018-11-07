@@ -36,7 +36,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     private val zoomLevel = 12f
 
-    private lateinit var activity : Activities
+    private lateinit var activity: Activities
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.map_fragment, container, false)
@@ -62,7 +62,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
         updateUserLocation()
 
-        if(activity.activityId == "") {
+        if (activity.activityId == "") {
             viewModel.getActivities().observe(this, Observer { activities ->
                 activities?.mapNotNull { item ->
                     val activityPosition = LatLng(item.lat, item.long)
@@ -131,9 +131,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
                         location?.let {
+                            val userLocation = LatLng(it.latitude, it.longitude)
+                            gMap.isMyLocationEnabled = true
+
                             if (activity.activityId == "") {
-                                val userLocation = LatLng(it.latitude, it.longitude)
-                                gMap.isMyLocationEnabled = true
                                 gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, zoomLevel))
                             }
                         }
