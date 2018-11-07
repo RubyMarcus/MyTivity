@@ -21,7 +21,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import android.support.v4.app.ActivityCompat
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.screens.containers.DetailContainerActivity
-import com.apia22018.sportactivities.screens.message.MessageFragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.Marker
@@ -63,14 +62,27 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         updateUserLocation()
 
         if (activity.activityId == "") {
-            viewModel.getActivities().observe(this, Observer { activities ->
-                activities?.mapNotNull { item ->
+            viewModel.getActivities().observe(this, Observer {
+                it?.mapNotNull { item ->
                     val activityPosition = LatLng(item.lat, item.long)
                     val marker = googleMap.addMarker(MarkerOptions().position(activityPosition))
 
                     marker.tag = item.activityId
                     marker.title = item.title
                     marker.snippet = item.description
+
+                    val lastIndex = it.lastIndex
+
+                    if (!mLocationPermissionGranted) {
+
+                        println("Hello: $mLocationPermissionGranted")
+
+                        val noUserLocationZoomLevel = 8f
+
+                        if (it[lastIndex] == item) {
+                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(activityPosition, noUserLocationZoomLevel))
+                        }
+                    }
                 }
             })
 
@@ -105,7 +117,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                         android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true
         } else {
-            ActivityCompat.requestPermissions(this.requireActivity(),
+            requestPermissions(
                     arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
         }
@@ -123,6 +135,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 }
             }
         }
+
         updateUserLocation()
     }
 
@@ -131,6 +144,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
                         location?.let {
+                            mLocationPermissionGranted = true
+
                             val userLocation = LatLng(it.latitude, it.longitude)
                             gMap.isMyLocationEnabled = true
 
