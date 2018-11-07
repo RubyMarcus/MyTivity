@@ -40,6 +40,8 @@ class AddActivity : AppCompatActivity() {
         val toolbar = binding.toolbarAddActivity
         setSupportActionBar(toolbar)
 
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE)
+
         supportActionBar?.apply {
             title = "New activity"
         }
@@ -135,8 +137,11 @@ class AddActivity : AppCompatActivity() {
     private fun datePickerDialog() {
         val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             viewModel.setDate(year, month, dayOfMonth)
+
         },
                 viewModel.timestampCalendar.get(Calendar.YEAR), viewModel.timestampCalendar.get(Calendar.MONTH), viewModel.timestampCalendar.get(Calendar.DAY_OF_MONTH))
+
+        datePicker.datePicker.minDate = System.currentTimeMillis() - 1000
         datePicker.show()
     }
 

@@ -23,8 +23,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_clear_black_24dp"
-            android:background="?attr/colorPrimary">
-            <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+            android:background="?attr/colorPrimary"
+            app:theme="@style/AppTheme.Toolbar">
 
         </android.support.v7.widget.Toolbar>
 
@@ -55,6 +55,8 @@
                     android:layout_marginEnd="16dp"
                     android:textSize="21sp"
                     app:errorEnabled="true"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="15"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -64,6 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Event name"
+                        android:maxLength="15"
                         android:inputType="textCapSentences"
                         android:singleLine="true"
                         android:textSize="21sp" />
