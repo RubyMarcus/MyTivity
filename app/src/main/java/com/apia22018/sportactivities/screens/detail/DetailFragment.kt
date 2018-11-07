@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.databinding.DataBindingUtil.setContentView
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -13,11 +14,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.databinding.DetailFragmentBinding
-import com.apia22018.sportactivities.screens.alertDialog.alertFragment
+import com.apia22018.sportactivities.screens.alertDialog.AlertFragment
 import com.apia22018.sportactivities.utils.InjectorUtils
 import kotlinx.android.synthetic.main.detail_fragment.*
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), AlertFragment.NoticeDialogListener {
+
+
     private lateinit var viewModel: DetailViewModel
     private lateinit var binding: DetailFragmentBinding
 
@@ -51,16 +54,7 @@ class DetailFragment : Fragment() {
 
         join_event.setOnClickListener{
 
-            var detailAlert = alertFragment()
-            detailAlert.message = R.string.detail_message
-            if (detailAlert.confirmation) {
-
-            }
-            else
-            {
-
-            }
-
+            confirmAlert(R.string.detail_message)
 
             /*val alertDialog: AlertDialog? = activity?.let {
                 val builder = AlertDialog.Builder(it)
@@ -102,4 +96,26 @@ class DetailFragment : Fragment() {
             }
         }
     }
+
+    fun confirmAlert(message: Int) {
+        val newFragment = AlertFragment()
+        newFragment.message = message
+
+        newFragment.show(fragmentManager, "alert")
+    }
+
+    fun showNoticeDialog() {
+        // Create an instance of the dialog fragment and show it
+        val dialog = AlertFragment()
+        dialog.show(fragmentManager, "NoticeDialogFragment")
+    }
+
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        print("success")
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        print("nope")
+    }
+
 }

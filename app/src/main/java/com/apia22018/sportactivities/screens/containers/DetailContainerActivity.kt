@@ -5,16 +5,20 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.DialogFragment
+import android.support.v7.app.AlertDialog
 import android.view.Menu
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
+import com.apia22018.sportactivities.screens.alertDialog.AlertFragment
 import com.apia22018.sportactivities.screens.detail.DetailFragment
 import com.apia22018.sportactivities.screens.map.MapFragment
 import com.apia22018.sportactivities.screens.message.MessageFragment
 import com.apia22018.sportactivities.utils.loadFragment
 import kotlinx.android.synthetic.main.detail_container_activity.*
 
-class DetailContainerActivity : AppCompatActivity() {
+class DetailContainerActivity : AppCompatActivity(), AlertFragment.NoticeDialogListener {
+
 
     companion object {
         private const val ID = "id"
@@ -69,4 +73,13 @@ class DetailContainerActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
+
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        print("success")
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+
+    }
+
 }
