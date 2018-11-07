@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -16,6 +18,7 @@ import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.screens.containers.DashboardContainerActivity
 import com.apia22018.sportactivities.screens.forgotPassword.ForgotPasswordActivity
 import com.apia22018.sportactivities.screens.signUp.SignUpActivity
+import com.apia22018.sportactivities.utils.showSnackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -31,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
     private var etEmail: EditText? = null
     private var etPassword: EditText? = null
     private var btnLogin: Button? = null
-    private var btnCreateAccount: Button? = null
+    private var btnCreateAccount: TextView? = null
     private var mProgressBar: ProgressDialog? = null
 
     //Firebase references
@@ -45,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+    /*
     override fun onStart() {
         super.onStart()
         val user = mAuth.currentUser
@@ -52,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             DashboardContainerActivity.start(this)
             finish()
         }
-    }
+    }*/
 
 
 
@@ -61,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById<View>(R.id.et_email) as EditText
         etPassword = findViewById<View>(R.id.et_password) as EditText
         btnLogin = findViewById<View>(R.id.btn_login) as Button
-        btnCreateAccount = findViewById<View>(R.id.btn_register_account) as Button
+        btnCreateAccount = findViewById<View>(R.id.btn_register_account) as TextView
         mProgressBar = ProgressDialog(this)
 
         tvForgotPassword!!
@@ -97,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     companion object {
         fun start (context: Context){
