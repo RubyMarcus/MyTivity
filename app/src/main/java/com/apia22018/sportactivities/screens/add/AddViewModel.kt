@@ -100,14 +100,16 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
         } else {
             descriptionError.value = null
         }
-        if (location.isEmpty()) {
-            locationError.value = "Pick a location!"
-            isEmptyFallback = true
-        } else if (location == "Invalid address") {
-            locationError.value = "Invalid address, pick new location!"
-            isEmptyFallback = true
-        } else {
-            locationError.value = null
+        when {
+            location.isEmpty() -> {
+                locationError.value = "Pick a location!"
+                isEmptyFallback = true
+            }
+            location == "Invalid address" -> {
+                locationError.value = "Invalid address, pick new location!"
+                isEmptyFallback = true
+            }
+            else -> locationError.value = null
         }
         if (date.isEmpty()) {
             dateError.value = "Pick a date!"
