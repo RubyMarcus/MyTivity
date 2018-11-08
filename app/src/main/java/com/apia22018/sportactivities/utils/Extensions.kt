@@ -9,16 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import com.apia22018.sportactivities.R
 import com.google.firebase.auth.FirebaseAuth
 
-//fun showSnackbar(view: View, message: String, duration: Int = Snackbar.LENGTH_SHORT) {
-//    Snackbar.make(view, message, duration).show()
-//}
-
-fun isNullOrEmpty(str: String?): Boolean {
-    if (str != null && !str.isEmpty())
-        return false
-    return true
-}
-
 fun AppCompatActivity.loadFragment(fragment: Fragment) {
     supportFragmentManager
             .beginTransaction()

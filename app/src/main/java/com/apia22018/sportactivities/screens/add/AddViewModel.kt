@@ -5,6 +5,9 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.attendee.AttendeeRepository
 import com.apia22018.sportactivities.data.activities.Activities
@@ -75,7 +78,21 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
     fun setTime(hourOfDay: Int, minute: Int) {
         timestampCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
         timestampCalendar.set(Calendar.MINUTE, minute)
-        time.value = timeFormat.format(timestampCalendar.time)
+
+        val currentTime = Calendar.getInstance()
+        currentTime.timeInMillis = System.currentTimeMillis() - 1000
+
+        currentTime.apply {
+            this.add(Calendar.HOUR, 1)
+        }
+
+        if(currentTime > timestampCalendar) {
+            //Snackbar?
+
+            time.value = ""
+        } else {
+            time.value = timeFormat.format(timestampCalendar.time)
+        }
     }
 
     fun setPLace(context: Context, currentPlace: Place) {
