@@ -43,6 +43,7 @@ class MessageFragment : Fragment() {
         this.viewModel.getMessages().observe(this, Observer {
             if (it != null && it.isNotEmpty()) {
                 adapter.setMessages(it)
+                messages_recycler_view.scrollToPosition(it.size-1)
             }
         })
 

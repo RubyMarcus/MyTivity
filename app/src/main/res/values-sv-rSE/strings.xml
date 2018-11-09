@@ -9,4 +9,6 @@
     <string name="create_account">Skapa konto</string>
     <string name="map">Karta</string>
     <string name="list">Lista</string>
+    <string name="message">Meddelande</string>
+    <string name="x">X</string>
 </resources>

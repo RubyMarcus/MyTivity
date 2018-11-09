@@ -13,4 +13,6 @@
     <string name="empty_spots">Empty spots</string>
     <string name="map">Map</string>
     <string name="list">List</string>
+    <string name="message">Message</string>
+    <string name="x">X</string>
 </resources>
