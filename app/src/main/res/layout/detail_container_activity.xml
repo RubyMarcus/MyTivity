@@ -30,9 +30,9 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorAccent"
-            app:tabIconTint="@color/colorAccent"
-            app:tabTextColor="@color/colorAccent">
+            app:tabIndicatorColor="@drawable/nav_indicator_color"
+            app:tabIconTint="@drawable/nav_indicator_color"
+            app:tabTextColor="@drawable/nav_indicator_color">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/activity_tab"

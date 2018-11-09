@@ -22,14 +22,17 @@ class DetailViewModel(private val activityId: String,
 
     fun attendEvent() {
         val user = FirebaseAuth.getInstance().currentUser
-        //TODO("NEED TO UPDATE ATTENDEE HERE")
-        activitiesRepository.updateActivityAttendees(activityId, 2) {
-            if (it) user?.email?.let {
-                attendeeRepository.insertAttendees(Attendee(user.uid, it), activityId)
-            } else {
-                //TODO("DISPLAY SOME KIND OF ERROR, COULD NOT ATTEND TRY AGAIN")
+        getActivity().value?.occupiedSeats?.run {
+            val addOneAttendees = this + 1
+            activitiesRepository.updateActivityAttendees(activityId, addOneAttendees) {
+                if (it) user?.email?.let { email ->
+                    attendeeRepository.insertAttendees(Attendee(user.uid, email), activityId)
+                } else {
+                    //TODO("DISPLAY SOME KIND OF ERROR, COULD NOT ATTEND TRY AGAIN")
+                }
             }
         }
+
     }
 
     fun getAttendees() = attendeeLiveData
@@ -37,8 +40,10 @@ class DetailViewModel(private val activityId: String,
     fun deleteAttendee(attendee: Attendee) {
         attendeeRepository.deleteAttendee(activityId, attendee) { value ->
             if (value) {
-                //TODO("NEED TO REMOVE ATTENDEE HERE")
-                activitiesRepository.updateActivityAttendees(activityId, 1)
+                getActivity().value?.occupiedSeats?.run {
+                    val removeOneAttendee = this -1
+                    activitiesRepository.updateActivityAttendees(activityId, removeOneAttendee)
+                }
             }
         }
     }
@@ -47,7 +52,7 @@ class DetailViewModel(private val activityId: String,
 
     fun getActivity() = activities
 
-    fun canDeleteActivity(){}
+    fun canDeleteActivity() {}
 
     fun deleteActivity() {
         activitiesRepository.deleteActivity(activityId) {

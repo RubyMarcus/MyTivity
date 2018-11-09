@@ -17,11 +17,7 @@ fun setDateAttr(view: TextView, value: Long?) {
 
 @BindingAdapter("isGone")
 fun bindIsGone(view: View, isGone: Boolean) {
-    view.visibility = if (isGone) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
+    view.visibility = if (isGone) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("place")
