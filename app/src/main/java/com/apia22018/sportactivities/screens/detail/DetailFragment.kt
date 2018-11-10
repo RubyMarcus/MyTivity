@@ -111,7 +111,7 @@ class DetailFragment : Fragment(), AlertFragment.NoticeDialogListener {
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {
-        print("success")
+        print("success on detail")
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {

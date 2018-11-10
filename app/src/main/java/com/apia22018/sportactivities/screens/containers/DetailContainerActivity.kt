@@ -75,6 +75,7 @@ class DetailContainerActivity : AppCompatActivity(), AlertFragment.NoticeDialogL
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {
+
         print("success")
     }
 
