@@ -30,7 +30,7 @@
             android:tint="@color/common_google_signin_btn_text_dark_focused"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/places_ic_clear" />
+            app:srcCompat="@drawable/ic_delete_activity" />
 
         <TextView
             android:id="@+id/detail_title"
