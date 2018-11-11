@@ -16,6 +16,7 @@
     <string name="message">Message</string>
     <string name="x">X</string>
 
+
     <!-- ROBIN TAPPER -->
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="repeat_password">Repeat password</string>
@@ -26,5 +27,8 @@
     <string name="please_enter_email">Please enter email</string>
     <string name="not_registered">This email is not registered</string>
     <string name="verify_email">Please verify your email</string>
+
+    <!-- Elias -->
+    <string name="join">Join</string>
 
 </resources>

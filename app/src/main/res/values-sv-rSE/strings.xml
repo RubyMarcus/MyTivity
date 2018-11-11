@@ -12,7 +12,6 @@
     <string name="message">Meddelande</string>
     <string name="x">X</string>
 
-
     <!-- ROBIN TAPPER -->
     <string name="forgot_your_password">Glömt ditt lösenord?</string>
     <string name="repeat_password">Upprepa lösenord</string>
@@ -24,5 +23,7 @@
     <string name="not_registered">Den här emailen är inte registrerad</string>
     <string name="verify_email">Verifiera din email</string>
 
+    <!-- Elias -->
+    <string name="join">Gå med</string>
 
 </resources>
