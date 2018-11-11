@@ -13,7 +13,9 @@ import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.databinding.MessageListFragmentBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
+import com.apia22018.sportactivities.utils.hideKeyboard
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.message_list_fragment.*
 
 class MessageFragment : Fragment() {
     private lateinit var viewModel: MessageViewModel
@@ -41,13 +43,19 @@ class MessageFragment : Fragment() {
         this.viewModel.getMessages().observe(this, Observer {
             if (it != null && it.isNotEmpty()) {
                 adapter.setMessages(it)
+                messages_recycler_view.scrollToPosition(it.size-1)
             }
         })
 
         this.viewModel.createMessage.observe(this, Observer {
             if (it != null && it) {
                 val user = FirebaseAuth.getInstance().currentUser
-                val text = view.findViewById<EditText>(R.id.message_text_input).text.toString()
+                val textInput = view.findViewById<EditText>(R.id.message_text_input)
+                val text = textInput.text.toString()
+                textInput.text?.clear()
+                textInput.clearFocus()
+                view.hideKeyboard()
+
                 user?.email?.let {
                     viewModel.postMessage(text, it)
                 }

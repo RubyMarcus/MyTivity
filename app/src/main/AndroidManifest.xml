@@ -8,15 +8,16 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/icon_on_bakgrund"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/icon_on_bakgrund"
+        android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.containers.DashboardContainerActivity"/>
+        <activity android:name=".screens.containers.DashboardContainerActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".screens.splash.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,11 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.add.AddActivity" />
-        <activity android:name=".screens.containers.DetailContainerActivity" />
-        <activity android:name=".screens.login.LoginActivity" />
-        <activity android:name=".screens.forgotPassword.ForgotPasswordActivity"/>
-        <activity android:name=".screens.signUp.SignUpActivity"/>
+        <activity android:name=".screens.add.AddActivity" android:screenOrientation="portrait" />
+        <activity android:name=".screens.containers.DetailContainerActivity" android:screenOrientation="portrait" />
+        <activity android:name=".screens.login.LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".screens.forgotPassword.ForgotPasswordActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".screens.signUp.SignUpActivity" android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_place_api" />

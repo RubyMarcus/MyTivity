@@ -44,8 +44,14 @@ class DetailContainerActivity : AppCompatActivity(), AlertFragment.NoticeDialogL
 
         supportActionBar?.apply {
             title = "TITLE"
+            subtitle = "OPTIONAL SUBTITLE?"
         }
 
+        tabs(activities)
+
+    }
+
+    private fun tabs(activities: Activities){
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
@@ -56,7 +62,7 @@ class DetailContainerActivity : AppCompatActivity(), AlertFragment.NoticeDialogL
                         loadFragment(MessageFragment.newInstance(activities))
                     }
                     2 -> {
-                        loadFragment(MapFragment.newInstance())
+                        loadFragment(MapFragment.newInstance(activities))
                     }
                 }
             }
@@ -68,9 +74,8 @@ class DetailContainerActivity : AppCompatActivity(), AlertFragment.NoticeDialogL
         loadFragment(DetailFragment.newInstance(activities.activityId))
     }
 
-    //TODO("NEEDS OWN TOOLBAR DESIGN MENU ThING)
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        menuInflater.inflate(R.menu.toolbar_detail, menu)
         return true
     }
 

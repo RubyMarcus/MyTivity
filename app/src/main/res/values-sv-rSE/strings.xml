@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SportActivities</string>
+    <string name="empty_spots">Lediga platser</string>
+    <string name="title_activity_maps_activitys">Karta</string>
+    <string name="email">Mail</string>
+    <string name="password">Lösenord</string>
+    <string name="login_title">Inlogning</string>
+    <string name="create_account">Skapa konto</string>
+    <string name="map">Karta</string>
+    <string name="list">Lista</string>
+    <string name="message">Meddelande</string>
+    <string name="x">X</string>
+    <string name="yes">Ja</string>
+    <string name="cancel">Avbryt</string>
+    <string name="stand_in">Är du säker?</string>
+    <string name="detail_message">Är du säker på att du vill gå med i aktiviteten?</string>
+</resources>

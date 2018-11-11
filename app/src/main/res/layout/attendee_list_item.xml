@@ -19,31 +19,49 @@
 
         <TextView
             android:id="@+id/attendee_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
-            android:textSize="18sp"
             android:text="@{attendee.userName}"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/attendee_btn_delete"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="johan" />
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/attendee_btn_delete"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@android:color/holo_red_light"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@android:color/holo_red_light"
-            android:text="X"
-            android:visibility="@{viewModel.canDelete(attendee.uid), default=gone}"
+            android:clickable="true"
+            android:focusable="true"
+            app:fabCustomSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/attendee_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/attendee_name"
+            app:srcCompat="@drawable/places_ic_clear"
             android:onClick="@{()->viewModel.deleteAttendee(attendee)}"
+            android:tint="@color/colorPrimaryDark"
+            android:visibility="@{viewModel.canRemoveAttendee(attendee.uid), default=gone}" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/attendee_name" />
+
     </android.support.constraint.ConstraintLayout>
 </layout>

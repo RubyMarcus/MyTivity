@@ -30,25 +30,29 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorAccent"
-            app:tabIconTint="@color/colorAccent">
+            app:tabIndicatorColor="@drawable/nav_indicator_color"
+            app:tabIconTint="@drawable/nav_indicator_color"
+            app:tabTextColor="@drawable/nav_indicator_color">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/activity_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Activity"
                 android:icon="@drawable/ic_local_activity" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/message_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Message"
                 android:icon="@drawable/ic_message" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/map_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Map"
                 android:icon="@drawable/ic_map"/>
 
         </android.support.design.widget.TabLayout>

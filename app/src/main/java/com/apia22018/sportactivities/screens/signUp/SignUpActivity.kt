@@ -21,6 +21,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private var etEmail: EditText? = null
     private var etPassword: EditText? = null
+    private var etRepeatPassword: EditText? = null
     private var btnCreateAccount: Button? = null
 
     private val TAG = "CreateAccountActivity"
@@ -28,6 +29,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private var email: String? = null
     private var password: String? = null
+    private var repeatpassword: String? = null
 
     //Firebase-referenser
     private var mDatabaseReference: DatabaseReference? = null
@@ -45,6 +47,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun initialise() {
         etEmail = findViewById<View>(R.id.emailField) as EditText
         etPassword = findViewById<View>(R.id.passwordField) as EditText
+        etRepeatPassword = findViewById<View>(R.id.repeatPasswordField) as EditText
         btnCreateAccount = findViewById<View>(R.id.signUpButton) as Button
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference!!.child("Users")
@@ -56,8 +59,9 @@ class SignUpActivity : AppCompatActivity() {
     private fun createNewAccount() {
         email = etEmail?.text.toString()
         password = etPassword?.text.toString()
+        repeatpassword = etRepeatPassword?.text.toString()
 
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(repeatpassword)){
 
             mAuth!!
                     .createUserWithEmailAndPassword(email!!, password!!)
@@ -117,6 +121,5 @@ class SignUpActivity : AppCompatActivity() {
             context.startActivity(Intent(context, SignUpActivity::class.java))
         }
     }
-
 }
 

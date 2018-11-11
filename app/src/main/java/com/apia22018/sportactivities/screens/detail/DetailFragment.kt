@@ -22,35 +22,26 @@ class DetailFragment : Fragment(), AlertFragment.NoticeDialogListener {
 
 
     private lateinit var viewModel: DetailViewModel
-    private lateinit var binding: DetailFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         val bundle = arguments ?: Bundle()
         val activityId: String = bundle.getString(VALUE) ?: ""
 
-        binding = DetailFragmentBinding.inflate(inflater, container, false)
+        val binding = DetailFragmentBinding.inflate(inflater, container, false)
         val factory = InjectorUtils.provideDetailViewModelFactory(activityId)
         viewModel = ViewModelProviders.of(this, factory)
                 .get(DetailViewModel::class.java)
 
+        val adapter = DetailAttendeeAdapter(viewModel)
+
+        binding.attendeeList.layoutManager = LinearLayoutManager(activity)
+        binding.attendeeList.adapter = adapter
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
-        return binding.root
-    }
+        subscribeUI(binding, adapter)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val adapter = DetailAttendeeAdapter(viewModel)
-
-        val list = binding.attendeeList
-        list.layoutManager = LinearLayoutManager(activity)
-        list.adapter = adapter
-
-        subscribeUI(adapter)
 
         join_event.setOnClickListener{
 
@@ -78,12 +69,28 @@ class DetailFragment : Fragment(), AlertFragment.NoticeDialogListener {
         }
 
 
+        return binding.root
+
     }
 
-    private fun subscribeUI(adapter: DetailAttendeeAdapter) {
+    private fun subscribeUI(binding: DetailFragmentBinding, adapter: DetailAttendeeAdapter) {
         this.viewModel.getAttendees().observe(this, Observer {
             if (it != null && it.isNotEmpty()) {
                 adapter.setAttendees(it)
+            }
+        })
+
+        this.viewModel.getActivity().observe(this, Observer {
+            if (it != null) {
+                binding.activity = it
+            }
+        })
+
+        this.viewModel.removeActivity.observe(this, Observer {
+            if (it != null && it) {
+                activity?.run {
+                    finish()
+                }
             }
         })
     }

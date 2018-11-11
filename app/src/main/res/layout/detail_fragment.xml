@@ -5,6 +5,10 @@
 
     <data>
         <variable
+            name="activity"
+            type="com.apia22018.sportactivities.data.activities.Activities"/>
+
+        <variable
             name="viewModel"
             type="com.apia22018.sportactivities.screens.detail.DetailViewModel"/>
     </data>
@@ -21,56 +25,36 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:contentDescription="edit_activity"
+            android:onClick="@{() -> viewModel.deleteActivity()}"
             android:tint="@color/common_google_signin_btn_text_dark_focused"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_edit" />
+            app:srcCompat="@drawable/places_ic_clear" />
 
         <TextView
             android:id="@+id/detail_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="@{viewModel.activity.title}"
+            android:text="@{activity.title}"
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Johan" />
-
-        <TextView
-            android:id="@+id/detail_description"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@{viewModel.activity.description}"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_address" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/description_guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.55" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/detail_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@{viewModel.activity.city}"
+            android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:address="@{activity}"
             app:layout_constraintEnd_toStartOf="@+id/detail_date"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -81,10 +65,10 @@
             android:id="@+id/detail_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
+            android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:date="@{viewModel.activity.activityDate}"
+            app:date="@{activity.activityDate}"
             app:layout_constraintBottom_toBottomOf="@+id/detail_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -92,28 +76,48 @@
             app:layout_constraintTop_toTopOf="@+id/detail_address" />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="15dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="24dp"
-            android:text="Empty seats"
-            app:layout_constraintBottom_toTopOf="@+id/attendee_list"
+            android:id="@+id/detail_description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@{activity.description}"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/description_guideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail_address" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/join_event"
+        <android.support.constraint.Guideline
+            android:id="@+id/description_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:onClick="@{() -> viewModel.attendEvent()}"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_constraintBottom_toTopOf="@+id/attendee_list"
+            android:text="@{activity.emptySeaterinos()}"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/outline_add_black_48dp" />
+            app:layout_constraintTop_toTopOf="@+id/description_guideline" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Attending"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/description_guideline" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/attendee_list"
@@ -129,6 +133,19 @@
         app:layout_constraintTop_toTopOf="@+id/description_guideline"
         tools:listitem="@layout/attendee_list_item" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/join_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:onClick="@{() -> viewModel.attendEvent()}"
+            app:layout_constraintBottom_toBottomOf="@+id/attendee_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/outline_add_black_48dp" />
 
 </android.support.constraint.ConstraintLayout>
 </layout>
