@@ -30,5 +30,6 @@
 
     <!-- Elias -->
     <string name="join">Join</string>
+    <string name="spots_text">Empty spots left:</string>
 
 </resources>
