@@ -69,6 +69,7 @@ class DetailFragment : Fragment(), AlertFragment.NoticeDialogListener {
         }
 
 
+
         return binding.root
 
     }
