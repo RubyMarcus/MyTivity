@@ -45,6 +45,7 @@
             app:layout_constraintTop_toTopOf="@+id/attendee_name"
             app:srcCompat="@drawable/ic_cancel_black_24dp"
             android:backgroundTint="@color/icon_background"
+            android:tint="@color/colorPrimary"
             android:onClick="@{()->viewModel.deleteAttendee(attendee)}"
             android:visibility="@{viewModel.canRemoveAttendee(attendee.uid), default=gone}" />
 

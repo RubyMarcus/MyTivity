@@ -24,6 +24,7 @@
     <string name="verify_email">Verifiera din email</string>
 
     <!-- Elias -->
-    <string name="join">Gå med</string>
+    <string name="join">GÅ MED</string>
+    <string name="spots_text">Platser kvar:</string>
 
 </resources>

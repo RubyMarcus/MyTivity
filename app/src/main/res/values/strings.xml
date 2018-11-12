@@ -29,7 +29,7 @@
     <string name="verify_email">Please verify your email</string>
 
     <!-- Elias -->
-    <string name="join">Join</string>
+    <string name="join">JOIN</string>
     <string name="spots_text">Empty spots left:</string>
 
 </resources>
