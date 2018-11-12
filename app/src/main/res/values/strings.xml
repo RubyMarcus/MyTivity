@@ -15,4 +15,11 @@
     <string name="list">List</string>
     <string name="message">Message</string>
     <string name="x">X</string>
+
+    <!-- ROBIN TAPPER -->
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="reset_password">Reset password</string>
+    <string name="enter_email">enter email..</string>
 </resources>

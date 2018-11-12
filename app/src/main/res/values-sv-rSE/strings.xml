@@ -11,4 +11,10 @@
     <string name="list">Lista</string>
     <string name="message">Meddelande</string>
     <string name="x">X</string>
+    <string name="forgot_your_password">Glömt ditt lösenord?</string>
+    <string name="repeat_password">Upprepa lösenord</string>
+    <string name="sign_up">Registrera dig</string>
+    <string name="reset_password">Återställ lösenord</string>
+    <string name="enter_email">skriv email..</string>
+
 </resources>
