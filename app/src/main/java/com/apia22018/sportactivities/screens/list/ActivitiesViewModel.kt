@@ -16,4 +16,8 @@ class ActivitiesViewModel(private val activitiesRepository: ActivitiesRepository
     }
 
     fun getActivities() = activitiesList
+
+    fun stopLoading() {
+        isLoading.set(false)
+    }
 }

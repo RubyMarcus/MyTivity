@@ -46,21 +46,6 @@ class MessageFragment : Fragment() {
                 messages_recycler_view.scrollToPosition(it.size-1)
             }
         })
-
-        this.viewModel.createMessage.observe(this, Observer {
-            if (it != null && it) {
-                val user = FirebaseAuth.getInstance().currentUser
-                val textInput = view.findViewById<EditText>(R.id.message_text_input)
-                val text = textInput.text.toString()
-                textInput.text?.clear()
-                textInput.clearFocus()
-                view.hideKeyboard()
-
-                user?.email?.let {
-                    viewModel.postMessage(text, it)
-                }
-            }
-        })
     }
 
     companion object {

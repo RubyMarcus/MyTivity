@@ -1,8 +1,13 @@
 package com.apia22018.sportactivities.utils
 
+import android.content.Context
 import android.databinding.BindingAdapter
 import android.location.Address
+import android.support.design.widget.TextInputEditText
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
 import com.apia22018.sportactivities.data.activities.Activities
 import java.text.SimpleDateFormat
