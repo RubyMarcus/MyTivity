@@ -21,6 +21,7 @@ class DetailViewModel(private val activity: Activities,
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
     val removeActivity = SingleLiveEvent<Boolean>()
     val isLoading: ObservableBoolean = ObservableBoolean(true)
+    val canJoinEvent: ObservableBoolean = ObservableBoolean(false)
 
     fun attendEvent() {
         val user = FirebaseAuth.getInstance().currentUser
@@ -43,7 +44,7 @@ class DetailViewModel(private val activity: Activities,
         attendeeRepository.deleteAttendee(activity.activityId, attendee) { value ->
             if (value) {
                 getActivity().value?.occupiedSeats?.run {
-                    val removeOneAttendee = this -1
+                    val removeOneAttendee = this - 1
                     activitiesRepository.updateActivityAttendees(activity.activityId, removeOneAttendee)
                 }
             }
@@ -64,6 +65,14 @@ class DetailViewModel(private val activity: Activities,
                 //TODO("ERROR KUNDE INTE TA BORT AKTIVIET")
             }
         }
+    }
+
+    fun checkIfUserCanJoinEvent(attending: List<Attendee>) {
+        FirebaseAuth.getInstance().currentUser?.email.also { email ->
+            val userCanJoin = !attending.any { it.userName == email} && (attending.size + 1) <= activity.totalSeats
+            canJoinEvent.set(userCanJoin)
+        }
+
     }
 
     fun stopSpinner() {

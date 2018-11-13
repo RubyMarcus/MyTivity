@@ -43,6 +43,7 @@ class DetailFragment : Fragment() {
         this.viewModel.getAttendees().observe(this, Observer {
             if (it != null && it.isNotEmpty()) {
                 adapter.setAttendees(it)
+                viewModel.checkIfUserCanJoinEvent(it)
             }
         })
 
