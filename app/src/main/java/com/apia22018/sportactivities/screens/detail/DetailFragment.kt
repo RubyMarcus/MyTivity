@@ -8,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.databinding.DetailFragmentBinding
+import com.apia22018.sportactivities.screens.containers.DetailContainerActivity
 import com.apia22018.sportactivities.utils.InjectorUtils
 
 class DetailFragment : Fragment() {
@@ -17,10 +19,11 @@ class DetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val bundle = arguments ?: Bundle()
-        val activityId: String = bundle.getString(VALUE) ?: ""
+        val activities: Activities = bundle.getParcelable(DetailFragment.VALUE) ?: Activities()
+
 
         val binding = DetailFragmentBinding.inflate(inflater, container, false)
-        val factory = InjectorUtils.provideDetailViewModelFactory(activityId)
+        val factory = InjectorUtils.provideDetailViewModelFactory(activities)
         viewModel = ViewModelProviders.of(this, factory)
                 .get(DetailViewModel::class.java)
 
@@ -61,9 +64,9 @@ class DetailFragment : Fragment() {
 
     companion object {
         private const val VALUE = "value"
-        fun newInstance(activityId: String) = DetailFragment().apply {
+        fun newInstance(activity: Activities) = DetailFragment().apply {
             arguments = Bundle().apply {
-                putString(VALUE, activityId)
+                putParcelable(VALUE, activity)
             }
         }
     }

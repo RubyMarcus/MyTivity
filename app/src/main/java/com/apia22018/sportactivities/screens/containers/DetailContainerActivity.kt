@@ -52,7 +52,7 @@ class DetailContainerActivity : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
-                        loadFragment(DetailFragment.newInstance(activities.activityId))
+                        loadFragment(DetailFragment.newInstance(activities))
                     }
                     1 -> {
                         loadFragment(MessageFragment.newInstance(activities))
@@ -67,7 +67,7 @@ class DetailContainerActivity : AppCompatActivity() {
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
         })
 
-        loadFragment(DetailFragment.newInstance(activities.activityId))
+        loadFragment(DetailFragment.newInstance(activities))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
