@@ -41,7 +41,7 @@ class MessageFragment : Fragment() {
 
     private fun subscribeUI(adapter: MessageAdapter, view: View) {
         this.viewModel.getMessages().observe(this, Observer {
-            if (it != null && it.isNotEmpty()) {
+            if (it != null) {
                 adapter.setMessages(it)
                 messages_recycler_view.scrollToPosition(it.size-1)
             }

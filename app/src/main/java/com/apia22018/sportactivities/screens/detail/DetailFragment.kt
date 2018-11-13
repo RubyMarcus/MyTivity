@@ -41,7 +41,7 @@ class DetailFragment : Fragment() {
 
     private fun subscribeUI(binding: DetailFragmentBinding, adapter: DetailAttendeeAdapter) {
         this.viewModel.getAttendees().observe(this, Observer {
-            if (it != null && it.isNotEmpty()) {
+            if (it != null) {
                 adapter.setAttendees(it)
                 viewModel.checkIfUserCanJoinEvent(it)
             }
