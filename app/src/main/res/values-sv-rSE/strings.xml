@@ -15,4 +15,9 @@
     <string name="cancel">Avbryt</string>
     <string name="stand_in">Är du säker?</string>
     <string name="detail_message">Är du säker på att du vill gå med i aktiviteten?</string>
+    <string name="forgot_your_password">Glömt ditt lösenord?</string>
+    <string name="repeat_password">Upprepa lösenord</string>
+    <string name="sign_up">Registrera dig</string>
+    <string name="reset_password">Återställ lösenord</string>
+    <string name="enter_email">skriv email..</string>
 </resources>

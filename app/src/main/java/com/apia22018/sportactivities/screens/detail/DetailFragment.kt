@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil.setContentView
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -47,25 +48,6 @@ class DetailFragment : Fragment(), AlertFragment.NoticeDialogListener {
 
             confirmAlert(R.string.detail_message)
 
-            /*val alertDialog: AlertDialog? = activity?.let {
-                val builder = AlertDialog.Builder(it)
-                builder.apply {
-                    setPositiveButton("Yes"
-                    ) { dialog, id ->
-
-                    }
-                    setNegativeButton("Cancel"
-                    ) { dialog, id ->
-                        print("Cancelled")
-                    }
-                }
-
-                builder.setMessage("Are you sure you want to join this activity?")
-
-                // Create the AlertDialog
-                builder.show()
-            }
-            */
         }
 
 
@@ -110,12 +92,7 @@ class DetailFragment : Fragment(), AlertFragment.NoticeDialogListener {
         newFragment.message = message
 
         newFragment.show(fragmentManager, "alert")
-    }
 
-    fun showNoticeDialog() {
-        // Create an instance of the dialog fragment and show it
-        val dialog = AlertFragment()
-        dialog.show(fragmentManager, "NoticeDialogFragment")
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {

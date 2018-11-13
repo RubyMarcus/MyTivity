@@ -86,6 +86,7 @@ class DetailContainerActivity : AppCompatActivity(), AlertFragment.NoticeDialogL
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {
 
+        print("no success")
     }
 
 }
