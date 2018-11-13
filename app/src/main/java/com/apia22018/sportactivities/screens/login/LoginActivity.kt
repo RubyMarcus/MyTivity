@@ -18,6 +18,7 @@ import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.screens.containers.DashboardContainerActivity
 import com.apia22018.sportactivities.screens.forgotPassword.ForgotPasswordActivity
 import com.apia22018.sportactivities.screens.signUp.SignUpActivity
+import com.apia22018.sportactivities.utils.hideKeyboard
 import com.apia22018.sportactivities.utils.showSnackbar
 import com.google.firebase.auth.FirebaseAuth
 
@@ -43,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
+
 
         initialise()
     }
@@ -93,12 +95,11 @@ class LoginActivity : AppCompatActivity() {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, "signInWithEmail:failure", task.exception)
-                            Toast.makeText(this@LoginActivity, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show()
+                                tvForgotPassword?.showSnackbar(getString(R.string.wrong_email_password),Snackbar.LENGTH_SHORT)
                         }
                     }
         } else {
-            Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
+            tvForgotPassword?.showSnackbar(getString(R.string.enter_email_password),Snackbar.LENGTH_SHORT)
         }
     }
 
