@@ -9,9 +9,9 @@ import android.view.inputmethod.InputMethodManager
 import com.apia22018.sportactivities.R
 import com.google.firebase.auth.FirebaseAuth
 
-fun showSnackbar(view: View, message: String, duration: Int = Snackbar.LENGTH_SHORT) {
-    Snackbar.make(view, message, duration).show()
-}
+//fun showSnackbar(view: View, message: String, duration: Int = Snackbar.LENGTH_SHORT) {
+//    Snackbar.make(view, message, duration).show()
+//}
 
 fun isNullOrEmpty(str: String?): Boolean {
     if (str != null && !str.isEmpty())
@@ -37,9 +37,9 @@ fun View.hideKeyboard(): Boolean {
     return false
 }
 
-//fun View.showSnackbar(snackbarText: String, timeLength: Int) {
-//    Snackbar.make(this, snackbarText, timeLength).show()
-//}
+fun View.showSnackbar(snackbarText: String, timeLength: Int) {
+    Snackbar.make(this, snackbarText, timeLength).show()
+}
 
 //Useful extensions
 //http://kotlinextensions.com

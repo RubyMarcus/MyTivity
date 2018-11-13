@@ -3,6 +3,7 @@ package com.apia22018.sportactivities.screens.detail
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.databinding.DetailFragmentBinding
 import com.apia22018.sportactivities.screens.containers.DetailContainerActivity
 import com.apia22018.sportactivities.utils.InjectorUtils
+import com.apia22018.sportactivities.utils.showSnackbar
 
 class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
@@ -59,6 +61,12 @@ class DetailFragment : Fragment() {
                 activity?.run {
                     finish()
                 }
+            }
+        })
+
+        this.viewModel.displaySnackBar.observe(this, Observer {
+            if (it != null) {
+                binding.root.showSnackbar(it, Snackbar.LENGTH_LONG)
             }
         })
     }

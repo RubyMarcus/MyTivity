@@ -20,6 +20,7 @@ class DetailViewModel(private val activity: Activities,
     private val activities: LiveData<Activities> = activitiesRepository.readActivity(activity.activityId)
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
     val removeActivity = SingleLiveEvent<Boolean>()
+    val displaySnackBar = SingleLiveEvent<String>()
     val isLoading: ObservableBoolean = ObservableBoolean(true)
     val canJoinEvent: ObservableBoolean = ObservableBoolean(false)
 
@@ -31,7 +32,7 @@ class DetailViewModel(private val activity: Activities,
                 if (it) user?.email?.let { email ->
                     attendeeRepository.insertAttendees(Attendee(user.uid, email), activity.activityId)
                 } else {
-                    //TODO("DISPLAY SOME KIND OF ERROR, COULD NOT ATTEND TRY AGAIN")
+                    displaySnackBar.postValue("Failed to attend event, try again later!")
                 }
             }
         }
@@ -62,7 +63,7 @@ class DetailViewModel(private val activity: Activities,
             if (it) {
                 removeActivity.postValue(it)
             } else {
-                //TODO("ERROR KUNDE INTE TA BORT AKTIVIET")
+                displaySnackBar.postValue("Failed to remove event, try again!")
             }
         }
     }

@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 class MessageViewModel(private val messageRepository: MessageRepository, private val activity: Activities) : ObservableViewModel() {
     private val messagesLiveData: LiveData<List<Message>> = messageRepository.getMessages(activity.activityId)
     private val user = FirebaseAuth.getInstance().currentUser
+    val displaySnackBar = SingleLiveEvent<String>()
 
     var inputText: String = ""
         @Bindable get() {
@@ -39,7 +40,7 @@ class MessageViewModel(private val messageRepository: MessageRepository, private
             messageRepository.createMessage(activity.activityId, message)
             inputText = ""
         } else {
-            //TODO(DISPLAY SNACKBAR MESSAGE WITH SOME ERROR``!??!)
+            displaySnackBar.postValue("Could not post message, try again!")
         }
     }
 
