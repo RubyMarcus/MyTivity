@@ -2,6 +2,7 @@ package com.apia22018.sportactivities.screens.detail
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import android.databinding.ObservableBoolean
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.apia22018.sportactivities.data.activities.Activities
@@ -19,6 +20,7 @@ class DetailViewModel(private val activityId: String,
     private val activities: LiveData<Activities> = activitiesRepository.readActivity(activityId)
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
     val removeActivity = SingleLiveEvent<Boolean>()
+    val isLoading: ObservableBoolean = ObservableBoolean(true)
 
     fun attendEvent() {
         val user = FirebaseAuth.getInstance().currentUser
@@ -62,6 +64,10 @@ class DetailViewModel(private val activityId: String,
                 //TODO("ERROR KUNDE INTE TA BORT AKTIVIET")
             }
         }
+    }
+
+    fun stopSpinner() {
+        isLoading.set(false)
     }
 
 }

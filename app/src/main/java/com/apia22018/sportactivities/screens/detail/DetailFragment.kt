@@ -46,6 +46,7 @@ class DetailFragment : Fragment() {
         this.viewModel.getActivity().observe(this, Observer {
             if (it != null) {
                 binding.activity = it
+                viewModel.stopSpinner()
             }
         })
 

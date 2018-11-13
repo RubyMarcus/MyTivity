@@ -146,5 +146,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/outline_add_black_48dp" />
 
+        <ProgressBar
+            android:id="@+id/detail_spinner"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isGone="@{viewModel.isLoading}"
+            app:layout_constraintBottom_toBottomOf="@+id/attendee_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 </layout>
