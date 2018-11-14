@@ -12,15 +12,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.screens.containers.DashboardContainerActivity
-import com.apia22018.sportactivities.screens.forgotPassword.ForgotPasswordActivity
+import com.apia22018.sportactivities.screens.forgotpassword.ForgotPasswordActivity
 import com.apia22018.sportactivities.screens.signUp.SignUpActivity
-import com.apia22018.sportactivities.utils.hideKeyboard
 import com.apia22018.sportactivities.utils.showSnackbar
 import com.google.firebase.auth.FirebaseAuth
-import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
 
