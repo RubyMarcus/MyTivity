@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -94,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, "signInWithEmail:failure", task.exception)
-                                tvForgotPassword?.showSnackbar(getString(R.string.wrong_email_password),Snackbar.LENGTH_SHORT)
+                                tvForgotPassword?.showSnackbar(getString(R.string.wrong_email_password), Snackbar.LENGTH_SHORT)
                         }
                     }
         } else {

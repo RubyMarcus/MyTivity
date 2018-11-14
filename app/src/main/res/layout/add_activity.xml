@@ -65,7 +65,7 @@
                         android:id="@+id/eventname_add_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Event name"
+                        android:hint="@string/hint_event_name"
                         android:maxLength="15"
                         android:inputType="textCapSentences"
                         android:singleLine="true"
@@ -90,7 +90,7 @@
                         android:id="@+id/description_add_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Description"
+                        android:hint="@string/hint_description"
                         android:singleLine="false" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -114,7 +114,7 @@
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                         android:onClick="@{() -> viewModel.showCreatePlacePickerDialog()}"
                         android:focusableInTouchMode="false"
-                        android:hint="Location"
+                        android:hint="@string/hint_location"
                         app:place="@{viewModel.place}" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -138,7 +138,7 @@
                         android:onClick="@{() -> viewModel.showCreateDatePickerDialog()}"
                         android:focusableInTouchMode="false"
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:hint="Date"
+                        android:hint="@string/hint_Date"
                         android:text="@{viewModel.date}"/>
                 </android.support.design.widget.TextInputLayout>
 
@@ -161,7 +161,7 @@
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                         android:focusableInTouchMode="false"
                         android:onClick="@{() -> viewModel.showCreateTimePickerDialog()}"
-                        android:hint="Time"
+                        android:hint="@string/hint_time"
                         android:text="@{viewModel.time}"/>
                 </android.support.design.widget.TextInputLayout>
 
@@ -184,7 +184,7 @@
                         android:id="@+id/spots_add_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="How many people?"
+                        android:hint="@string/hint_how_many_people"
                         android:inputType="number"
                         android:maxLength="2"
                         android:singleLine="true" />

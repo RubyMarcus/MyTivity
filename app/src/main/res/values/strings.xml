@@ -32,4 +32,17 @@
     <string name="join">JOIN</string>
     <string name="spots_text">Empty spots left:</string>
 
+    <string name="hint_event_name">Event name</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_location">Location</string>
+    <string name="hint_Date">Date</string>
+    <string name="hint_time">Time</string>
+    <string name="hint_how_many_people">How many people?</string>
+    <string name="activity">Activity</string>
+    <string name="edit_activity">Edit activity</string>
+    <string name="attending">Attending</string>
+    <string name="save">Save</string>
+    <string name="messages">Messages</string>
+    <string name="logout">Logout</string>
+
 </resources>
