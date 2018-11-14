@@ -103,7 +103,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
             viewModel.getActivity(it.tag as String)?.also { activities ->
                 DetailContainerActivity.start(this.requireContext(), activities)
             }
-
         }
     }
 

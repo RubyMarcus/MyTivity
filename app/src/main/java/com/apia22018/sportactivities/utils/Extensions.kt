@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import com.apia22018.sportactivities.R
 import com.google.firebase.auth.FirebaseAuth
+import java.util.regex.Pattern
 
 fun AppCompatActivity.loadFragment(fragment: Fragment) {
     supportFragmentManager
@@ -29,6 +30,17 @@ fun View.hideKeyboard(): Boolean {
 
 fun View.showSnackbar(snackbarText: String, timeLength: Int) {
     Snackbar.make(this, snackbarText, timeLength).show()
+}
+
+fun isEmailValid(email: String): Boolean {
+    return Pattern.compile(
+            "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]|[\\w-]{2,}))@"
+                    + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                    + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                    + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                    + "[0-9]{1,2}|25[0-5]|2[0-4][0-9]))|"
+                    + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$"
+    ).matcher(email).matches()
 }
 
 //Useful extensions

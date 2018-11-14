@@ -13,10 +13,12 @@ import android.widget.EditText
 import android.widget.Toast
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.screens.login.LoginActivity
+import com.apia22018.sportactivities.utils.isEmailValid
 import com.apia22018.sportactivities.utils.showSnackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.util.regex.Pattern
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -57,12 +59,18 @@ class SignUpActivity : AppCompatActivity() {
         btnCreateAccount!!.setOnClickListener { createNewAccount() }
     }
 
-
     private fun validateForm(): Boolean {
         var valid = true
         val email = etEmail?.text.toString()
+        if (!isEmailValid(email)) {
+            etEmail?.error = "Invalid email."
+            valid = false
+        }
         if (TextUtils.isEmpty(email)) {
             etEmail?.error = "Required."
+            valid = false
+        } else if (!isEmailValid(email)){
+            etEmail?.error = "Invalid email"
             valid = false
         } else {
             etEmail?.error = null
@@ -117,6 +125,7 @@ class SignUpActivity : AppCompatActivity() {
                             val currentUserDb = mDatabaseReference!!.child(userId)
                             currentUserDb.child("userName").setValue(username)
                             */
+                            finish()
                             LoginActivity.start(this)
                         } else {
                             // Signin fail meddelande
@@ -128,7 +137,6 @@ class SignUpActivity : AppCompatActivity() {
         } else {
             etEmail?.showSnackbar(getString(R.string.enter_email_password),Snackbar.LENGTH_SHORT)
         }
-finish()
     }
 
     private fun verifyEmail() {
