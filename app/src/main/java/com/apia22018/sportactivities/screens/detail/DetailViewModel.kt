@@ -19,29 +19,29 @@ class DetailViewModel(private val activity: Activities,
     private val attendeeLiveData = attendeeRepository.getAttendees(activity.activityId)
     private val activities: LiveData<Activities> = activitiesRepository.readActivity(activity.activityId)
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
-    val removeActivity = SingleLiveEvent<Boolean>()
     val displaySnackBar = SingleLiveEvent<String>()
     val displayDialog = SingleLiveEvent<Boolean>()
     val isLoading: ObservableBoolean = ObservableBoolean(true)
     val canJoinEvent: ObservableBoolean = ObservableBoolean(false)
 
     fun attendEvent() {
-        showDialog()
+        canJoinEvent.set(false)
         val user = FirebaseAuth.getInstance().currentUser
         getActivity().value?.occupiedSeats?.run {
             val addOneAttendees = this + 1
             activitiesRepository.updateActivityAttendees(activity.activityId, addOneAttendees) {
                 if (it) user?.email?.let { email ->
                     attendeeRepository.insertAttendees(Attendee(user.uid, email), activity.activityId)
+                    useSnackbar("You joined the event!!")
                 } else {
-                    displaySnackBar.postValue("Failed to attend event, try again later!")
+                    useSnackbar("Failed to attend event, try again later!")
                 }
             }
 
         }
     }
 
-    private fun showDialog() = displayDialog.postValue(true)
+    fun showDialog() = displayDialog.postValue(true)
 
     fun getAttendees() = attendeeLiveData
 
@@ -50,7 +50,9 @@ class DetailViewModel(private val activity: Activities,
             if (value) {
                 getActivity().value?.occupiedSeats?.run {
                     val removeOneAttendee = this - 1
-                    activitiesRepository.updateActivityAttendees(activity.activityId, removeOneAttendee)
+                    activitiesRepository.updateActivityAttendees(activity.activityId, removeOneAttendee).run {
+                        useSnackbar("You have now left the event!")
+                    }
                 }
             }
         }
@@ -62,12 +64,12 @@ class DetailViewModel(private val activity: Activities,
 
     fun canDeleteActivity(): Boolean = activity.createdBy == currentUserUid
 
-    fun deleteActivity() {
+    fun deleteActivity(complete: (Boolean) -> Unit = {}) {
         activitiesRepository.deleteActivity(activity.activityId) {
             if (it) {
-                removeActivity.postValue(it)
+                complete(true)
             } else {
-                displaySnackBar.postValue("Failed to remove event, try again!")
+                useSnackbar("Could not remove activity try again!!")
             }
         }
     }
@@ -82,6 +84,10 @@ class DetailViewModel(private val activity: Activities,
 
     fun stopSpinner() {
         isLoading.set(false)
+    }
+
+    private fun useSnackbar(text: String){
+        displaySnackBar.postValue(text)
     }
 
 }

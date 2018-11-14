@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.databinding.DetailFragmentBinding
@@ -58,14 +59,6 @@ class DetailFragment : Fragment() {
             }
         })
 
-        this.viewModel.removeActivity.observe(this, Observer {
-            if (it != null && it) {
-                activity?.run {
-                    finish()
-                }
-            }
-        })
-
         this.viewModel.displaySnackBar.observe(this, Observer {
             if (it != null) {
                 displaySnackbar(binding.root, it, Snackbar.LENGTH_LONG)
@@ -74,28 +67,36 @@ class DetailFragment : Fragment() {
 
         this.viewModel.displayDialog.observe(this, Observer {
             if (it != null && it) {
-                showCreateDialog()
+                showCreateDialog("Are you sure you want to delete the event?")
             }
         })
+    }
+
+    private fun closeFragment(){
+        activity?.run {
+            finish()
+        }
     }
 
     private fun displaySnackbar(view: View, text: String, length: Int) {
         view.showSnackbar(text, length)
     }
 
-    private fun showCreateDialog() {
+    private fun showCreateDialog(textInfo: String) {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Add user")
+        builder.setTitle("Remove Activity")
         val view = layoutInflater.inflate(R.layout.dialog, null)
         builder.setView(view)
-        val firstNameView = view.findViewById(R.id.firstName) as TextInputEditText
-        val lastNameView = view.findViewById(R.id.lastName) as TextInputEditText
+        val firstNameView = view.findViewById(R.id.dialogInfo) as TextView
+        firstNameView.text = textInfo
         builder.setPositiveButton(android.R.string.ok) { _, _ ->
-
+            viewModel.deleteActivity { removed ->
+                if (removed) {
+                    closeFragment()
+                }
+            }
         }
-        builder.setNegativeButton("NEJ") { _, _ ->
-
-        }
+        builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
         builder.show()
     }
 
