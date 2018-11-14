@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
     //Firebase references
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val user = mAuth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +46,15 @@ class LoginActivity : AppCompatActivity() {
         initialise()
     }
 
-
-
     override fun onStart() {
         super.onStart()
-        val user = mAuth.currentUser
         if (user != null) {
-            DashboardContainerActivity.start(this)
-            finish()
+            if (user.isEmailVerified) {
+                DashboardContainerActivity.start(this)
+                finish()
+            } else {
+                tvForgotPassword?.showSnackbar("Please verify email.", Snackbar.LENGTH_SHORT)
+            }
         }
     }
 
@@ -85,8 +87,12 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with signed-in user's information
                             Log.d(TAG, "signInWithEmail:success")
-                            DashboardContainerActivity.start(this)
-                            finish()
+                            if(user!!.isEmailVerified) {
+                                DashboardContainerActivity.start(this)
+                                finish()
+                            } else {
+                                tvForgotPassword?.showSnackbar("Please verify email.", Snackbar.LENGTH_SHORT)
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, "signInWithEmail:failure", task.exception)

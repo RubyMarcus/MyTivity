@@ -196,7 +196,9 @@ class AddActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, AddActivity::class.java))
+            val intent = Intent(context, AddActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            context.startActivity(intent)
         }
     }
 }
