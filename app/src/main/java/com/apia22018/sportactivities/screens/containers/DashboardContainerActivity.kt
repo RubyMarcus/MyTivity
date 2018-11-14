@@ -13,6 +13,7 @@ import com.apia22018.sportactivities.screens.list.ListFragment
 import com.apia22018.sportactivities.screens.map.MapFragment
 import com.apia22018.sportactivities.screens.add.AddActivity
 import com.apia22018.sportactivities.screens.login.LoginActivity
+import com.apia22018.sportactivities.utils.addFragment
 import com.apia22018.sportactivities.utils.loadFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.dashboard_container_activity.*
@@ -31,7 +32,7 @@ class DashboardContainerActivity : AppCompatActivity() {
         setContentView(R.layout.dashboard_container_activity)
 
         setSupportActionBar(toolbar)
-
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE)
         supportActionBar?.apply {
             title = "Activities"
         }
@@ -39,7 +40,7 @@ class DashboardContainerActivity : AppCompatActivity() {
         bottomNavigation()
 
         floatingActionButton.setOnClickListener {
-            AddActivity.start(this)
+           addFragment(AddActivity.newInstance())
         }
 
     }

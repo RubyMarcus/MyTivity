@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.view.inputmethod.InputMethodManager
 import com.apia22018.sportactivities.R
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +18,17 @@ fun AppCompatActivity.loadFragment(fragment: Fragment) {
                     R.id.container,
                     fragment
             )
+            .commit()
+}
+
+fun AppCompatActivity.addFragment(fragment: Fragment) {
+    supportFragmentManager
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .add(android.R.id.content,
+                    fragment
+            )
+            .addToBackStack(null)
             .commit()
 }
 

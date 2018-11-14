@@ -2,74 +2,89 @@ package com.apia22018.sportactivities.screens.add
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
-import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.apia22018.sportactivities.R
 import com.google.android.gms.location.places.ui.PlacePicker
 import kotlinx.android.synthetic.main.add_activity.*
 import java.util.*
 import android.content.Intent
+import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatDialogFragment
-import android.text.InputType
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import android.widget.TextView
 import com.apia22018.sportactivities.databinding.AddActivityBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
+import android.support.v7.app.AppCompatActivity
+import android.view.MenuInflater
 
-class AddActivity : AppCompatActivity() {
+
+class AddActivity : DialogFragment() {
 
     val PLACE_PICKER_REQUEST = 1
 
     lateinit var viewModel: AddViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         val factory: AddViewModelFactory = InjectorUtils.provideAddActivityViewModelFactory()
 
-        viewModel = ViewModelProviders.of(this, factory
-        ).get(AddViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory)
+                .get(AddViewModel::class.java)
 
-        val binding: AddActivityBinding = DataBindingUtil.setContentView(this, R.layout.add_activity)
+        val binding: AddActivityBinding = AddActivityBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
 
         val toolbar = binding.toolbarAddActivity
-        setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        toolbar.setTitleTextColor(android.graphics.Color.WHITE)
+        (activity as AppCompatActivity).supportActionBar?.run {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
+        }
+        setHasOptionsMenu(true)
 
-        supportActionBar?.apply {
+        toolbar.apply {
             title = "New activity"
+            setTitleTextColor(android.graphics.Color.WHITE)
         }
 
-        description_add_edittext.setRawInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE)
-        description_add_edittext.setRawInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
+//        description_add_edittext.setRawInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE)
+//        description_add_edittext.setRawInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
 
         textErrorObservers()
         dialogObservers()
+
+        return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.add_activity_menu, menu)
-        return true
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        return dialog
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.add_activity_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_favorite -> {
+            println("KLICK KLICK")
             createNewActivity()
             true
         }
 
         android.R.id.home -> {
             // Respond to the action bar's Up/Home button
-            showCreateDialog("Are you sure you want to remove the activity")
+            //showCreateDialog("Are you sure you want to remove the activity")
+            println("KLICK KLICK KLICK")
+            dismiss()
             true
         }
 
@@ -134,11 +149,11 @@ class AddActivity : AppCompatActivity() {
 
     private fun placePickerDialog() {
         val builder = PlacePicker.IntentBuilder()
-        startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST)
+        startActivityForResult(builder.build(activity), PLACE_PICKER_REQUEST)
     }
 
     private fun datePickerDialog() {
-        val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+        val datePicker = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             viewModel.setDate(year, month, dayOfMonth)
 
         },
@@ -149,7 +164,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun timePickerDialog() {
-        val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+        val timePicker = TimePickerDialog(requireContext(), TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
             viewModel.setTime(hourOfDay, minute)
         },
                 viewModel.timestampCalendar.get(Calendar.HOUR_OF_DAY), viewModel.timestampCalendar.get(Calendar.MINUTE), true)
@@ -160,8 +175,8 @@ class AddActivity : AppCompatActivity() {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                    val place = PlacePicker.getPlace(this, data)
-                    viewModel.setPLace(this, place)
+                    val place = PlacePicker.getPlace(requireContext(), data)
+                    viewModel.setPLace(requireContext(), place)
                 }
             }
         }
@@ -177,28 +192,26 @@ class AddActivity : AppCompatActivity() {
 
         val success = viewModel.createActivity(name, description, location, date, time, emptySpots)
 
-        if (success) { finish() }
+        if (success) {
+            dismiss()
+        }
     }
 
     private fun showCreateDialog(textInfo: String) {
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Remove Activity")
         val view = layoutInflater.inflate(R.layout.dialog, null)
         builder.setView(view)
         val firstNameView = view.findViewById(R.id.dialogInfo) as TextView
         firstNameView.text = textInfo
         builder.setPositiveButton(android.R.string.ok) { _, _ ->
-            finish()
+            dismiss()
         }
         builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
         builder.show()
     }
 
     companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, AddActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-            context.startActivity(intent)
-        }
+        fun newInstance() = AddActivity()
     }
 }
