@@ -12,6 +12,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
         tools:context=".screens.add.AddActivity">
 
         <android.support.v7.widget.Toolbar
@@ -43,7 +44,10 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
+                android:focusable="true">
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/eventname_textInputLayout"
@@ -66,10 +70,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_event_name"
-                        android:maxLength="15"
                         android:inputType="textCapSentences"
+                        android:maxLength="15"
                         android:singleLine="true"
-                        android:textSize="21sp"/>
+                        android:textSize="21sp"
+                        app:hideKeyboardOnLostFocus="@{true}"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -91,7 +96,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_description"
-                        android:singleLine="false" />
+                        android:singleLine="false"
+                        app:hideKeyboardOnLostFocus="@{true}"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -112,9 +118,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:onClick="@{() -> viewModel.showCreatePlacePickerDialog()}"
                         android:focusableInTouchMode="false"
                         android:hint="@string/hint_location"
+                        android:onClick="@{() -> viewModel.showCreatePlacePickerDialog()}"
                         app:place="@{viewModel.place}" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -135,11 +141,11 @@
                         android:id="@+id/date_add_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="@{() -> viewModel.showCreateDatePickerDialog()}"
-                        android:focusableInTouchMode="false"
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:focusableInTouchMode="false"
                         android:hint="@string/hint_Date"
-                        android:text="@{viewModel.date}"/>
+                        android:onClick="@{() -> viewModel.showCreateDatePickerDialog()}"
+                        android:text="@{viewModel.date}" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -160,9 +166,9 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                         android:focusableInTouchMode="false"
-                        android:onClick="@{() -> viewModel.showCreateTimePickerDialog()}"
                         android:hint="@string/hint_time"
-                        android:text="@{viewModel.time}"/>
+                        android:onClick="@{() -> viewModel.showCreateTimePickerDialog()}"
+                        android:text="@{viewModel.time}" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -187,7 +193,8 @@
                         android:hint="@string/hint_how_many_people"
                         android:inputType="number"
                         android:maxLength="2"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        app:hideKeyboardOnLostFocus="@{true}"/>
                 </android.support.design.widget.TextInputLayout>
             </android.support.constraint.ConstraintLayout>
         </ScrollView>

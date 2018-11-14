@@ -1,19 +1,14 @@
 package com.apia22018.sportactivities.utils
 
-import android.content.Context
 import android.databinding.BindingAdapter
 import android.databinding.InverseBindingListener
 import android.location.Address
 import android.text.Editable
 import android.text.TextWatcher
-import android.support.design.widget.TextInputEditText
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import com.apia22018.sportactivities.data.activities.Activities
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -88,5 +83,16 @@ fun setListener(view: TextView, listener: InverseBindingListener) {
             listener.onChange()
         }
     })
+}
+
+@BindingAdapter("hideKeyboardOnLostFocus")
+fun hideKeyboardOnLostFocus(view: EditText, enabled: Boolean) {
+    if (!enabled) return
+    view.setOnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) {
+            view.clearFocus()
+            view.hideKeyboard()
+        }
+    }
 }
 

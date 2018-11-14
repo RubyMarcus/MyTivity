@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatDialogFragment
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.widget.TextView
 import com.apia22018.sportactivities.databinding.AddActivityBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
@@ -192,6 +193,10 @@ class AddActivity : AppCompatActivity() {
         }
         builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
         builder.show()
+    }
+
+    override fun onBackPressed() {
+        showCreateDialog("Are you sure you want to remove the activity")
     }
 
     companion object {
