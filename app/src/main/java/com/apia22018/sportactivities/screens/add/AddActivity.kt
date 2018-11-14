@@ -13,6 +13,7 @@ import com.google.android.gms.location.places.ui.PlacePicker
 import kotlinx.android.synthetic.main.add_activity.*
 import java.util.*
 import android.content.Intent
+import android.support.v7.app.AppCompatDialogFragment
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem

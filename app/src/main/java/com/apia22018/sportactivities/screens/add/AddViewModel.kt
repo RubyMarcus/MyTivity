@@ -87,7 +87,7 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
         }
 
         if(currentTime > timestampCalendar) {
-            //Snackbar?
+            timeError.value = "Selected time is not valid!"
 
             time.value = ""
         } else {
@@ -122,7 +122,7 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
                 locationError.value = "Pick a location!"
                 isEmptyFallback = true
             }
-            location == "Invalid address" -> {
+            location == "Invalid address!" -> {
                 locationError.value = "Invalid address, pick new location!"
                 isEmptyFallback = true
             }
