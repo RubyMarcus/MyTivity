@@ -37,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
 
     //Firebase references
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val user = mAuth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        val user = mAuth.currentUser
         if (user != null) {
             if (user.isEmailVerified) {
                 DashboardContainerActivity.start(this)
@@ -57,6 +57,8 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
     private fun initialise() {
         tvForgotPassword = findViewById<View>(R.id.tv_forgot_password) as TextView
@@ -87,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with signed-in user's information
                             Log.d(TAG, "signInWithEmail:success")
-                            if(user!!.isEmailVerified) {
+                            if(mAuth.currentUser!!.isEmailVerified) {
                                 DashboardContainerActivity.start(this)
                                 finish()
                             } else {

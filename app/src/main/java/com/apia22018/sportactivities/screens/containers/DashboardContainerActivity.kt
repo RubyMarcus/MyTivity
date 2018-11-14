@@ -20,7 +20,9 @@ import kotlinx.android.synthetic.main.dashboard_container_activity.*
 class DashboardContainerActivity : AppCompatActivity() {
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, DashboardContainerActivity::class.java))
+            val intent = Intent(context, DashboardContainerActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            context.startActivity(intent)
         }
     }
 
