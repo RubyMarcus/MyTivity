@@ -21,10 +21,12 @@ class DetailViewModel(private val activity: Activities,
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
     val removeActivity = SingleLiveEvent<Boolean>()
     val displaySnackBar = SingleLiveEvent<String>()
+    val displayDialog = SingleLiveEvent<Boolean>()
     val isLoading: ObservableBoolean = ObservableBoolean(true)
     val canJoinEvent: ObservableBoolean = ObservableBoolean(false)
 
     fun attendEvent() {
+        showDialog()
         val user = FirebaseAuth.getInstance().currentUser
         getActivity().value?.occupiedSeats?.run {
             val addOneAttendees = this + 1
@@ -35,9 +37,11 @@ class DetailViewModel(private val activity: Activities,
                     displaySnackBar.postValue("Failed to attend event, try again later!")
                 }
             }
-        }
 
+        }
     }
+
+    private fun showDialog() = displayDialog.postValue(true)
 
     fun getAttendees() = attendeeLiveData
 
@@ -70,7 +74,7 @@ class DetailViewModel(private val activity: Activities,
 
     fun checkIfUserCanJoinEvent(attending: List<Attendee>) {
         FirebaseAuth.getInstance().currentUser?.email.also { email ->
-            val userCanJoin = !attending.any { it.userName == email} && (attending.size + 1) <= activity.totalSeats
+            val userCanJoin = !attending.any { it.userName == email } && (attending.size + 1) <= activity.totalSeats
             canJoinEvent.set(userCanJoin)
         }
 

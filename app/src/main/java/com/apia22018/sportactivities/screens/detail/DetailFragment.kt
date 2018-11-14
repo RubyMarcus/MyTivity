@@ -4,14 +4,16 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.databinding.DetailFragmentBinding
-import com.apia22018.sportactivities.screens.containers.DetailContainerActivity
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.apia22018.sportactivities.utils.showSnackbar
 
@@ -66,9 +68,35 @@ class DetailFragment : Fragment() {
 
         this.viewModel.displaySnackBar.observe(this, Observer {
             if (it != null) {
-                binding.root.showSnackbar(it, Snackbar.LENGTH_LONG)
+                displaySnackbar(binding.root, it, Snackbar.LENGTH_LONG)
             }
         })
+
+        this.viewModel.displayDialog.observe(this, Observer {
+            if (it != null && it) {
+                showCreateDialog()
+            }
+        })
+    }
+
+    private fun displaySnackbar(view: View, text: String, length: Int) {
+        view.showSnackbar(text, length)
+    }
+
+    private fun showCreateDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Add user")
+        val view = layoutInflater.inflate(R.layout.dialog, null)
+        builder.setView(view)
+        val firstNameView = view.findViewById(R.id.firstName) as TextInputEditText
+        val lastNameView = view.findViewById(R.id.lastName) as TextInputEditText
+        builder.setPositiveButton(android.R.string.ok) { _, _ ->
+
+        }
+        builder.setNegativeButton("NEJ") { _, _ ->
+
+        }
+        builder.show()
     }
 
     companion object {
