@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.screens.login.LoginActivity
+import com.apia22018.sportactivities.utils.isEmailValid
 import com.apia22018.sportactivities.utils.showSnackbar
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -35,8 +36,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
             val email = mEmail.text.toString().trim()
 
             if(email.isEmpty()){
-                mEmail.error = "Enter email"
+                mEmail.error = "Enter email."
                 return@setOnClickListener
+            } else if (!isEmailValid(email)) {
+                mEmail.error = "Invalid email."
+                return@setOnClickListener
+            } else {
+                mEmail.error = null
             }
 
             forGetPassword(email)

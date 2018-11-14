@@ -20,6 +20,7 @@ import com.apia22018.sportactivities.screens.signUp.SignUpActivity
 import com.apia22018.sportactivities.utils.hideKeyboard
 import com.apia22018.sportactivities.utils.showSnackbar
 import com.google.firebase.auth.FirebaseAuth
+import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
 
@@ -44,7 +45,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
 
-
         initialise()
     }
 
@@ -58,8 +58,6 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
     }
-
-
 
     private fun initialise() {
         tvForgotPassword = findViewById<View>(R.id.tv_forgot_password) as TextView
@@ -95,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, "signInWithEmail:failure", task.exception)
-                                tvForgotPassword?.showSnackbar(getString(R.string.wrong_email_password),Snackbar.LENGTH_SHORT)
+                                tvForgotPassword?.showSnackbar(getString(R.string.wrong_email_password), Snackbar.LENGTH_SHORT)
                         }
                     }
         } else {
