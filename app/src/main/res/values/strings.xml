@@ -19,7 +19,12 @@
     <!-- ROBIN TAPPER -->
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="repeat_password">Repeat password</string>
-    <string name="sign_up">Sign Up</string>
     <string name="reset_password">Reset password</string>
     <string name="enter_email">enter email..</string>
+    <string name="enter_email_password">Please enter your email and password</string>
+    <string name="wrong_email_password">Wrong email or password</string>
+    <string name="please_enter_email">Please enter email</string>
+    <string name="not_registered">This email is not registered</string>
+    <string name="verify_email">Please verify your email</string>
+
 </resources>

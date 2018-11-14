@@ -11,10 +11,18 @@
     <string name="list">Lista</string>
     <string name="message">Meddelande</string>
     <string name="x">X</string>
+
+
+    <!-- ROBIN TAPPER -->
     <string name="forgot_your_password">Glömt ditt lösenord?</string>
     <string name="repeat_password">Upprepa lösenord</string>
-    <string name="sign_up">Registrera dig</string>
     <string name="reset_password">Återställ lösenord</string>
-    <string name="enter_email">skriv email..</string>
+    <string name="enter_email">fyll i din email..</string>
+    <string name="enter_email_password">Fyll i din email och lösenord</string>
+    <string name="wrong_email_password">Fel email eller lösenord</string>
+    <string name="please_enter_email">Var snäll att fyll i din email</string>
+    <string name="not_registered">Den här emailen är inte registrerad</string>
+    <string name="verify_email">Verifiera din email</string>
+
 
 </resources>
