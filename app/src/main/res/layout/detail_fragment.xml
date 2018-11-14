@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:contentDescription="edit_activity"
+            android:contentDescription="@string/edit_activity"
             android:onClick="@{() -> viewModel.deleteActivity()}"
             android:tint="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +92,7 @@
         <TextView
             android:id="@+id/detail_description_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@{activity.description}"
             android:textAlignment="center"
              />
@@ -116,7 +116,7 @@
             android:layout_marginBottom="21dp"
             android:text="@{activity.emptySeaterinos()}"
             android:textAlignment="center"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/attendee_list"
             app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +130,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="48dp"
-            android:text="Attending"
+            android:text="@string/attending"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/attendee_list"
             app:layout_constraintEnd_toStartOf="@+id/textView"
@@ -165,7 +165,8 @@
             android:text="@string/join"
             app:layout_constraintBottom_toBottomOf="@+id/attendee_list"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/spots_text"

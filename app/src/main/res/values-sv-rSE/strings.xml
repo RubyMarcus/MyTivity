@@ -5,7 +5,7 @@
     <string name="title_activity_maps_activitys">Karta</string>
     <string name="email">Mail</string>
     <string name="password">Lösenord</string>
-    <string name="login_title">Inlogning</string>
+    <string name="login_title">Inloggning</string>
     <string name="create_account">Skapa konto</string>
     <string name="map">Karta</string>
     <string name="list">Lista</string>
@@ -26,5 +26,17 @@
     <!-- Elias -->
     <string name="join">GÅ MED</string>
     <string name="spots_text">Platser kvar:</string>
+    <string name="hint_event_name">Evenemangnamn</string>
+    <string name="hint_description">Beskrivning</string>
+    <string name="hint_location">Plats</string>
+    <string name="hint_Date">Datum</string>
+    <string name="hint_time">Tid</string>
+    <string name="hint_how_many_people">Hur många deltagare?</string>
+    <string name="activity">Aktivitet</string>
+    <string name="edit_activity">redigera aktivitet</string>
+    <string name="attending">Kommer</string>
+    <string name="save">Spara</string>
+    <string name="messages">Meddelanden</string>
+    <string name="logout">Logga ut</string>
 
 </resources>
