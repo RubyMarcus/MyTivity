@@ -4,6 +4,7 @@ package com.apia22018.sportactivities.screens.message
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.databinding.MessageListFragmentBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
 import com.apia22018.sportactivities.utils.hideKeyboard
+import com.apia22018.sportactivities.utils.showSnackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.message_list_fragment.*
 
@@ -41,24 +43,15 @@ class MessageFragment : Fragment() {
 
     private fun subscribeUI(adapter: MessageAdapter, view: View) {
         this.viewModel.getMessages().observe(this, Observer {
-            if (it != null && it.isNotEmpty()) {
+            if (it != null) {
                 adapter.setMessages(it)
-                messages_recycler_view.scrollToPosition(it.size-1)
+                messages_recycler_view.scrollToPosition(it.size - 1)
             }
         })
 
-        this.viewModel.createMessage.observe(this, Observer {
-            if (it != null && it) {
-                val user = FirebaseAuth.getInstance().currentUser
-                val textInput = view.findViewById<EditText>(R.id.message_text_input)
-                val text = textInput.text.toString()
-                textInput.text?.clear()
-                textInput.clearFocus()
-                view.hideKeyboard()
-
-                user?.email?.let {
-                    viewModel.postMessage(text, it)
-                }
+        this.viewModel.displaySnackBar.observe(this, Observer {
+            if (it != null) {
+                view.showSnackbar(it, Snackbar.LENGTH_LONG)
             }
         })
     }

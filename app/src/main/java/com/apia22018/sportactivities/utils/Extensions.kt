@@ -38,6 +38,5 @@ fun View.showSnackbar(snackbarText: String, timeLength: Int) {
     Snackbar.make(this, snackbarText, timeLength).show()
 }
 
-
 //Useful extensions
 //http://kotlinextensions.com

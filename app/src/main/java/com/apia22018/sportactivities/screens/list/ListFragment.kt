@@ -38,7 +38,7 @@ class ListFragment : Fragment() {
         viewModel.getActivities().observe(this, Observer { activities ->
             if (activities != null) {
                 adapter.submitList(activities)
-                viewModel.isLoading.set(false)
+                viewModel.stopLoading()
             }
         })
     }

@@ -71,9 +71,10 @@ class LoginActivity : AppCompatActivity() {
         mProgressBar = ProgressDialog(this)
 
         tvForgotPassword!!
-                 .setOnClickListener { ForgotPasswordActivity.start(this) }
-         btnCreateAccount!!
-                 .setOnClickListener { SignUpActivity.start(this) }
+                 .setOnClickListener { ForgotPasswordActivity.start(this)}
+
+        btnCreateAccount!!
+                 .setOnClickListener { SignUpActivity.start(this)}
 
         btnLogin!!.setOnClickListener { loginUser() }
     }

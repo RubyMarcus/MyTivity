@@ -2,6 +2,7 @@ package com.apia22018.sportactivities.screens.detail
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import android.databinding.ObservableBoolean
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.apia22018.sportactivities.data.activities.Activities
@@ -11,24 +12,27 @@ import com.apia22018.sportactivities.data.attendee.AttendeeRepository
 import com.apia22018.sportactivities.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
 
-class DetailViewModel(private val activityId: String,
+class DetailViewModel(private val activity: Activities,
                       private val activitiesRepository: ActivitiesRepository,
                       private val attendeeRepository: AttendeeRepository
 ) : ViewModel() {
-    private val attendeeLiveData = attendeeRepository.getAttendees(activityId)
-    private val activities: LiveData<Activities> = activitiesRepository.readActivity(activityId)
+    private val attendeeLiveData = attendeeRepository.getAttendees(activity.activityId)
+    private val activities: LiveData<Activities> = activitiesRepository.readActivity(activity.activityId)
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
     val removeActivity = SingleLiveEvent<Boolean>()
+    val displaySnackBar = SingleLiveEvent<String>()
+    val isLoading: ObservableBoolean = ObservableBoolean(true)
+    val canJoinEvent: ObservableBoolean = ObservableBoolean(false)
 
     fun attendEvent() {
         val user = FirebaseAuth.getInstance().currentUser
         getActivity().value?.occupiedSeats?.run {
             val addOneAttendees = this + 1
-            activitiesRepository.updateActivityAttendees(activityId, addOneAttendees) {
+            activitiesRepository.updateActivityAttendees(activity.activityId, addOneAttendees) {
                 if (it) user?.email?.let { email ->
-                    attendeeRepository.insertAttendees(Attendee(user.uid, email), activityId)
+                    attendeeRepository.insertAttendees(Attendee(user.uid, email), activity.activityId)
                 } else {
-                    //TODO("DISPLAY SOME KIND OF ERROR, COULD NOT ATTEND TRY AGAIN")
+                    displaySnackBar.postValue("Failed to attend event, try again later!")
                 }
             }
         }
@@ -38,11 +42,11 @@ class DetailViewModel(private val activityId: String,
     fun getAttendees() = attendeeLiveData
 
     fun deleteAttendee(attendee: Attendee) {
-        attendeeRepository.deleteAttendee(activityId, attendee) { value ->
+        attendeeRepository.deleteAttendee(activity.activityId, attendee) { value ->
             if (value) {
                 getActivity().value?.occupiedSeats?.run {
-                    val removeOneAttendee = this -1
-                    activitiesRepository.updateActivityAttendees(activityId, removeOneAttendee)
+                    val removeOneAttendee = this - 1
+                    activitiesRepository.updateActivityAttendees(activity.activityId, removeOneAttendee)
                 }
             }
         }
@@ -52,16 +56,28 @@ class DetailViewModel(private val activityId: String,
 
     fun getActivity() = activities
 
-    fun canDeleteActivity() {}
+    fun canDeleteActivity(): Boolean = activity.createdBy == currentUserUid
 
     fun deleteActivity() {
-        activitiesRepository.deleteActivity(activityId) {
+        activitiesRepository.deleteActivity(activity.activityId) {
             if (it) {
                 removeActivity.postValue(it)
             } else {
-                //TODO("ERROR KUNDE INTE TA BORT AKTIVIET")
+                displaySnackBar.postValue("Failed to remove event, try again!")
             }
         }
+    }
+
+    fun checkIfUserCanJoinEvent(attending: List<Attendee>) {
+        FirebaseAuth.getInstance().currentUser?.email.also { email ->
+            val userCanJoin = !attending.any { it.userName == email} && (attending.size + 1) <= activity.totalSeats
+            canJoinEvent.set(userCanJoin)
+        }
+
+    }
+
+    fun stopSpinner() {
+        isLoading.set(false)
     }
 
 }
