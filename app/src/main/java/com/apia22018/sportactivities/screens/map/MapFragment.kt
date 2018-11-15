@@ -131,11 +131,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationPermissionGranted = true
+                    updateUserLocation()
                 }
             }
         }
-
-        updateUserLocation()
     }
 
     private fun updateUserLocation() {
