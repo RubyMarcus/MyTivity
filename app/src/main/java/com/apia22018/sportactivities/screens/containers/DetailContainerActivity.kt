@@ -21,7 +21,9 @@ class DetailContainerActivity : AppCompatActivity() {
         private const val VALUE = "value"
 
         fun start(context: Context, activity: Activities) {
-            context.startActivity(Intent(context, DetailContainerActivity::class.java).apply {
+            val intent = Intent(context, DetailContainerActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            context.startActivity(intent.apply {
                 putExtras(Bundle().apply {
                     putParcelable(VALUE, activity)
                 })

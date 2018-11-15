@@ -46,15 +46,20 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-
     override fun onStart() {
         super.onStart()
         val user = mAuth.currentUser
         if (user != null) {
-            DashboardContainerActivity.start(this)
-            finish()
+            if (user.isEmailVerified) {
+                DashboardContainerActivity.start(this)
+                finish()
+            } else {
+                tv_forgot_password.showSnackbar("Please verify email.", Snackbar.LENGTH_SHORT)
+            }
         }
     }
+
+
 
     private fun initialise() {
         tv_forgot_password
@@ -72,6 +77,7 @@ class LoginActivity : AppCompatActivity() {
         val email = et_email?.text.toString()
         val password = et_password?.text.toString()
         viewModel.errorCheck(email, password)
+
     }
 
     private fun errorObserver() {

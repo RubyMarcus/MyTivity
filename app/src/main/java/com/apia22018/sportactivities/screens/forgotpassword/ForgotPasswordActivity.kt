@@ -40,7 +40,9 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, ForgotPasswordActivity::class.java))
+            val intent = Intent(context, ForgotPasswordActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            context.startActivity(intent)
         }
     }
 }

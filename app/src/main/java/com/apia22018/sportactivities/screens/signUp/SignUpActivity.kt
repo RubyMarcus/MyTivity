@@ -160,7 +160,9 @@ class SignUpActivity : AppCompatActivity() {
 
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, SignUpActivity::class.java))
+            val intent = Intent(context, SignUpActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            context.startActivity(intent)
         }
     }
 }

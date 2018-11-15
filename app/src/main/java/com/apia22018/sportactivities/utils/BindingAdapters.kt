@@ -1,39 +1,34 @@
 package com.apia22018.sportactivities.utils
 
-import android.content.Context
 import android.databinding.BindingAdapter
 import android.databinding.InverseBindingListener
 import android.location.Address
 import android.text.Editable
 import android.text.TextWatcher
-import android.support.design.widget.TextInputEditText
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import com.apia22018.sportactivities.data.activities.Activities
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
 @BindingAdapter("day")
 fun setDayAttr(view: TextView, value: Long?) {
-    val sdf = SimpleDateFormat("dd", Locale.UK)
+    val sdf = SimpleDateFormat("dd", Locale.getDefault())
     val cal = Calendar.getInstance().apply { timeInMillis = value ?: 1539255728 }
     view.text = sdf.format(cal.time)
 }
 
 @BindingAdapter("month")
 fun setMonthAttr(view: TextView, value: Long?) {
-    val sdf = SimpleDateFormat("MMM", Locale.UK)
+    val sdf = SimpleDateFormat("MMM", Locale.getDefault())
     val cal = Calendar.getInstance().apply { timeInMillis = value ?: 1539255728 }
     view.text = sdf.format(cal.time)
 }
 
 @BindingAdapter("dayAndTime")
 fun setDayAndTimeAttr(view: TextView, value: Long?) {
-    val sdf = SimpleDateFormat("EEE - HH:mm", Locale.UK)
+    val sdf = SimpleDateFormat("EEE - HH:mm", Locale.getDefault())
     val cal = Calendar.getInstance().apply { timeInMillis = value ?: 1539255728 }
     view.text = sdf.format(cal.time)
 }
@@ -88,5 +83,16 @@ fun setListener(view: TextView, listener: InverseBindingListener) {
             listener.onChange()
         }
     })
+}
+
+@BindingAdapter("hideKeyboardOnLostFocus")
+fun hideKeyboardOnLostFocus(view: EditText, enabled: Boolean) {
+    if (!enabled) return
+    view.setOnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) {
+            view.clearFocus()
+            view.hideKeyboard()
+        }
+    }
 }
 

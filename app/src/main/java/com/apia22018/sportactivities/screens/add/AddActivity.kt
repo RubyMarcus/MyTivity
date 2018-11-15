@@ -13,10 +13,13 @@ import com.google.android.gms.location.places.ui.PlacePicker
 import kotlinx.android.synthetic.main.add_activity.*
 import java.util.*
 import android.content.Intent
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatDialogFragment
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.widget.TextView
 import com.apia22018.sportactivities.databinding.AddActivityBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
 
@@ -67,7 +70,7 @@ class AddActivity : AppCompatActivity() {
 
         android.R.id.home -> {
             // Respond to the action bar's Up/Home button
-            finish()
+            showCreateDialog("Are you sure you want to remove the activity")
             true
         }
 
@@ -178,9 +181,29 @@ class AddActivity : AppCompatActivity() {
         if (success) { finish() }
     }
 
+    private fun showCreateDialog(textInfo: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Remove Activity")
+        val view = layoutInflater.inflate(R.layout.dialog, null)
+        builder.setView(view)
+        val firstNameView = view.findViewById(R.id.dialogInfo) as TextView
+        firstNameView.text = textInfo
+        builder.setPositiveButton(android.R.string.ok) { _, _ ->
+            finish()
+        }
+        builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
+        builder.show()
+    }
+
+    override fun onBackPressed() {
+        showCreateDialog("Are you sure you want to remove the activity")
+    }
+
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, AddActivity::class.java))
+            val intent = Intent(context, AddActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            context.startActivity(intent)
         }
     }
 }
