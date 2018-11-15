@@ -14,21 +14,21 @@ import java.util.*
 
 @BindingAdapter("day")
 fun setDayAttr(view: TextView, value: Long?) {
-    val sdf = SimpleDateFormat("dd", Locale.UK)
+    val sdf = SimpleDateFormat("dd", Locale.getDefault())
     val cal = Calendar.getInstance().apply { timeInMillis = value ?: 1539255728 }
     view.text = sdf.format(cal.time)
 }
 
 @BindingAdapter("month")
 fun setMonthAttr(view: TextView, value: Long?) {
-    val sdf = SimpleDateFormat("MMM", Locale.UK)
+    val sdf = SimpleDateFormat("MMM", Locale.getDefault())
     val cal = Calendar.getInstance().apply { timeInMillis = value ?: 1539255728 }
     view.text = sdf.format(cal.time)
 }
 
 @BindingAdapter("dayAndTime")
 fun setDayAndTimeAttr(view: TextView, value: Long?) {
-    val sdf = SimpleDateFormat("EEE - HH:mm", Locale.UK)
+    val sdf = SimpleDateFormat("EEE - HH:mm", Locale.getDefault())
     val cal = Calendar.getInstance().apply { timeInMillis = value ?: 1539255728 }
     view.text = sdf.format(cal.time)
 }
