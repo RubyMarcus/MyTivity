@@ -1,5 +1,6 @@
 package com.apia22018.sportactivities.screens.signUp
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.apia22018.sportactivities.R
+import com.apia22018.sportactivities.screens.forgotpassword.ForgotPasswordViewModel
 import com.apia22018.sportactivities.screens.login.LoginActivity
 import com.apia22018.sportactivities.utils.isEmailValid
 import com.apia22018.sportactivities.utils.showSnackbar
@@ -22,6 +24,7 @@ import java.util.regex.Pattern
 
 
 class SignUpActivity : AppCompatActivity() {
+    lateinit var viewModel : SignUpViewModel
 
     private var etEmail: EditText? = null
     private var etPassword: EditText? = null
@@ -43,6 +46,8 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sign_up_activity)
+
+        viewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
 
 
         initialise()
