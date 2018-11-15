@@ -67,6 +67,7 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
         timestampCalendar.set(year, month, dayOfMonth)
         date.value = dateFormat.format(timestampCalendar.time)
+        dateError.value = null
     }
 
     fun setTime(hourOfDay: Int, minute: Int) {
@@ -82,10 +83,10 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
 
         if(currentTime > timestampCalendar) {
             timeError.value = "Selected time is not valid!"
-
             time.value = ""
         } else {
             time.value = timeFormat.format(timestampCalendar.time)
+            timeError.value = null
         }
     }
 

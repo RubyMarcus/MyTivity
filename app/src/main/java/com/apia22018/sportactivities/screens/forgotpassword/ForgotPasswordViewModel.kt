@@ -24,7 +24,11 @@ class ForgotPasswordViewModel : ViewModel () {
 
     private fun sendPasswordReset (email: String) {
         user.sendPasswordResetEmail(email).addOnCompleteListener { task ->
-            isComplete.value = task.isComplete
+            if(task.isComplete) {
+                isComplete.value = task.isComplete
+            } else {
+                isComplete.value = false
+            }
         }
     }
 }
