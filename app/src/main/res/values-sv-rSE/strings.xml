@@ -16,7 +16,7 @@
     <string name="forgot_your_password">Glömt ditt lösenord?</string>
     <string name="repeat_password">Upprepa lösenord</string>
     <string name="reset_password">Återställ lösenord</string>
-    <string name="enter_email">fyll i din email..</string>
+    <string name="enter_email">Fyll i din email..</string>
     <string name="enter_email_password">Fyll i din email och lösenord</string>
     <string name="wrong_email_password">Fel email eller lösenord</string>
     <string name="please_enter_email">Var snäll att fyll i din email</string>
@@ -38,5 +38,6 @@
     <string name="save">Spara</string>
     <string name="messages">Meddelanden</string>
     <string name="logout">Logga ut</string>
+    <string name="no_messages_to_show">Tyvärr inga meddelanden att visa just nu..</string>
 
 </resources>

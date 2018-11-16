@@ -1,11 +1,9 @@
 package com.apia22018.sportactivities.screens.message
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.apia22018.sportactivities.BR
+import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.data.messages.Message
 import com.apia22018.sportactivities.data.messages.MessageRepository
@@ -51,4 +49,6 @@ class MessageViewModel(private val messageRepository: MessageRepository, private
     fun canDelete(): Boolean {
         return activity.createdBy == user?.uid
     }
+
+    fun isAuthor(message: Message): Boolean = user!!.email == message.userName
 }

@@ -66,7 +66,7 @@ fun setListAddress(view: TextView, value: Activities?) {
 @BindingAdapter("emptySpots")
 fun setEmptySpots(view: TextView, value: Activities?) {
     val activities = value ?: Activities()
-    view.text = "Empty spots: ${activities.emptySeaterinos()}"
+    view.text = "Empty spots: ${activities.emptySeaterinos()} / ${activities.totalSeats}"
 }
 @BindingAdapter(value = ["userAttrChanged"])
 fun setListener(view: TextView, listener: InverseBindingListener) {

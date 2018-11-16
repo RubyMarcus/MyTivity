@@ -46,6 +46,11 @@ class MessageFragment : Fragment() {
             if (it != null) {
                 adapter.setMessages(it)
                 messages_recycler_view.scrollToPosition(it.size - 1)
+                if (!it.isEmpty()) {
+                    no_messages.visibility = View.GONE
+                } else {
+                    no_messages.visibility = View.VISIBLE
+                }
             }
         })
 

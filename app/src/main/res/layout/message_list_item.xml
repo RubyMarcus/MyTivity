@@ -20,9 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/colorLightGrey"
+        app:cardBackgroundColor="@color/colorMessageGrey"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        app:cardElevation="3dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,12 +33,13 @@
                 android:id="@+id/user_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:textColor="@{viewModel.isAuthor(message) ? @color/colorRed : @color/colorPrimaryDark}"
                 android:text="@{message.userName}"
                 android:textStyle="bold"
+                tools:text="apia2@gmail.com"
                 app:layout_constraintEnd_toStartOf="@+id/delete_message"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,30 +48,31 @@
                 android:id="@+id/text_message"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@{message.text}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_name" />
+                app:layout_constraintTop_toBottomOf="@+id/user_name"
+                tools:text="Hej detta är ett meddelande" />
 
-            <TextView
+            <ImageButton
                 android:id="@+id/delete_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="@string/x"
-                android:textColor="@color/colorRed"
-                android:textStyle="bold"
-                app:isGone="@{viewModel.canDelete}"
+                android:backgroundTint="@color/colorClear"
+                android:clickable="true"
+                android:focusable="true"
                 android:onClick="@{()->viewModel.deleteMessage(message)}"
+                android:tint="@color/colorPrimary"
+                app:isGone="@{viewModel.canDelete}"
                 app:layout_constraintBottom_toBottomOf="@+id/user_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/user_name" />
+                app:layout_constraintTop_toTopOf="@+id/user_name"
+                app:srcCompat="@drawable/ic_cancel_black_24dp" />
 
         </android.support.constraint.ConstraintLayout>
 

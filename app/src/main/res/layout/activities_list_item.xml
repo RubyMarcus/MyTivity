@@ -50,6 +50,7 @@
                 android:layout_marginBottom="16dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorRed"
+                tools:text="Nov"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/activityDate"
                 app:layout_constraintStart_toStartOf="@+id/activityDate"
@@ -62,9 +63,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="@{activities.title}"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                tools:text="Fotboll"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/activityDate"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,9 +78,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                tools:text="Spela fotboll hela dagen lång"
                 app:dayAndTime="@{activities.activityDate}"
                 app:layout_constraintBottom_toTopOf="@+id/city"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/title"
                 app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -96,12 +105,15 @@
                 android:id="@+id/spotsLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                app:emptySpots="@{activities}"
                 android:textSize="14sp"
-                tools:text="4 spots left"
+                app:emptySpots="@{activities}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/city" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/city"
+                tools:text="4 spots left" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
