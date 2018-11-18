@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
@@ -37,6 +36,7 @@ class DetailFragment : Fragment() {
         binding.attendeeList.layoutManager = LinearLayoutManager(activity)
         binding.attendeeList.adapter = adapter
         binding.viewModel = viewModel
+        binding.isLoading = true
         binding.executePendingBindings()
 
         subscribeUI(binding, adapter)
@@ -54,8 +54,10 @@ class DetailFragment : Fragment() {
 
         this.viewModel.getActivity().observe(this, Observer {
             if (it != null) {
+                binding.isLoading = false
                 binding.activity = it
-                viewModel.stopSpinner()
+            } else {
+                binding.isLoading = true
             }
         })
 

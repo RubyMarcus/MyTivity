@@ -21,7 +21,6 @@ class DetailViewModel(private val activity: Activities,
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
     val displaySnackBar = SingleLiveEvent<String>()
     val displayDialog = SingleLiveEvent<Boolean>()
-    val isLoading: ObservableBoolean = ObservableBoolean(true)
     val canJoinEvent: ObservableBoolean = ObservableBoolean(false)
 
     fun attendEvent() {
@@ -80,10 +79,6 @@ class DetailViewModel(private val activity: Activities,
             canJoinEvent.set(userCanJoin)
         }
 
-    }
-
-    fun stopSpinner() {
-        isLoading.set(false)
     }
 
     private fun useSnackbar(text: String){

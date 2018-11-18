@@ -14,11 +14,9 @@ import kotlinx.android.synthetic.main.add_activity.*
 import java.util.*
 import android.content.Intent
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatDialogFragment
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.widget.TextView
 import com.apia22018.sportactivities.databinding.AddActivityBinding
 import com.apia22018.sportactivities.utils.InjectorUtils
@@ -150,7 +148,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun timePickerDialog() {
-        val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+        val timePicker = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
             viewModel.setTime(hourOfDay, minute)
         },
                 viewModel.timestampCalendar.get(Calendar.HOUR_OF_DAY), viewModel.timestampCalendar.get(Calendar.MINUTE), true)

@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="isLoading"
+            type="boolean"/>
+        <variable
             name="viewModel"
             type="com.apia22018.sportactivities.screens.list.ActivitiesViewModel"/>
     </data>
@@ -29,7 +32,7 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:isGone="@{viewModel.isLoading}"
+            app:isGone="@{isLoading}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/recyclerview_list_activities"

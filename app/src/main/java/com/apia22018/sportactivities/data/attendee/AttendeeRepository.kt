@@ -2,7 +2,6 @@ package com.apia22018.sportactivities.data.attendee
 
 import android.arch.lifecycle.LiveData
 import com.google.firebase.database.*
-import kotlin.math.truncate
 
 class AttendeeRepository {
     private val reference: DatabaseReference = FirebaseDatabase

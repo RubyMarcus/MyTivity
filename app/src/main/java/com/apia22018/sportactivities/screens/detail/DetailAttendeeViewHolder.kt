@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.databinding.AttendeeListItemBinding
-import kotlin.math.truncate
 
 class DetailAttendeeViewHolder(private val binding: AttendeeListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 

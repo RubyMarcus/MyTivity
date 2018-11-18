@@ -7,7 +7,6 @@ import android.view.View
 import android.support.v4.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import com.apia22018.sportactivities.R
-import com.google.firebase.auth.FirebaseAuth
 import java.util.regex.Pattern
 
 fun AppCompatActivity.loadFragment(fragment: Fragment) {
