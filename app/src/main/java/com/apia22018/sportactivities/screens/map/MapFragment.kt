@@ -28,7 +28,6 @@ import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.Marker
-import kotlinx.android.synthetic.main.map_fragment.*
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
@@ -76,7 +75,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 askPermissionToShowUserLocation()
                 if (ContextCompat.checkSelfPermission(requireContext(),
                                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    it?.get(it.size)?.also { activities ->
+                    it?.get(it.size - 1)?.also { activities ->
                         val noUserLocationZoomLevel = 8f
                         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(activities.lat, activities.long), noUserLocationZoomLevel))
                     }
@@ -134,7 +133,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                         }.show();
             }
             if (e.foreverDenied.size > 0) {
-                e.goToSettings()
+//                e.goToSettings()
             }
         }
     }

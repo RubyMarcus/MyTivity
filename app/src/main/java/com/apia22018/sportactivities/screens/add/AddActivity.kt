@@ -45,8 +45,6 @@ class AddActivity : AppCompatActivity() {
         val toolbar = binding.toolbarAddActivity
         setSupportActionBar(toolbar)
 
-        toolbar.setTitleTextColor(android.graphics.Color.WHITE)
-
         supportActionBar?.apply {
             title = "New activity"
         }
