@@ -13,6 +13,7 @@ import com.google.android.gms.location.places.ui.PlacePicker
 import kotlinx.android.synthetic.main.add_activity.*
 import java.util.*
 import android.content.Intent
+import android.location.Geocoder
 import android.support.v7.app.AlertDialog
 import android.text.InputType
 import android.view.Menu
@@ -79,7 +80,7 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
-    private fun textErrorObservers () {
+    private fun textErrorObservers() {
         viewModel.eventNameError.observe(this, android.arch.lifecycle.Observer {
             eventname_textInputLayout.error = it
         })
@@ -156,11 +157,16 @@ class AddActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (data != null) {
-                    val place = PlacePicker.getPlace(this, data)
-                    viewModel.setPLace(this, place)
+        if (requestCode == PLACE_PICKER_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            val place = PlacePicker.getPlace(this, data)
+            if (place != null) {
+                Geocoder(this, Locale.getDefault()).run {
+                    this.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1).mapNotNull {
+                        if (it != null) {
+                            viewModel.setPLace(it)
+                        }
+
+                    }
                 }
             }
         }
@@ -176,7 +182,9 @@ class AddActivity : AppCompatActivity() {
 
         val success = viewModel.createActivity(name, description, location, date, time, emptySpots)
 
-        if (success) { finish() }
+        if (success) {
+            finish()
+        }
     }
 
     private fun showCreateDialog(textInfo: String) {

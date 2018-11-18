@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.detail_container_activity.*
 class DetailContainerActivity : AppCompatActivity() {
 
     companion object {
-        private const val ID = "id"
         private const val VALUE = "value"
 
         fun start(context: Context, activity: Activities) {

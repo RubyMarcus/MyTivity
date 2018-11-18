@@ -2,18 +2,12 @@ package com.apia22018.sportactivities.screens.add
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.content.Context
 import android.location.Address
-import android.location.Geocoder
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.attendee.AttendeeRepository
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.data.activities.ActivitiesRepository
 import com.apia22018.sportactivities.utils.SingleLiveEvent
-import com.google.android.gms.location.places.Place
 import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +25,7 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
 
     private val user = FirebaseAuth.getInstance().currentUser
 
-    val place = MutableLiveData<List<Address>>()
+    val place = MutableLiveData<Address>()
     val date = MutableLiveData<String>()
     val time = MutableLiveData<String>()
 
@@ -95,9 +89,8 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
         }
     }
 
-    fun setPLace(context: Context, currentPlace: Place) {
-        val gcd = Geocoder(context, Locale.getDefault())
-        place.value = gcd.getFromLocation(currentPlace.latLng.latitude, currentPlace.latLng.longitude, 1)
+    fun setPLace(address: Address) {
+        place.value = address
     }
 
     fun createActivity(eventName: String, description: String, location: String,
@@ -151,9 +144,9 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
 
         place.value?.let {
             insertActivity(Activities(eventName, description, emptySpots.toInt(), 1,
-                    timestampCalendar.timeInMillis, it[0].locality ?: "",
-                    it[0].thoroughfare + " " + it[0].subThoroughfare, user?.uid ?: "",
-                    it[0].latitude, it[0].longitude))
+                    timestampCalendar.timeInMillis, it.locality ?: "",
+                    it.thoroughfare + " " + it.subThoroughfare, user?.uid ?: "",
+                    it.latitude, it.longitude))
             }
         return true
         }

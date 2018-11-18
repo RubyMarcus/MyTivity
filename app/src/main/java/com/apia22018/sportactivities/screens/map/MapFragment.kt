@@ -1,12 +1,16 @@
 package com.apia22018.sportactivities.screens.map
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,18 +24,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.screens.containers.DetailContainerActivity
+import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.Marker
+import kotlinx.android.synthetic.main.map_fragment.*
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private lateinit var viewModel: MapViewModel
-    private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0
-    private var mLocationPermissionGranted = false
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var gMap: GoogleMap
-
     private val zoomLevel = 12f
 
     private lateinit var activity: Activities
@@ -58,30 +61,25 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
     override fun onMapReady(googleMap: GoogleMap) {
         gMap = googleMap
 
-        updateUserLocation()
-
         if (activity.activityId == "") {
             viewModel.getActivities().observe(this, Observer {
                 it?.mapNotNull { item ->
-                    val activityPosition = LatLng(item.lat, item.long)
-                    val marker = googleMap.addMarker(MarkerOptions().position(activityPosition))
+                    val marker = googleMap.addMarker(MarkerOptions()
+                            .position(LatLng(item.lat, item.long))
+                            .title(item.title)
+                            .snippet(item.description)
+                    )
 
                     marker.tag = item.activityId
-                    marker.title = item.title
-                    marker.snippet = item.description
+                }
 
-                    val lastIndex = it.lastIndex
-
-                    if (!mLocationPermissionGranted) {
-
-                        println("Hello: $mLocationPermissionGranted")
-
-                        val noUserLocationZoomLevel = 8f
-
-                        if (it[lastIndex] == item) {
-                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(activityPosition, noUserLocationZoomLevel))
-                        }
-                    }
+                askPermissionToShowUserLocation()
+                if (ContextCompat.checkSelfPermission(requireContext(),
+                                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                    it?.get(it?.size)?.also { activities ->
+//                        val noUserLocationZoomLevel = 8f
+//                        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(activities.lat, activities.long), noUserLocationZoomLevel))
+//                    }
                 }
             })
 
@@ -105,61 +103,39 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         }
     }
 
-    private fun getLocationPermission() {
-        /*
-     * Request location permission, so that we can get the location of the
-     * device. The result of the permission request is handled by a callback,
-     * onRequestPermissionsResult.
-     */
-        if (ContextCompat.checkSelfPermission(this.requireContext(),
-                        android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mLocationPermissionGranted = true
-        } else {
-            requestPermissions(
-                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
-        }
-    }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
-        mLocationPermissionGranted = false
-        when (requestCode) {
-            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true
-                    updateUserLocation()
-                }
-            }
-        }
-    }
-
+    @SuppressLint("MissingPermission")
     private fun updateUserLocation() {
-        if (checkPermission()) {
-            fusedLocationClient.lastLocation
-                    .addOnSuccessListener { location: Location? ->
-                        location?.let {
-                            mLocationPermissionGranted = true
-
-                            val userLocation = LatLng(it.latitude, it.longitude)
-                            gMap.isMyLocationEnabled = true
-
-                            if (activity.activityId == "") {
-                                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, zoomLevel))
-                            }
-                        }
+        fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    location?.let {
+                        gMap.isMyLocationEnabled = true
+                        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), zoomLevel))
                     }
-        }
+                }
     }
 
-    private fun checkPermission(): Boolean {
-        return if (ContextCompat.checkSelfPermission(this.requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            true
-        } else {
-            getLocationPermission()
-            false
+    private fun askPermissionToShowUserLocation() {
+        askPermission(
+                Manifest.permission.ACCESS_FINE_LOCATION
+        ) {
+            if (it.isAccepted) {
+                updateUserLocation()
+            }
+        }.onDeclined { e ->
+            if (e.denied.size > 0) {
+                AlertDialog.Builder(requireContext())
+                        .setMessage("Please accept the permission so that we can provide your position on the map")
+                        .setPositiveButton("yes") { _: DialogInterface, _: Int ->
+                            e.askAgain()
+                        }
+                        .setNegativeButton("no") { dialog: DialogInterface, _: Int ->
+                            dialog.dismiss()
+                        }.show();
+            }
+            if (e.foreverDenied.size > 0) {
+                e.goToSettings()
+            }
         }
     }
 

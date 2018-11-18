@@ -39,12 +39,12 @@ fun bindIsGone(view: View, isGone: Boolean) {
 }
 
 @BindingAdapter("place")
-fun setPlaceValue(view: TextView, value: List<Address>?) {
+fun setPlaceValue(view: TextView, value: Address?) {
     if (value != null) {
-        if (value[0].locality == null || value[0].thoroughfare == null) {
+        if (value.locality == null || value.thoroughfare == null) {
             view.text = "Invalid address"
         } else {
-            view.text = value[0].locality + " " + value[0].thoroughfare + " " + value[0].subThoroughfare
+            view.text = value.locality + " " + value.thoroughfare + " " + value.subThoroughfare
         }
     } else {
         view.text = ""
