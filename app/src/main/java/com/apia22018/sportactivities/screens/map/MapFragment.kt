@@ -76,10 +76,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 askPermissionToShowUserLocation()
                 if (ContextCompat.checkSelfPermission(requireContext(),
                                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                    it?.get(it?.size)?.also { activities ->
-//                        val noUserLocationZoomLevel = 8f
-//                        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(activities.lat, activities.long), noUserLocationZoomLevel))
-//                    }
+                    it?.get(it.size)?.also { activities ->
+                        val noUserLocationZoomLevel = 8f
+                        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(activities.lat, activities.long), noUserLocationZoomLevel))
+                    }
                 }
             })
 

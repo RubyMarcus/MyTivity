@@ -20,11 +20,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import com.apia22018.sportactivities.databinding.AddActivityBinding
+import com.apia22018.sportactivities.utils.IO
 import com.apia22018.sportactivities.utils.InjectorUtils
+import com.apia22018.sportactivities.utils.UI
 
 class AddActivity : AppCompatActivity() {
 
-    val PLACE_PICKER_REQUEST = 1
+    private val PLACE_PICKER_REQUEST = 1
 
     lateinit var viewModel: AddViewModel
 
@@ -159,14 +161,16 @@ class AddActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PLACE_PICKER_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             val place = PlacePicker.getPlace(this, data)
+            println(place)
             if (place != null) {
-                Geocoder(this, Locale.getDefault()).run {
-                    this.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1).mapNotNull {
-                        if (it != null) {
-                            viewModel.setPLace(it)
+                Geocoder(this, Locale.getDefault()).also {
+                    IO.execute {
+                        val gfl = it.getFromLocation(place.latLng.latitude, place.latLng.longitude, 1)
+                        UI.execute {
+                            viewModel.setPLace(gfl)
                         }
-
                     }
+
                 }
             }
         }

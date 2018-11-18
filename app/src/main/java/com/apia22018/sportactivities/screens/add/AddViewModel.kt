@@ -89,8 +89,12 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
         }
     }
 
-    fun setPLace(address: Address) {
-        place.value = address
+    fun setPLace(addressList: List<Address?>?) {
+        addressList?.mapNotNull { address ->
+            if (address != null) {
+                place.value = address
+            }
+        }
     }
 
     fun createActivity(eventName: String, description: String, location: String,
