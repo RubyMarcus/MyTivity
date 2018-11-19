@@ -34,11 +34,11 @@ class SignUpViewModel : ViewModel() {
 
         if (password.isEmpty()) {
             isValid = false
-            passwordError.value = R.string.enter_email_password
+            passwordError.value = R.string.enter_password
         }
         if (repeatPassword.isEmpty()) {
             isValid = false
-            passwordRepeat.value = R.string.enter_email_password
+            passwordRepeatError.value = R.string.enter_password
         }
 
         if (password != repeatPassword && (!password.isEmpty() || !repeatPassword.isEmpty())) {
