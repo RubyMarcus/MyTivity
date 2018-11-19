@@ -45,5 +45,28 @@
     <string name="messages">Messages</string>
     <string name="logout">Logout</string>
     <string name="no_messages_to_show">No messages to show!</string>
+    <string name="remove_activity_question">Are you sure you want to remove the activity</string>
+    <string name="remove_activity">Remove activity</string>
+    <string name="new_activity">New activity</string>
+    <string name="not_valid_time">Selected time is not valid!</string>
+    <string name="need_name">You need a name!</string>
+    <string name="activities">Activities</string>
+    <string name="joined_event_text">You joined the event!</string>
+    <string name="logging_in">Logging in...</string>
+    <string name="logging_in_user">Logging in user</string>
+    <string name="please_verify_email">Please verify email</string>
+    <string name="could_not_post">Could not post message, try again!</string>
+    <string name="email_invalid">Email invalid</string>
+    <string name="required">Required</string>
+    <string name="password_no_match">Password does not match</string>
+    <string name="invalid_address">Invalid address</string>
+    <string name="add_info">Add some information</string>
+    <string name="pick_a_date">Pick a date</string>
+    <string name="pick_a_location">Pick a location</string>
+    <string name="pick_a_time">Pick a time</string>
+    <string name="choose_number_people">Choose how many people</string>
+    <string name="failed_to_attend">Failed to attend event, try again later!</string>
+    <string name="left_event">You have now left the event!</string>
+    <string name="could_not_remove_activity">Failed to remove activity. Try again!</string>
 
 </resources>

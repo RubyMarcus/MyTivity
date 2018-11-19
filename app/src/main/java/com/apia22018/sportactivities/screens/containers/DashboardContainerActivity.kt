@@ -32,7 +32,7 @@ class DashboardContainerActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
-            title = "Activities"
+            title = getString(R.string.activities)
         }
 
         bottomNavigation()

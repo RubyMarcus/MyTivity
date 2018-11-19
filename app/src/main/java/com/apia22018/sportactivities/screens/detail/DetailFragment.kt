@@ -63,13 +63,13 @@ class DetailFragment : Fragment() {
 
         this.viewModel.displaySnackBar.observe(this, Observer {
             if (it != null) {
-                displaySnackbar(binding.root, it, Snackbar.LENGTH_LONG)
+                displaySnackbar(binding.root, getString(it), Snackbar.LENGTH_LONG)
             }
         })
 
         this.viewModel.displayDialog.observe(this, Observer {
             if (it != null && it) {
-                showCreateDialog("Are you sure you want to delete the event?")
+                showCreateDialog(getString(R.string.remove_activity_question))
             }
         })
     }
@@ -86,7 +86,7 @@ class DetailFragment : Fragment() {
 
     private fun showCreateDialog(textInfo: String) {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Remove Activity")
+        builder.setTitle(getString(R.string.remove_activity))
         val view = layoutInflater.inflate(R.layout.dialog, null)
         builder.setView(view)
         val firstNameView = view.findViewById(R.id.dialogInfo) as TextView

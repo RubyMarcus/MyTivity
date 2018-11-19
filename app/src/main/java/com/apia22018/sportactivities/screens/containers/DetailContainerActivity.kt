@@ -39,11 +39,6 @@ class DetailContainerActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar_detail)
 
-        supportActionBar?.apply {
-            title = "TITLE"
-            subtitle = "OPTIONAL SUBTITLE?"
-        }
-
         tabs(activities)
 
     }

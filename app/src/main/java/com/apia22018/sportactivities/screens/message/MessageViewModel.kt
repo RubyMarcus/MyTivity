@@ -2,6 +2,7 @@ package com.apia22018.sportactivities.screens.message
 
 import android.arch.lifecycle.LiveData
 import android.databinding.Bindable
+import android.provider.Settings.Global.getString
 import com.apia22018.sportactivities.BR
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
@@ -14,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 class MessageViewModel(private val messageRepository: MessageRepository, private val activity: Activities) : ObservableViewModel() {
     private val messagesLiveData: LiveData<List<Message>> = messageRepository.getMessages(activity.activityId)
     private val user = FirebaseAuth.getInstance().currentUser
-    val displaySnackBar = SingleLiveEvent<String>()
+    val displaySnackBar = SingleLiveEvent<Int>()
 
     var inputText: String = ""
         @Bindable get() {
@@ -38,7 +39,7 @@ class MessageViewModel(private val messageRepository: MessageRepository, private
             messageRepository.createMessage(activity.activityId, message)
             inputText = ""
         } else {
-            displaySnackBar.postValue("Could not post message, try again!")
+            displaySnackBar.postValue(R.string.could_not_post)
         }
     }
 

@@ -3,8 +3,10 @@ package com.apia22018.sportactivities.screens.detail
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
+import android.provider.Settings.Global.getString
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.data.activities.ActivitiesRepository
 import com.apia22018.sportactivities.data.attendee.Attendee
@@ -19,7 +21,7 @@ class DetailViewModel(private val activity: Activities,
     private val attendeeLiveData = attendeeRepository.getAttendees(activity.activityId)
     private val activities: LiveData<Activities> = activitiesRepository.readActivity(activity.activityId)
     private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
-    val displaySnackBar = SingleLiveEvent<String>()
+    val displaySnackBar = SingleLiveEvent<Int>()
     val displayDialog = SingleLiveEvent<Boolean>()
     val canJoinEvent: ObservableBoolean = ObservableBoolean(false)
 
@@ -31,9 +33,9 @@ class DetailViewModel(private val activity: Activities,
             activitiesRepository.updateActivityAttendees(activity.activityId, addOneAttendees) {
                 if (it) user?.email?.let { email ->
                     attendeeRepository.insertAttendees(Attendee(user.uid, email), activity.activityId)
-                    useSnackbar("You joined the event!!")
+                    useSnackbar(R.string.joined_event_text)
                 } else {
-                    useSnackbar("Failed to attend event, try again later!")
+                    useSnackbar(R.string.failed_to_attend)
                 }
             }
 
@@ -50,7 +52,7 @@ class DetailViewModel(private val activity: Activities,
                 getActivity().value?.occupiedSeats?.run {
                     val removeOneAttendee = this - 1
                     activitiesRepository.updateActivityAttendees(activity.activityId, removeOneAttendee).run {
-                        useSnackbar("You have now left the event!")
+                        useSnackbar(R.string.left_event)
                     }
                 }
             }
@@ -68,7 +70,7 @@ class DetailViewModel(private val activity: Activities,
             if (it) {
                 complete(true)
             } else {
-                useSnackbar("Could not remove activity try again!!")
+                useSnackbar(R.string.could_not_remove_activity)
             }
         }
     }
@@ -81,7 +83,15 @@ class DetailViewModel(private val activity: Activities,
 
     }
 
+<<<<<<< HEAD
     private fun useSnackbar(text: String){
+=======
+    fun stopSpinner() {
+        isLoading.set(false)
+    }
+
+    private fun useSnackbar(text: Int){
+>>>>>>> något
         displaySnackBar.postValue(text)
     }
 

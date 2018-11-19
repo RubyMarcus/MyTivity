@@ -3,6 +3,7 @@ package com.apia22018.sportactivities.screens.add
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.location.Address
+import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.attendee.Attendee
 import com.apia22018.sportactivities.data.attendee.AttendeeRepository
 import com.apia22018.sportactivities.data.activities.Activities
@@ -29,12 +30,12 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
     val date = MutableLiveData<String>()
     val time = MutableLiveData<String>()
 
-    val eventNameError = MutableLiveData<String>()
-    val descriptionError = MutableLiveData<String>()
-    val locationError = MutableLiveData<String>()
-    val dateError = MutableLiveData<String>()
-    val timeError = MutableLiveData<String>()
-    val emptySpotsError = MutableLiveData<String>()
+    val eventNameError = MutableLiveData<Int>()
+    val descriptionError = MutableLiveData<Int>()
+    val locationError = MutableLiveData<Int>()
+    val dateError = MutableLiveData<Int>()
+    val timeError = MutableLiveData<Int>()
+    val emptySpotsError = MutableLiveData<Int>()
 
     var activityId: String = ""
 
@@ -82,7 +83,7 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
         }
 
         if(currentTime > timestampCalendar) {
-            timeError.value = "Selected time is not valid!"
+            timeError.value = R.string.not_valid_time
             time.value = ""
         } else {
             time.value = timeFormat.format(timestampCalendar.time)
@@ -104,42 +105,42 @@ class AddViewModel(private val repoActivity: ActivitiesRepository, val repoAtten
         var isEmptyFallback = false
 
         if (eventName.isEmpty()) {
-            eventNameError.value = "You need a name!"
+            eventNameError.value = R.string.need_name
             isEmptyFallback = true
         } else {
             eventNameError.value = null
         }
         if (description.isEmpty()) {
-            descriptionError.value = "Add some information!"
+            descriptionError.value = R.string.add_info
             isEmptyFallback = true
         } else {
             descriptionError.value = null
         }
         when {
             location.isEmpty() -> {
-                locationError.value = "Pick a location!"
+                locationError.value = R.string.pick_a_location
                 isEmptyFallback = true
             }
             location == "Invalid address!" -> {
-                locationError.value = "Invalid address, pick new location!"
+                locationError.value = R.string.invalid_address
                 isEmptyFallback = true
             }
             else -> locationError.value = null
         }
         if (date.isEmpty()) {
-            dateError.value = "Pick a date!"
+            dateError.value = R.string.hint_Date
             isEmptyFallback = true
         } else {
             dateError.value = null
         }
         if (time.isEmpty()) {
-            timeError.value = "Pick a time!"
+            timeError.value = R.string.pick_a_time
             isEmptyFallback = true
         } else {
             timeError.value = null
         }
         if (emptySpots.isEmpty()) {
-            emptySpotsError.value = "Choose how many people!"
+            emptySpotsError.value = R.string.choose_number_people
             isEmptyFallback = true
         } else {
             emptySpotsError.value = null

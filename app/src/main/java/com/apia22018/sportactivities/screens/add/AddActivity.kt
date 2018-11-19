@@ -46,7 +46,7 @@ class AddActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
-            title = "New activity"
+            title = getString(R.string.new_activity)
         }
 
         description_add_edittext.setRawInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE)
@@ -69,7 +69,7 @@ class AddActivity : AppCompatActivity() {
 
         android.R.id.home -> {
             // Respond to the action bar's Up/Home button
-            showCreateDialog("Are you sure you want to remove the activity")
+            showCreateDialog(getString(R.string.remove_activity_question))
             true
         }
 
@@ -82,27 +82,40 @@ class AddActivity : AppCompatActivity() {
 
     private fun textErrorObservers() {
         viewModel.eventNameError.observe(this, android.arch.lifecycle.Observer {
-            eventname_add_edittext.error = it
+            if (it != null){
+                eventname_textInputLayout.error = getString(it)
+            }
         })
 
         viewModel.descriptionError.observe(this, android.arch.lifecycle.Observer {
-            description_add_edittext.error = it
+            if (it != null) {
+                description_textInputLayout.error = getString(it)
+            }
         })
 
         viewModel.locationError.observe(this, android.arch.lifecycle.Observer {
-            location_add_edittext.error = it
+            if (it != null) {
+                location_textInputLayout.error = getString(it)
+            }
         })
 
         viewModel.dateError.observe(this, android.arch.lifecycle.Observer {
-            date_add_edittext.error = it
+            if (it != null) {
+                date_textInputLayout.error = getString(it)
+            }
+
         })
 
         viewModel.timeError.observe(this, android.arch.lifecycle.Observer {
-            time_add_edittext.error = it
+            if (it != null){
+                time_textInputLayout.error = getString(it)
+            }
         })
 
         viewModel.emptySpotsError.observe(this, android.arch.lifecycle.Observer {
-            spots_add_edittext .error = it
+            if (it != null){
+                spots_textInputLayout.error = getString(it)
+            }
         })
     }
 
@@ -191,7 +204,7 @@ class AddActivity : AppCompatActivity() {
 
     private fun showCreateDialog(textInfo: String) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Remove Activity")
+        builder.setTitle(getString(R.string.remove_activity))
         val view = layoutInflater.inflate(R.layout.dialog, null)
         builder.setView(view)
         val firstNameView = view.findViewById(R.id.dialogInfo) as TextView
@@ -204,7 +217,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        showCreateDialog("Are you sure you want to remove the activity")
+        showCreateDialog(getString(R.string.remove_activity_question))
     }
 
     companion object {

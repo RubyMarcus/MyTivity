@@ -9,6 +9,7 @@ import android.view.View
 import android.view.Window
 import android.widget.EditText
 import android.widget.TextView
+import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.data.activities.Activities
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,7 +44,7 @@ fun bindIsGone(view: View, isGone: Boolean) {
 fun setPlaceValue(view: TextView, value: Address?) {
     if (value != null) {
         if (value.locality == null || value.thoroughfare == null) {
-            view.text = "Invalid address"
+            view.text = view.resources.getString(R.string.invalid_address)
         } else {
             view.text = value.locality + " " + value.thoroughfare + " " + value.subThoroughfare
         }

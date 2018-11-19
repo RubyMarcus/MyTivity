@@ -77,7 +77,6 @@ class LoginActivity : AppCompatActivity() {
         val email = et_email?.text.toString()
         val password = et_password?.text.toString()
         viewModel.errorCheck(email, password)
-
     }
 
     private fun errorObserver() {

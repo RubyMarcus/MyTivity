@@ -56,7 +56,7 @@ class MessageFragment : Fragment() {
 
         this.viewModel.displaySnackBar.observe(this, Observer {
             if (it != null) {
-                view.showSnackbar(it, Snackbar.LENGTH_LONG)
+                view.showSnackbar(getString(it), Snackbar.LENGTH_LONG)
             }
         })
     }

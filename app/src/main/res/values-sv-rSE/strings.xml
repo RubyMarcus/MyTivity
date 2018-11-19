@@ -5,7 +5,6 @@
     <string name="title_activity_maps_activitys">Karta</string>
     <string name="email">Mail</string>
     <string name="password">Lösenord</string>
-    <string name="login_title">Inloggning</string>
     <string name="create_account">Skapa konto</string>
     <string name="map">Karta</string>
     <string name="list">Lista</string>
@@ -16,7 +15,7 @@
     <string name="forgot_your_password">Glömt ditt lösenord?</string>
     <string name="repeat_password">Upprepa lösenord</string>
     <string name="reset_password">Återställ lösenord</string>
-    <string name="enter_email">Fyll i din email..</string>
+    <string name="enter_email">Fyll i din email...</string>
     <string name="enter_email_password">Fyll i din email och lösenord</string>
     <string name="wrong_email_password">Fel email eller lösenord</string>
     <string name="please_enter_email">Var snäll att fyll i din email</string>
@@ -39,5 +38,30 @@
     <string name="messages">Meddelanden</string>
     <string name="logout">Logga ut</string>
     <string name="no_messages_to_show">Tyvärr inga meddelanden att visa just nu..</string>
+    <string name="login_title">Logga in</string>
+    <string name="remove_activity_question">Är du säker på att du vill ta bort aktiviteten?</string>
+    <string name="remove_activity">Ta bort aktiviteten</string>
+    <string name="new_activity">Ny aktivitet</string>
+    <string name="not_valid_time">Vald tid är ogiltig</string>
+    <string name="need_name">Du behöver ett namn!</string>
+    <string name="activities">Aktiviteter</string>
+    <string name="joined_event_text">Du gick med i aktiviteten!</string>
+    <string name="logging_in">Loggar in...</string>
+    <string name="logging_in_user">Loggar in användare</string>
+    <string name="please_verify_email">Var god och verifiera din emailadress</string>
+    <string name="could_not_post">Kunde inte skicka meddelandet, försök igen!</string>
+    <string name="email_invalid">Ogiltig emailadress</string>
+    <string name="required">Obligatorisk</string>
+    <string name="password_no_match">Lösenorden stämmer inte överens</string>
+    <string name="invalid_address">Ogiltig address</string>
+    <string name="add_info">Lägg till information</string>
+    <string name="pick_a_date">Välj ett datum</string>
+    <string name="pick_a_location">Välj en plats</string>
+    <string name="pick_a_time">Välj en tid</string>
+    <string name="choose_number_people">Välj hur många deltagare</string>
+    <string name="failed_to_attend">Misslyckades med att gå med i aktivitet, försök igen senare!</string>
+    <string name="left_event">Du har nu lämnat aktiviteten!</string>
+    <string name="could_not_remove_activity">Misslyckades med att ta bort aktiviteten. Försök igen senare!</string>
+>>>>>>> något
 
 </resources>
