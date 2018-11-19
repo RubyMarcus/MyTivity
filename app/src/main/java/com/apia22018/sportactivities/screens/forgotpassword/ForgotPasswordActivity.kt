@@ -8,7 +8,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.apia22018.sportactivities.R
-import com.apia22018.sportactivities.databinding.AddActivityBinding
 import com.apia22018.sportactivities.databinding.ForgotPasswordActivityBinding
 import com.apia22018.sportactivities.screens.login.LoginActivity
 import kotlinx.android.synthetic.main.forgot_password_activity.*
@@ -26,6 +25,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
 
+
         btn_submit.setOnClickListener {
             val email = et_email.text.toString().trim()
             viewModel.isValid(email)
@@ -41,7 +41,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         })
 
         viewModel.emailError.observe(this, Observer {
-            passwordToEmail.error = it
+            et_email.error = it
         })
     }
 

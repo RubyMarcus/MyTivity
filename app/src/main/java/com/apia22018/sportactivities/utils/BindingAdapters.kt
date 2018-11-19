@@ -6,6 +6,7 @@ import android.location.Address
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.Window
 import android.widget.EditText
 import android.widget.TextView
 import com.apia22018.sportactivities.data.activities.Activities
@@ -67,22 +68,6 @@ fun setListAddress(view: TextView, value: Activities?) {
 fun setEmptySpots(view: TextView, value: Activities?) {
     val activities = value ?: Activities()
     view.text = "Empty spots: ${activities.emptySeaterinos()} / ${activities.totalSeats}"
-}
-@BindingAdapter(value = ["userAttrChanged"])
-fun setListener(view: TextView, listener: InverseBindingListener) {
-    view.addTextChangedListener(object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            view.error = ""
-        }
-
-        override fun afterTextChanged(editable: Editable?) {
-            listener.onChange()
-        }
-    })
 }
 
 @BindingAdapter("hideKeyboardOnLostFocus")

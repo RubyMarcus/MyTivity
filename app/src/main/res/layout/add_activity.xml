@@ -74,7 +74,7 @@
                         android:maxLength="15"
                         android:singleLine="true"
                         android:textSize="21sp"
-                        app:hideKeyboardOnLostFocus="@{true}"/>
+                        app:hideKeyboardOnLostFocus="@{true}" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout

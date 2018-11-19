@@ -5,6 +5,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.support.v4.app.Fragment
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import com.apia22018.sportactivities.R
 import java.util.regex.Pattern
@@ -40,6 +42,15 @@ fun isEmailValid(email: String): Boolean {
                     + "[0-9]{1,2}|25[0-5]|2[0-4][0-9]))|"
                     + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$"
     ).matcher(email).matches()
+}
+
+fun userTouchDisabled (window : Window) {
+    window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+}
+
+fun userTouchEnabled (window : Window) {
+    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 }
 
 //Useful extensions

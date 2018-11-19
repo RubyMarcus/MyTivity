@@ -82,27 +82,27 @@ class AddActivity : AppCompatActivity() {
 
     private fun textErrorObservers() {
         viewModel.eventNameError.observe(this, android.arch.lifecycle.Observer {
-            eventname_textInputLayout.error = it
+            eventname_add_edittext.error = it
         })
 
         viewModel.descriptionError.observe(this, android.arch.lifecycle.Observer {
-            description_textInputLayout.error = it
+            description_add_edittext.error = it
         })
 
         viewModel.locationError.observe(this, android.arch.lifecycle.Observer {
-            location_textInputLayout.error = it
+            location_add_edittext.error = it
         })
 
         viewModel.dateError.observe(this, android.arch.lifecycle.Observer {
-            date_textInputLayout.error = it
+            date_add_edittext.error = it
         })
 
         viewModel.timeError.observe(this, android.arch.lifecycle.Observer {
-            time_textInputLayout.error = it
+            time_add_edittext.error = it
         })
 
         viewModel.emptySpotsError.observe(this, android.arch.lifecycle.Observer {
-            spots_textInputLayout.error = it
+            spots_add_edittext .error = it
         })
     }
 

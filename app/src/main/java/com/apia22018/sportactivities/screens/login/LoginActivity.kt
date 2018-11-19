@@ -4,13 +4,15 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import com.apia22018.sportactivities.R
+import com.apia22018.sportactivities.databinding.LoginActivityBinding
 import com.apia22018.sportactivities.screens.containers.DashboardContainerActivity
 import com.apia22018.sportactivities.screens.forgotpassword.ForgotPasswordActivity
-import com.apia22018.sportactivities.screens.signUp.SignUpActivity
+import com.apia22018.sportactivities.screens.signup.SignUpActivity
 import com.apia22018.sportactivities.utils.showSnackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.login_activity.*
@@ -19,16 +21,17 @@ class LoginActivity : AppCompatActivity() {
 
     lateinit var viewModel: LoginViewModel
 
-    private val TAG = "LoginActivity"
-
-    //Firebase references
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_activity)
-
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+
+        val binding: LoginActivityBinding = DataBindingUtil.setContentView(this, R.layout.login_activity)
+        binding.viewModel = viewModel
+        binding.setLifecycleOwner(this)
+        binding.executePendingBindings()
+
 
         errorObserver()
 
@@ -59,8 +62,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun initialise() {
         tv_forgot_password
                 .setOnClickListener { ForgotPasswordActivity.start(this) }
@@ -72,7 +73,6 @@ class LoginActivity : AppCompatActivity() {
                 .setOnClickListener { loginUser() }
     }
 
-
     private fun loginUser() {
         val email = et_email?.text.toString()
         val password = et_password?.text.toString()
@@ -82,16 +82,18 @@ class LoginActivity : AppCompatActivity() {
 
     private fun errorObserver() {
         viewModel.emailError.observe(this, Observer {
-            emailSomething.error = it
+            et_email.error = it
         })
         viewModel.passwordError.observe(this, Observer {
-            passwordSomething.error = it
+            et_password.error = it
         })
     }
 
     companion object {
         fun start(context: Context) {
-            context.startActivity(Intent(context, LoginActivity::class.java))
+            val intent = Intent(context, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            context.startActivity(intent)
         }
     }
 }
