@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SportActivities</string>
+    <string name="app_name">MyTivity</string>
     <string name="empty_spots">Lediga platser</string>
     <string name="title_activity_maps_activitys">Karta</string>
     <string name="email">Mail</string>
@@ -59,5 +59,6 @@
     <string name="left_event">Du har nu lämnat aktiviteten</string>
     <string name="could_not_remove_activity">Misslyckades med att ta bort aktiviteteten, försök igen senare</string>
     <string name="something_went_wrong">Något gick fel</string>
+    <string name="total_of">av</string>
 
 </resources>

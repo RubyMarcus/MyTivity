@@ -71,7 +71,7 @@ fun setListAddress(view: TextView, value: Activities?) {
 @BindingAdapter("emptySpots")
 fun setEmptySpots(view: TextView, value: Activities?) {
     val activities = value ?: Activities()
-    val text = "${view.resources.getString(R.string.empty_spots)} ${activities.emptySeaterinos()} / ${activities.totalSeats}"
+    val text = "${view.resources.getString(R.string.empty_spots)} ${activities.emptySeaterinos()} ${view.resources.getString(R.string.total_of)} ${activities.totalSeats}"
     view.text = text
 }
 
