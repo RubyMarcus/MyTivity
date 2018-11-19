@@ -13,39 +13,41 @@ class LoginViewModel : ViewModel() {
     val isLoading = ObservableBoolean(false)
     val isComplete = SingleLiveEvent<Boolean>()
     val isVerified = SingleLiveEvent<Boolean>()
-    val emailError = MutableLiveData<String>()
-    val passwordError = MutableLiveData<String>()
+    val emailError = MutableLiveData<Int>()
+    val passwordError = MutableLiveData<Int>()
+    var errorMessage: String = ""
 
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private fun loginUser(email: String, password: String) {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener { task ->
                 val user = mAuth.currentUser
-                if (task.isSuccessful) {
-                    user?.let {
-                        if (it.isEmailVerified) {
-                            isComplete.value = task.isSuccessful
-                        } else {
-                            isVerified.value = false
-                        }
+                user?.let {
+                    if (!it.isEmailVerified) {
+                        isVerified.value = false
+                    } else {
+                        isComplete.value = true
                     }
-                } else {
-                    isComplete.value = false
                 }
             }
+                    .addOnFailureListener {
+                        errorMessage = it.localizedMessage
+                        isComplete.value = false
+                    }
         }
     }
 
     fun errorCheck(email: String, password: String) {
         if (email.isEmpty()) {
             emailError.value = R.string.enter_email
-        } else {
-                isLoading.set(true)
         }
+
         if (password.isEmpty()) {
             passwordError.value = R.string.enter_password
         } else {
+            isLoading.set(true)
             loginUser(email, password)
         }
     }
+}

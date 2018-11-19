@@ -34,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
 
-
         errorObserver()
 
         initialise()
@@ -47,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
                     userTouchEnabled(window)
                     finish()
                 } else {
-                    tv_forgot_password.showSnackbar(getString(R.string.wrong_email_password), Snackbar.LENGTH_SHORT)
+                    tv_forgot_password.showSnackbar(viewModel.errorMessage, Snackbar.LENGTH_LONG)
                     userTouchEnabled(window)
                     viewModel.isLoading.set(false)
                 }
@@ -101,13 +100,14 @@ class LoginActivity : AppCompatActivity() {
         viewModel.emailError.observe(this, Observer {
             if (it != null) {
                 et_email.error = getString(it)
-            }else{
+            }
             userTouchEnabled(window)
         })
+
         viewModel.passwordError.observe(this, Observer {
             if (it != null) {
                 et_password.error = getString(it)
-            }else{
+            }
             userTouchEnabled(window)
         })
     }

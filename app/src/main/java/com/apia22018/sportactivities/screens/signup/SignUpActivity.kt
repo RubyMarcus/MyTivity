@@ -21,8 +21,6 @@ class SignUpActivity : AppCompatActivity() {
 
     lateinit var viewModel : SignUpViewModel
 
-    private var etEmail: EditText? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,7 +47,7 @@ class SignUpActivity : AppCompatActivity() {
                } else {
                    viewModel.isLoading.set(false)
                    userTouchEnabled(window)
-                   etEmail?.showSnackbar(getString(R.string.something_went_wrong), Snackbar.LENGTH_SHORT)
+                   binding.root.showSnackbar(viewModel.errorMessage, Snackbar.LENGTH_LONG)
                }
             }
         })
@@ -59,8 +57,6 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.emailError.observe(this, Observer {
             if (it != null) {
                 emailField.error = getString(it)
-            }else{
-                emailField.error = null
             }
             userTouchEnabled(window)
         })
@@ -68,16 +64,13 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.passwordError.observe(this, Observer {
             if (it != null) {
                 passwordField.error = getString(it)
-            }else{
-                passwordField.error = null
             }
             userTouchEnabled(window)
         })
 
-        viewModel.passwordRepeat.observe(this, Observer {
+        viewModel.passwordRepeatError.observe(this, Observer {
             if (it != null) {
                 repeatPasswordField.error = getString(it)
-            }else{
             }
             userTouchEnabled(window)
         })

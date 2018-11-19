@@ -47,6 +47,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
             }
         })
 
+
+
         viewModel.emailError.observe(this, Observer {
             if (it != null) {
                 et_email.error = getString(it)

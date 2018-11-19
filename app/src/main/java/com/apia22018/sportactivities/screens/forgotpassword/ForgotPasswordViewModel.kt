@@ -14,7 +14,7 @@ class ForgotPasswordViewModel : ViewModel () {
 
     private val user = FirebaseAuth.getInstance()
     val isLoading = ObservableBoolean(false)
-    val emailError = MutableLiveData<String>()
+    val emailError = MutableLiveData<Int>()
     val isComplete = SingleLiveEvent<Boolean>()
 
     fun isValid (email : String) {
