@@ -3,6 +3,7 @@ package com.apia22018.sportactivities.screens.signup
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
+import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.utils.SingleLiveEvent
 import com.apia22018.sportactivities.utils.isEmailValid
 import com.apia22018.sportactivities.utils.userTouchDisabled
@@ -10,9 +11,9 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SignUpViewModel : ViewModel() {
 
-    val emailError = MutableLiveData<String>()
-    val passwordError = MutableLiveData<String>()
-    val passwordRepeat = MutableLiveData<String>()
+    val emailError = MutableLiveData<Int>()
+    val passwordError = MutableLiveData<Int>()
+    val passwordRepeat = MutableLiveData<Int>()
 
     var isLoading = ObservableBoolean(false)
     var isComplete = SingleLiveEvent<Boolean>()
@@ -22,22 +23,22 @@ class SignUpViewModel : ViewModel() {
 
     fun isValid(email: String, password: String, repeatPassword: String) {
         if (email.isEmpty()) {
-            emailError.value = "Enter email."
+            emailError.value = R.string.enter_email
         } else if (!isEmailValid(email)) {
-            emailError.value = "Invalid email."
+            emailError.value = R.string.email_invalid
         }
 
         if (password.isEmpty()) {
-            passwordError.value = "Enter password"
+            passwordError.value = R.string.enter_email_password
         }
         if (repeatPassword.isEmpty()) {
-            passwordRepeat.value = "Enter password"
+            passwordRepeat.value = R.string.enter_email_password
             return
         }
 
         if (password != repeatPassword && (!password.isEmpty() || !repeatPassword.isEmpty())) {
-            passwordError.value = "Password does not match"
-            passwordRepeat.value = "Password does not match"
+            passwordError.value = R.string.password_no_match
+            passwordRepeat.value = R.string.password_no_match
             return
         } else if (isEmailValid(email)) {
             isLoading.set(true)

@@ -83,15 +83,7 @@ class DetailViewModel(private val activity: Activities,
 
     }
 
-<<<<<<< HEAD
-    private fun useSnackbar(text: String){
-=======
-    fun stopSpinner() {
-        isLoading.set(false)
-    }
-
     private fun useSnackbar(text: Int){
->>>>>>> något
         displaySnackBar.postValue(text)
     }
 

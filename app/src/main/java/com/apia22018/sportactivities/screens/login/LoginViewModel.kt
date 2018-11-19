@@ -3,6 +3,7 @@ package com.apia22018.sportactivities.screens.login
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.text.TextUtils
+import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.utils.SingleLiveEvent
 import com.apia22018.sportactivities.utils.isEmailValid
 import com.google.firebase.auth.FirebaseAuth
@@ -10,8 +11,8 @@ import com.google.firebase.auth.FirebaseAuth
 class LoginViewModel : ViewModel() {
 
     val isComplete = SingleLiveEvent<Boolean>()
-    val emailError = MutableLiveData<String>()
-    val passwordError = MutableLiveData<String>()
+    val emailError = MutableLiveData<Int>()
+    val passwordError = MutableLiveData<Int>()
 
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -29,12 +30,12 @@ class LoginViewModel : ViewModel() {
 
     fun errorCheck(email: String, password: String) {
         if (email.isEmpty()) {
-            emailError.value = "Enter email"
+            emailError.value = R.string.enter_email
         } else {
             emailError.value = null
         }
         if (password.isEmpty()) {
-            passwordError.value = "Enter password"
+            passwordError.value = R.string.enter_email_password
         } else {
             passwordError.value = null
             loginUser(email, password)

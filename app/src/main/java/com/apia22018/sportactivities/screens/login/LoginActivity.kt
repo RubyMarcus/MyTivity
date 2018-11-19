@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
                 DashboardContainerActivity.start(this)
                 finish()
             } else {
-                tv_forgot_password.showSnackbar("Please verify email.", Snackbar.LENGTH_SHORT)
+                tv_forgot_password.showSnackbar(getString(R.string.verify_email), Snackbar.LENGTH_SHORT)
             }
         }
     }
@@ -81,10 +81,18 @@ class LoginActivity : AppCompatActivity() {
 
     private fun errorObserver() {
         viewModel.emailError.observe(this, Observer {
-            et_email.error = it
+            if (it != null) {
+                et_email.error = getString(it)
+            }else{
+                et_email.error = null
+            }
         })
         viewModel.passwordError.observe(this, Observer {
-            et_password.error = it
+            if (it != null) {
+                et_password.error = getString(it)
+            }else{
+                et_password.error = null
+            }
         })
     }
 

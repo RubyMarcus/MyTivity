@@ -49,7 +49,7 @@ class SignUpActivity : AppCompatActivity() {
                } else {
                    viewModel.isLoading.set(false)
                    userTouchEnabled(window)
-                   etEmail?.showSnackbar("Something went wrong.", Snackbar.LENGTH_SHORT)
+                   etEmail?.showSnackbar(getString(R.string.something_went_wrong), Snackbar.LENGTH_SHORT)
                }
             }
         })
@@ -57,17 +57,29 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun errorObservers () {
         viewModel.emailError.observe(this, Observer {
-            emailField.error = it
+            if (it != null) {
+                emailField.error = getString(it)
+            }else{
+                emailField.error = null
+            }
             userTouchEnabled(window)
         })
 
         viewModel.passwordError.observe(this, Observer {
-            passwordField.error = it
+            if (it != null) {
+                passwordField.error = getString(it)
+            }else{
+                passwordField.error = null
+            }
             userTouchEnabled(window)
         })
 
         viewModel.passwordRepeat.observe(this, Observer {
-            repeatPasswordField.error = it
+            if (it != null) {
+                repeatPasswordField.error = getString(it)
+            }else{
+                repeatPasswordField.error = null
+            }
             userTouchEnabled(window)
         })
     }

@@ -68,5 +68,6 @@
     <string name="failed_to_attend">Failed to attend event, try again later!</string>
     <string name="left_event">You have now left the event!</string>
     <string name="could_not_remove_activity">Failed to remove activity. Try again!</string>
+    <string name="something_went_wrong">Something went wrong</string>
 
 </resources>
