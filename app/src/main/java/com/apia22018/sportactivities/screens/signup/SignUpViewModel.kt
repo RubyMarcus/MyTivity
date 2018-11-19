@@ -10,9 +10,9 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SignUpViewModel : ViewModel() {
 
-    val emailError = MutableLiveData<Int>()
-    val passwordError = MutableLiveData<Int>()
-    val passwordRepeat = MutableLiveData<Int>()
+    val emailError = MutableLiveData<String>()
+    val passwordError = MutableLiveData<String>()
+    val passwordRepeatError = MutableLiveData<String>()
 
     var isLoading = ObservableBoolean(false)
     var isComplete = SingleLiveEvent<Boolean>()
@@ -21,25 +21,29 @@ class SignUpViewModel : ViewModel() {
     private var fbAuth = FirebaseAuth.getInstance()
 
     fun isValid(email: String, password: String, repeatPassword: String) {
+        var isValid = true
+
         if (email.isEmpty()) {
             emailError.value = R.string.enter_email
+            isValid = false
         } else if (!isEmailValid(email)) {
             emailError.value = R.string.email_invalid
+            isValid = false
         }
 
         if (password.isEmpty()) {
-            passwordError.value = R.string.enter_password
+            isValid = false
+            passwordError.value = R.string.enter_email_password
         }
         if (repeatPassword.isEmpty()) {
-            passwordRepeat.value = R.string.enter_password
-            return
+            isValid = false
+            passwordRepeat.value = R.string.enter_email_password
         }
 
         if (password != repeatPassword && (!password.isEmpty() || !repeatPassword.isEmpty())) {
             passwordError.value = R.string.password_no_match
             passwordRepeat.value = R.string.password_no_match
-            return
-        } else if (isEmailValid(email)) {
+        } else if(isValid) {
             isLoading.set(true)
             createNewAccount(email, password)
         }

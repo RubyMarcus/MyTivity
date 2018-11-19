@@ -40,7 +40,6 @@ class DashboardContainerActivity : AppCompatActivity() {
         floatingActionButton.setOnClickListener {
             AddActivity.start(this)
         }
-
     }
 
     private fun bottomNavigation(){

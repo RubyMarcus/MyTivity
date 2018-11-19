@@ -14,6 +14,8 @@ import com.apia22018.sportactivities.screens.containers.DashboardContainerActivi
 import com.apia22018.sportactivities.screens.forgotpassword.ForgotPasswordActivity
 import com.apia22018.sportactivities.screens.signup.SignUpActivity
 import com.apia22018.sportactivities.utils.showSnackbar
+import com.apia22018.sportactivities.utils.userTouchDisabled
+import com.apia22018.sportactivities.utils.userTouchEnabled
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.login_activity.*
 
@@ -27,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
-        val binding: LoginActivityBinding = DataBindingUtil.setContentView(this, R.layout.login_activity)
+        val binding : LoginActivityBinding = DataBindingUtil.setContentView(this, R.layout.login_activity)
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
@@ -40,10 +42,24 @@ class LoginActivity : AppCompatActivity() {
         viewModel.isComplete.observe(this, Observer { it ->
             it?.let {
                 if (it) {
+                    viewModel.isLoading.set(false)
                     DashboardContainerActivity.start(this)
+                    userTouchEnabled(window)
                     finish()
                 } else {
                     tv_forgot_password.showSnackbar(getString(R.string.wrong_email_password), Snackbar.LENGTH_SHORT)
+                    userTouchEnabled(window)
+                    viewModel.isLoading.set(false)
+                }
+            }
+        })
+
+        viewModel.isVerified.observe(this, Observer { it ->
+            it?.let {
+                if (!it) {
+                    userTouchEnabled(window)
+                    viewModel.isLoading.set(false)
+                    tv_forgot_password.showSnackbar("Please verify email.", Snackbar.LENGTH_SHORT)
                 }
             }
         })
@@ -54,8 +70,8 @@ class LoginActivity : AppCompatActivity() {
         val user = mAuth.currentUser
         if (user != null) {
             if (user.isEmailVerified) {
-                DashboardContainerActivity.start(this)
                 finish()
+                DashboardContainerActivity.start(this)
             } else {
                 tv_forgot_password.showSnackbar(getString(R.string.verify_email), Snackbar.LENGTH_SHORT)
             }
@@ -74,6 +90,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginUser() {
+        userTouchDisabled(window)
+
         val email = et_email?.text.toString()
         val password = et_password?.text.toString()
         viewModel.errorCheck(email, password)
@@ -84,15 +102,13 @@ class LoginActivity : AppCompatActivity() {
             if (it != null) {
                 et_email.error = getString(it)
             }else{
-                et_email.error = null
-            }
+            userTouchEnabled(window)
         })
         viewModel.passwordError.observe(this, Observer {
             if (it != null) {
                 et_password.error = getString(it)
             }else{
-                et_password.error = null
-            }
+            userTouchEnabled(window)
         })
     }
 

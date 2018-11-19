@@ -78,7 +78,6 @@ class SignUpActivity : AppCompatActivity() {
             if (it != null) {
                 repeatPasswordField.error = getString(it)
             }else{
-                repeatPasswordField.error = null
             }
             userTouchEnabled(window)
         })

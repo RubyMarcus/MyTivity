@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.databinding.ForgotPasswordActivityBinding
 import com.apia22018.sportactivities.screens.login.LoginActivity
+import com.apia22018.sportactivities.utils.userTouchDisabled
+import com.apia22018.sportactivities.utils.userTouchEnabled
 import kotlinx.android.synthetic.main.forgot_password_activity.*
 
 class ForgotPasswordActivity : AppCompatActivity() {
@@ -25,8 +27,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
         binding.setLifecycleOwner(this)
         binding.executePendingBindings()
 
-
         btn_submit.setOnClickListener {
+            userTouchDisabled(window)
             val email = et_email.text.toString().trim()
             viewModel.isValid(email)
         }
@@ -34,6 +36,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
         viewModel.isComplete.observe(this, Observer { it ->
             it?.let {
                 if (it) {
+                    viewModel.isLoading.set(false)
+                    userTouchEnabled(window)
                     LoginActivity.start(this)
                     finish()
                 }
@@ -43,9 +47,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
         viewModel.emailError.observe(this, Observer {
             if (it != null) {
                 et_email.error = getString(it)
-            }else{
-                et_email.error = null
             }
+            userTouchEnabled(window)
         })
     }
 
