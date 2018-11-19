@@ -39,15 +39,12 @@ class LoginViewModel : ViewModel() {
     }
 
     fun errorCheck(email: String, password: String) {
-        if (email.isEmpty()) {
-            emailError.value = R.string.enter_email
-        }
-
-        if (password.isEmpty()) {
-            passwordError.value = R.string.enter_password
-        } else {
+        if (email.isEmpty()) emailError.value = R.string.enter_email
+        if (password.isEmpty()) passwordError.value = R.string.enter_password
+        if (email.isNotEmpty() && password.isNotEmpty()) {
             isLoading.set(true)
             loginUser(email, password)
         }
     }
 }
+
