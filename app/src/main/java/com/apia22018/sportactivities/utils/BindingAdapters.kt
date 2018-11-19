@@ -32,7 +32,7 @@ fun setMonthAttr(view: TextView, value: Long?) {
 fun setDayAndTimeAttr(view: TextView, value: Long?) {
     val sdf = SimpleDateFormat("EEE - HH:mm", Locale.getDefault())
     val cal = Calendar.getInstance().apply { timeInMillis = value ?: 1539255728 }
-    view.text = sdf.format(cal.time)
+    view.text = sdf.format(cal.time).toUpperCase()
 }
 
 @BindingAdapter("isGone")
@@ -46,7 +46,8 @@ fun setPlaceValue(view: TextView, value: Address?) {
         if (value.locality == null || value.thoroughfare == null) {
             view.text = view.resources.getString(R.string.invalid_address)
         } else {
-            view.text = value.locality + " " + value.thoroughfare + " " + value.subThoroughfare
+            val text = value.locality + " " + value.thoroughfare + " " + value.subThoroughfare
+            view.text = text
         }
     } else {
         view.text = ""
@@ -56,19 +57,22 @@ fun setPlaceValue(view: TextView, value: Address?) {
 @BindingAdapter("address")
 fun formatAddress(view: TextView, value: Activities?) {
     val address = value ?: Activities()
-    view.text = "${address.streetName} \n ${address.city}"
+    val text = "${address.streetName} \n ${address.city}"
+    view.text = text
 }
 
 @BindingAdapter("listAddress")
 fun setListAddress(view: TextView, value: Activities?) {
     val address = value ?: Activities()
-    view.text = "${address.streetName} - ${address.city}"
+    val text = "${address.streetName} - ${address.city}"
+    view.text = text
 }
 
 @BindingAdapter("emptySpots")
 fun setEmptySpots(view: TextView, value: Activities?) {
     val activities = value ?: Activities()
-    view.text = "Empty spots: ${activities.emptySeaterinos()} / ${activities.totalSeats}"
+    val text = "${view.resources.getString(R.string.empty_spots)} ${activities.emptySeaterinos()} / ${activities.totalSeats}"
+    view.text = text
 }
 
 @BindingAdapter("hideKeyboardOnLostFocus")

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel
 import android.text.TextUtils
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.utils.SingleLiveEvent
-import com.apia22018.sportactivities.utils.isEmailValid
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginViewModel : ViewModel() {
@@ -35,7 +34,7 @@ class LoginViewModel : ViewModel() {
             emailError.value = null
         }
         if (password.isEmpty()) {
-            passwordError.value = R.string.enter_email_password
+            passwordError.value = R.string.enter_password
         } else {
             passwordError.value = null
             loginUser(email, password)

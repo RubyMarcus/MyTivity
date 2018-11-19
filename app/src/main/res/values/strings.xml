@@ -2,36 +2,26 @@
     <string name="app_name">SportActivities</string>
     <string name="google_place_api" translatable="false">AIzaSyDcUNyNokjBpxV9EzO6FdmL_6EvHMkYANQ</string>
     <string name="title_activity_maps_activitys">Map</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login_title">Login</string>
     <string name="create_account">Create Account</string>
-
-    <!-- DAVID BEER -->
     <string name="empty_spots">Empty spots</string>
     <string name="map">Map</string>
     <string name="list">List</string>
     <string name="message">Message</string>
     <string name="x">X</string>
-
-
-    <!-- ROBIN TAPPER -->
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="repeat_password">Repeat password</string>
     <string name="reset_password">Reset password</string>
     <string name="enter_email">Enter email..</string>
-    <string name="enter_email_password">Please enter your email and password</string>
+    <string name="enter_password">Enter your password</string>
     <string name="wrong_email_password">Wrong email or password</string>
     <string name="please_enter_email">Please enter email</string>
     <string name="not_registered">This email is not registered</string>
     <string name="verify_email">Please verify your email</string>
-
-    <!-- Elias -->
     <string name="join">JOIN</string>
-    <string name="spots_text">Empty spots left:</string>
-
+    <string name="spots_text">Empty spots:</string>
     <string name="hint_event_name">Event name</string>
     <string name="hint_description">Description</string>
     <string name="hint_location">Location</string>
@@ -58,7 +48,7 @@
     <string name="could_not_post">Could not post message, try again!</string>
     <string name="email_invalid">Email invalid</string>
     <string name="required">Required</string>
-    <string name="password_no_match">Password does not match</string>
+    <string name="password_no_match">Passwords do not match</string>
     <string name="invalid_address">Invalid address</string>
     <string name="add_info">Add some information</string>
     <string name="pick_a_date">Pick a date</string>

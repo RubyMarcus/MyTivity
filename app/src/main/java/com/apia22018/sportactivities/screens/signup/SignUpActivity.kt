@@ -40,8 +40,8 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         viewModel.isComplete.observe(this, Observer {
-            it?.let { it ->
-               if(it) {
+            it?.let { value ->
+               if(value) {
                    viewModel.isLoading.set(false)
                    userTouchEnabled(window)
                    LoginActivity.start(this)

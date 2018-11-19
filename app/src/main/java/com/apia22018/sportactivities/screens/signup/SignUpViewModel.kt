@@ -6,7 +6,6 @@ import android.databinding.ObservableBoolean
 import com.apia22018.sportactivities.R
 import com.apia22018.sportactivities.utils.SingleLiveEvent
 import com.apia22018.sportactivities.utils.isEmailValid
-import com.apia22018.sportactivities.utils.userTouchDisabled
 import com.google.firebase.auth.FirebaseAuth
 
 class SignUpViewModel : ViewModel() {
@@ -29,10 +28,10 @@ class SignUpViewModel : ViewModel() {
         }
 
         if (password.isEmpty()) {
-            passwordError.value = R.string.enter_email_password
+            passwordError.value = R.string.enter_password
         }
         if (repeatPassword.isEmpty()) {
-            passwordRepeat.value = R.string.enter_email_password
+            passwordRepeat.value = R.string.enter_password
             return
         }
 
@@ -60,8 +59,8 @@ class SignUpViewModel : ViewModel() {
 
     private fun sendEmailVerification() {
         val user = fbAuth.currentUser
-        user?.let { user ->
-            user.sendEmailVerification()
+        user?.let {
+            it.sendEmailVerification()
                     .addOnCompleteListener { task ->
                         if(task.isComplete) {
                             sendEmailVerificationComplete.value = task.isComplete
