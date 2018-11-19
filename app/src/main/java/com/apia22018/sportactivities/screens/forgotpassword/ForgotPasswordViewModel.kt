@@ -23,7 +23,6 @@ class ForgotPasswordViewModel : ViewModel () {
         } else if (!isEmailValid(email)) {
             emailError.value = R.string.email_invalid
         } else {
-            emailError.value = null
             isLoading.set(true)
             sendPasswordReset(email)
         }
@@ -33,6 +32,8 @@ class ForgotPasswordViewModel : ViewModel () {
         user.sendPasswordResetEmail(email).addOnCompleteListener { task ->
             if(task.isComplete) {
                 isComplete.value = task.isComplete
+            } else {
+                isComplete.value = false
             }
         }
     }

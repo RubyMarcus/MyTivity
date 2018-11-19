@@ -36,10 +36,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
         viewModel.isComplete.observe(this, Observer { it ->
             it?.let {
                 if (it) {
-                    viewModel.isLoading.set(false)
-                    userTouchEnabled(window)
                     LoginActivity.start(this)
                     finish()
+                    viewModel.isLoading.set(false)
+                    userTouchEnabled(window)
+                } else {
+                    viewModel.isLoading.set(false)
+                    userTouchEnabled(window)
                 }
             }
         })
