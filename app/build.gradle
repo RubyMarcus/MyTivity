@@ -9,9 +9,24 @@ android {
         applicationId "com.apia22018.sportactivities"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        debug {
+            keyAlias 'debug'
+            keyPassword 'android'
+            storePassword 'android'
+            storeFile file('../keystore/debug.key')
+        }
+
+        release {
+            keyAlias 'myTivity'
+            keyPassword 'SPORTACTIVITY_RELEASE_KEY_PASSWORD'
+            storePassword 'SPORTACTIVITY_RELEASE_STORE_PASSWORD'
+            storeFile file('../keystore/myTivity.key')
+        }
     }
     buildTypes {
         release {

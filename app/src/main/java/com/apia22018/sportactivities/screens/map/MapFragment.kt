@@ -1,7 +1,6 @@
 package com.apia22018.sportactivities.screens.map
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
@@ -33,9 +32,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
 
     private lateinit var viewModel: MapViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var gMap: GoogleMap
     private val zoomLevel = 12f
-
     private lateinit var activity: Activities
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,49 +46,66 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                 .of(this, factory)
                 .get(MapViewModel::class.java)
 
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        return view
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        gMap = googleMap
-
         if (activity.activityId == "") {
-            viewModel.getActivities().observe(this, Observer {
-                it?.mapNotNull { item ->
-                    val marker = googleMap.addMarker(MarkerOptions()
-                            .position(LatLng(item.lat, item.long))
-                            .title(item.title)
-                            .snippet(item.description)
-                    )
+            viewModel.getActivities().observe(this, Observer { activities ->
+                activities?.map { placeMarker(it, googleMap) }
 
-                    marker.tag = item.activityId
+                askPermissionToShowUserLocation { granted ->
+                    placeUserOnMapIfPermissionGranted(granted, activities, googleMap)
                 }
-
-                askPermissionToShowUserLocation()
-                if (ContextCompat.checkSelfPermission(requireContext(),
-                                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    it?.get(it.size - 1)?.also { activities ->
-                        val noUserLocationZoomLevel = 8f
-                        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(activities.lat, activities.long), noUserLocationZoomLevel))
-                    }
-                }
+                googleMap.setOnInfoWindowClickListener(this)
             })
-
-            gMap.setOnInfoWindowClickListener(this)
         } else {
             activity.let {
-                val singleActivityPosition = LatLng(it.lat, it.long)
-                googleMap.addMarker(MarkerOptions().position(singleActivityPosition))
-
-                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(singleActivityPosition, zoomLevel))
-
+                placeMarker(it, googleMap)
+                positionCameraOnMap(googleMap, it.lat, it.long)
             }
         }
+    }
+
+    private fun positionCameraOnMap(googleMap: GoogleMap, lat: Double, long: Double) {
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, long), zoomLevel))
+    }
+
+    private fun placeUserOnMapIfPermissionGranted(granted: Boolean, activities: List<Activities>?, googleMap: GoogleMap) {
+        if (granted && ContextCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.lastLocation
+                    .addOnSuccessListener { location: Location? ->
+                        location?.run {
+                            googleMap.isMyLocationEnabled = true
+                            positionCameraOnMap(googleMap, this.latitude, this.longitude)
+                        }
+                    }
+        } else {
+            activities?.get(activities.size - 1)?.run {
+                val noUserLocationZoomLevel = 8f
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(this.lat, this.long), noUserLocationZoomLevel))
+            }
+        }
+    }
+
+    private fun placeMarker(it: Activities, googleMap: GoogleMap) {
+        val marker = googleMap.addMarker(MarkerOptions()
+                .position(LatLng(it.lat, it.long))
+                .title(it.title)
+                .snippet(it.description)
+        )
+
+        marker.tag = it.activityId
     }
 
     override fun onInfoWindowClick(marker: Marker?) {
@@ -102,24 +116,12 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         }
     }
 
-
-    @SuppressLint("MissingPermission")
-    private fun updateUserLocation() {
-        fusedLocationClient.lastLocation
-                .addOnSuccessListener { location: Location? ->
-                    location?.let {
-                        gMap.isMyLocationEnabled = true
-                        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), zoomLevel))
-                    }
-                }
-    }
-
-    private fun askPermissionToShowUserLocation() {
+    private fun askPermissionToShowUserLocation(granted: (Boolean) -> Unit = {}) {
         askPermission(
                 Manifest.permission.ACCESS_FINE_LOCATION
         ) {
             if (it.isAccepted) {
-                updateUserLocation()
+                granted(true)
             }
         }.onDeclined { e ->
             if (e.denied.size > 0) {
@@ -130,10 +132,12 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
                         }
                         .setNegativeButton("no") { dialog: DialogInterface, _: Int ->
                             dialog.dismiss()
+                            granted(false)
                         }.show();
             }
             if (e.foreverDenied.size > 0) {
 //                e.goToSettings()
+                granted(false)
             }
         }
     }
