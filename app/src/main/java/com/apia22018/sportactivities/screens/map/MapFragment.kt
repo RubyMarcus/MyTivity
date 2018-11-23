@@ -25,10 +25,9 @@ import com.apia22018.sportactivities.data.activities.Activities
 import com.apia22018.sportactivities.screens.containers.DetailContainerActivity
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.Marker
 
-class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+class MapFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
 
     private lateinit var viewModel: MapViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -55,10 +54,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        mapFragment.getMapAsync{ fragmentMapReady(it) }
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
+    fun fragmentMapReady(googleMap: GoogleMap) {
         if (activity.activityId == "") {
             viewModel.getActivities().observe(this, Observer { activities ->
                 activities?.map { placeMarker(it, googleMap) }
@@ -126,11 +125,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickL
         }.onDeclined { e ->
             if (e.denied.size > 0) {
                 AlertDialog.Builder(requireContext())
-                        .setMessage("Please accept the permission so that we can provide your position on the map")
-                        .setPositiveButton("yes") { _: DialogInterface, _: Int ->
+                        .setMessage(R.string.accept_position_permission)
+                        .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
                             e.askAgain()
                         }
-                        .setNegativeButton("no") { dialog: DialogInterface, _: Int ->
+                        .setNegativeButton(android.R.string.no) { dialog: DialogInterface, _: Int ->
                             dialog.dismiss()
                             granted(false)
                         }.show();

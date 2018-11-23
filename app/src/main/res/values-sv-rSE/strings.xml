@@ -60,5 +60,6 @@
     <string name="could_not_remove_activity">Misslyckades med att ta bort aktiviteteten, försök igen senare</string>
     <string name="something_went_wrong">Något gick fel</string>
     <string name="total_of">av</string>
+    <string name="accept_position_permission">Ge tillstånd till att visa din position på kartan</string>
 
 </resources>

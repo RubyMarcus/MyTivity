@@ -60,5 +60,6 @@
     <string name="could_not_remove_activity">Failed to remove activity. Try again!</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="total_of">of</string>
+    <string name="accept_position_permission">Permission to provide your position on the map</string>
 
 </resources>
